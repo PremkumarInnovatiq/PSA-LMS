@@ -88,7 +88,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '/admin/dashboard/main',
+        path: '/admin/courses/all-courses',
         title: 'List',
         iconType: '',
         icon: '',
@@ -710,7 +710,7 @@ export const ROUTES: RouteInfo[] = [
         role: [''],
         submenu: [],
       },
-    
+
     ],
   },
   {
