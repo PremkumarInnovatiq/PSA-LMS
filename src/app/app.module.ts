@@ -28,6 +28,8 @@ import {
 
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { ApiIntereptor } from '@core/interceptor/api.interceptor';
+import { ErrorHandlerInterceptor } from '@core/interceptor/error-handler.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -66,6 +68,17 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     fakeBackendProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiIntereptor,
+      multi: true,
+
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent],
 })

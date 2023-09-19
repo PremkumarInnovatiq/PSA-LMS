@@ -16,22 +16,22 @@
               <button mat-raised-button color="primary" type="button" (click)="adminSet();">Admin</button>
             </div>
             <div>
-              <button mat-raised-button color="accent" type="button" (click)="teacherSet();">Teacher</button>
+              <button mat-raised-button color="accent" type="button" (click)="teacherSet();">Instructor</button>
             </div>
             <div>
               <button mat-raised-button color="warn" type="button" (click)="studentSet();">Student</button>
             </div>
           </div>
           <h2 class="login-title">Sign in</h2>
-          <form class="validate-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+          <form class="validate-form" [formGroup]="authForm" (ngSubmit)="loginUser()">
             <div class="row">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Username</mat-label>
-                  <input matInput formControlName="username" />
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email" />
                   <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
-                  <mat-error *ngIf="authForm.get('username')?.hasError('required')">
-                    Username is required
+                  <mat-error *ngIf="authForm.get('email')?.hasError('required')">
+                    Email is required
                   </mat-error>
                 </mat-form-field>
               </div>

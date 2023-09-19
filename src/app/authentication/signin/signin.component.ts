@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {  ActivatedRoute, Router } from '@angular/router';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService, Role } from '@core';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
+import { AuthenticationService } from '@core/service/authentication.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -19,38 +20,70 @@ export class SigninComponent
   authForm!: UntypedFormGroup;
   submitted = false;
   loading = false;
+  isLoading= false;
   error = '';
   hide = true;
+  email:any;
+  password:any;
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private authenticationService:AuthenticationService
   ) {
     super();
   }
 
   ngOnInit() {
     this.authForm = this.formBuilder.group({
-      username: ['admin@school.org', Validators.required],
-      password: ['admin@123', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      logintype: ['admin'],
+      type: ['admin']
+
     });
   }
   get f() {
     return this.authForm.controls;
   }
   adminSet() {
-    this.authForm.get('username')?.setValue('admin@school.org');
-    this.authForm.get('password')?.setValue('admin@123');
+    this.authForm.get('email')?.setValue('admin1@tms.com');
+    this.authForm.get('password')?.setValue('12345678');
   }
   teacherSet() {
-    this.authForm.get('username')?.setValue('teacher@school.org');
+    this.authForm.get('email')?.setValue('teacher@school.org');
     this.authForm.get('password')?.setValue('teacher@123');
   }
   studentSet() {
-    this.authForm.get('username')?.setValue('student@school.org');
+    this.authForm.get('email')?.setValue('student@school.org');
     this.authForm.get('password')?.setValue('student@123');
   }
+  loginUser(){
+  let formData =this.authForm.getRawValue()
+  console.log(formData)
+  this.isLoading = true;
+
+  this.authenticationService.loginUser(formData.email.trim(), formData.password.trim(), formData.logintype.trim(), formData.type.trim())
+        .subscribe(user => {
+          this.router.navigate(['/admin/dashboard/main']);
+            this.authenticationService.saveUserInfo(user);
+        }, (error) => {
+          this.isLoading = false;
+          this.error = error;
+          if(error?.errors){
+          this.email=error?.errors.map((test: { email: any; }) =>test.email&&test.email?test.email:"");
+          this.password= error?.errors.map((test: { password: any; }) =>test.password&&test.password?test.password:"");
+          }
+          if(error.message){
+          this.email=error.message
+          }
+
+          }
+
+          )
+  }
+
   onSubmit() {
     this.submitted = true;
     this.loading = true;
