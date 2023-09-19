@@ -1,13 +1,17 @@
 <div class="auth-container">
   <div class="row auth-main">
     <div class="col-sm-6 px-0 d-none d-sm-block">
-      <div class="left-img" style="background-image: url(assets/images/pages/bg-01.png);">
+      <div class="left-img" >
+        <div class="slideshow">
+          <img *ngFor="let image of images; let i = index" [src]="'' + image" [alt]="'Psa-login' + (i + 1)"
+            [class.active]="i === currentIndex">
+        </div>
       </div>
     </div>
     <div class="col-sm-6 auth-form-section">
       <div class="form-section">
         <div class="auth-wrapper">
-          <h2 class="welcome-msg">  Welcome to Smart</h2>
+          <h2 class="welcome-msg">  Welcome to PSA</h2>
           <p class="auth-signup-text text-muted">Need an account?<a routerLink="/authentication/signup"
               class="sign-up-link">Sign Up
             </a></p>
@@ -16,7 +20,7 @@
               <button mat-raised-button color="primary" type="button" (click)="adminSet();">Admin</button>
             </div>
             <div>
-              <button mat-raised-button color="accent" type="button" (click)="teacherSet();">Teacher</button>
+              <button mat-raised-button color="accent" type="button" (click)="teacherSet();">Instructor</button>
             </div>
             <div>
               <button mat-raised-button color="warn" type="button" (click)="studentSet();">Student</button>

@@ -31,6 +31,7 @@ export class SigninComponent
   }
 
   ngOnInit() {
+    this.startSlideshow();
     this.authForm = this.formBuilder.group({
       username: ['admin@school.org', Validators.required],
       password: ['admin@123', Validators.required],
@@ -88,5 +89,13 @@ export class SigninComponent
           },
         });
     }
+  }
+  images: string[] = ['/assets/images/login/Image 1- PSA.jpg', '/assets/images/login/Image 2- PSA.jpg', '/assets/images/login/Image 3.jpg',];
+    currentIndex = 0;
+
+  startSlideshow() {
+    setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }, 5000);
   }
 }
