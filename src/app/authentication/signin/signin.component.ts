@@ -50,13 +50,13 @@ export class SigninComponent
     this.authForm.get('email')?.setValue('admin1@tms.com');
     this.authForm.get('password')?.setValue('12345678');
   }
-  teacherSet() {
-    this.authForm.get('email')?.setValue('teacher@school.org');
-    this.authForm.get('password')?.setValue('teacher@123');
-  }
   studentSet() {
-    this.authForm.get('email')?.setValue('student@school.org');
-    this.authForm.get('password')?.setValue('student@123');
+    this.authForm.get('email')?.setValue('teo.su@yahooo.com');
+    this.authForm.get('password')?.setValue('12345678');
+  }
+  teacherSet() {
+    this.authForm.get('email')?.setValue('timothy.chow@yahooo.com');
+    this.authForm.get('password')?.setValue('12345678');
   }
   loginUser(){
   let formData =this.authForm.getRawValue()
