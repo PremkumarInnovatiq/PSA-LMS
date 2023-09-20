@@ -285,7 +285,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '',
-    title: 'Servey',
+    title: 'Survey',
     iconType: 'material-icons-two-tone',
     icon: 'school',
     class: 'menu-toggle',

@@ -13,6 +13,7 @@ import {
 import { ROUTES } from './sidebar-items';
 import { AuthService, Role } from '@core';
 import { RouteInfo } from './sidebar.metadata';
+import { AuthenService } from '@core/service/authen.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -35,7 +36,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public elementRef: ElementRef,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private authenService:AuthenService
   ) {
     this.elementRef.nativeElement.closest('body');
     this.routerObj = this.router.events.subscribe((event) => {
@@ -69,21 +71,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    if (this.authService.currentUserValue) {
-      const userRole = this.authService.currentUserValue.role;
+    if (this.authenService.currentUserValue) {
+      const userRole = this.authenService.currentUserValue.user.role;
       this.userFullName =
-        this.authService.currentUserValue.firstName +
+        this.authenService.currentUserValue.user.name +
         ' ' +
-        this.authService.currentUserValue.lastName;
-      this.userImg = this.authService.currentUserValue.img;
+        this.authenService.currentUserValue.user.last_name;
+      this.userImg = this.authenService.currentUserValue.user.avatar;
 
       this.sidebarItems = ROUTES.filter(
         (x) => x.role.indexOf(userRole) !== -1 || x.role.indexOf('All') !== -1
       );
       if (userRole === Role.Admin) {
         this.userType = Role.Admin;
-      } else if (userRole === Role.Teacher) {
-        this.userType = Role.Teacher;
+      } else if (userRole === Role.Instructor) {
+        this.userType = Role.Instructor;
       } else if (userRole === Role.Student) {
         this.userType = Role.Student;
       } else {
@@ -138,6 +140,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.authService.logout().subscribe((res) => {
       if (!res.success) {
         this.router.navigate(['/authentication/signin']);
+        localStorage.clear;
       }
     });
   }

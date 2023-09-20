@@ -25,7 +25,7 @@ const routes: Routes = [
         path: 'teacher',
         // canActivate: [AuthGuard],
         data: {
-          role: Role.Teacher,
+          role: Role.Instructor,
         },
         loadChildren: () =>
           import('./teacher/teacher.module').then((m) => m.TeacherModule),

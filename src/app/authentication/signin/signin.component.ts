@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService, Role } from '@core';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
-import { AuthenticationService } from '@core/service/authentication.service';
+import { AuthenService } from '@core/service/authen.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -30,7 +30,7 @@ export class SigninComponent
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private authenticationService:AuthenticationService
+    private authenticationService:AuthenService
   ) {
     super();
   }
@@ -40,8 +40,6 @@ export class SigninComponent
     this.authForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
-      logintype: ['admin'],
-      type: ['admin']
 
     });
   }
@@ -52,23 +50,34 @@ export class SigninComponent
     this.authForm.get('email')?.setValue('admin1@tms.com');
     this.authForm.get('password')?.setValue('12345678');
   }
-  teacherSet() {
-    this.authForm.get('email')?.setValue('teacher@school.org');
-    this.authForm.get('password')?.setValue('teacher@123');
-  }
   studentSet() {
-    this.authForm.get('email')?.setValue('student@school.org');
-    this.authForm.get('password')?.setValue('student@123');
+    this.authForm.get('email')?.setValue('teo.su@yahooo.com');
+    this.authForm.get('password')?.setValue('12345678');
+  }
+  teacherSet() {
+    this.authForm.get('email')?.setValue('timothy.chow@yahooo.com');
+    this.authForm.get('password')?.setValue('12345678');
   }
   loginUser(){
   let formData =this.authForm.getRawValue()
   console.log(formData)
   this.isLoading = true;
 
-  this.authenticationService.loginUser(formData.email.trim(), formData.password.trim(), formData.logintype.trim(), formData.type.trim())
+  this.authenticationService.loginUser(formData.email.trim(), formData.password.trim())
         .subscribe(user => {
-          this.router.navigate(['/admin/dashboard/main']);
-            this.authenticationService.saveUserInfo(user);
+          setTimeout(() => {
+            const role = this.authenticationService.currentUserValue.user.role;
+            if (role === Role.All || role === Role.Admin) {
+              this.router.navigate(['/admin/dashboard/main']);
+            } else if (role === Role.Instructor) {
+              this.router.navigate(['/teacher/dashboard']);
+            } else if (role === Role.Student) {
+              this.router.navigate(['/student/dashboard']);
+            } else {
+              this.router.navigate(['/authentication/signin']);
+            }
+            this.loading = false;
+          }, 100);            this.authenticationService.saveUserInfo(user);
         }, (error) => {
           this.isLoading = false;
           this.error = error;
@@ -102,7 +111,7 @@ export class SigninComponent
                 const role = this.authService.currentUserValue.role;
                 if (role === Role.All || role === Role.Admin) {
                   this.router.navigate(['/admin/dashboard/main']);
-                } else if (role === Role.Teacher) {
+                } else if (role === Role.Instructor) {
                   this.router.navigate(['/teacher/dashboard']);
                 } else if (role === Role.Student) {
                   this.router.navigate(['/student/dashboard']);
