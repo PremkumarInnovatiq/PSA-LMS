@@ -43,6 +43,30 @@
         "ABOUT-COURSE": "About Course"
       }
     },
+
+    "COURSE": {
+      "TEXT": "Courses",
+      "LIST": {
+        "ALL-COURSES": "Course List",
+        "CREATE-COURSE": "Create Course",
+        "COURSE-APPROVAL": "Courrse Approval",
+        "COURSE-KIT": "Course Kit",
+        "CATEGORIES": "Categories"
+      }
+    },
+
+    "SCHEDULECLASS": {
+      "TEXT": "Schedule Class",
+      "LIST": {
+        "ALL-CLASS": "Class List",
+        "CREATE-CLASS": "Create Class",
+        "APPROVE-LIST": "Approve List",
+        "COMPLETION-LIST": "Completion List"
+      }
+    },
+
+
+
     "LIBRARY": {
       "TEXT": "Library",
       "LIST": {
@@ -94,7 +118,7 @@
       }
     },
 
-    "TEACHER": {    
+    "TEACHER": {
       "TEXT": "Teacher",
       "LIST": {
         "DASHBOARD": "Dashboard",
@@ -104,7 +128,7 @@
         "SETTINGS": "Settings"
       }
     },
-    "STUDENT": {    
+    "STUDENT": {
       "TEXT": "Student",
       "LIST": {
         "DASHBOARD": "Dashboard",
