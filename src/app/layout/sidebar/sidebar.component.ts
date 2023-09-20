@@ -74,10 +74,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.authenService.currentUserValue) {
       const userRole = this.authenService.currentUserValue.user.role;
       this.userFullName =
-        this.authService.currentUserValue.firstName +
+        this.authenService.currentUserValue.user.name +
         ' ' +
-        this.authService.currentUserValue.lastName;
-      this.userImg = this.authService.currentUserValue.img;
+        this.authenService.currentUserValue.user.last_name;
+      this.userImg = this.authenService.currentUserValue.user.avatar;
 
       this.sidebarItems = ROUTES.filter(
         (x) => x.role.indexOf(userRole) !== -1 || x.role.indexOf('All') !== -1
