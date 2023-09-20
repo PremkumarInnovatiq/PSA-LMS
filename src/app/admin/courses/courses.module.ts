@@ -8,6 +8,9 @@ import { AboutCourseComponent } from './about-course/about-course.component';
 import { AllCourseComponent } from './all-course/all-course.component';
 import { SharedModule } from '@shared';
 import { ComponentsModule } from '@shared/components/components.module';
+import { CourseApprovalComponent } from './course-approval/course-approval.component';
+import { CourseKitComponent } from './course-kit/course-kit.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { ComponentsModule } from '@shared/components/components.module';
     EditCourseComponent,
     AboutCourseComponent,
     AllCourseComponent,
+    CourseApprovalComponent,
+    CourseKitComponent,
+    CategoriesComponent,
   ],
   imports: [
     CommonModule,

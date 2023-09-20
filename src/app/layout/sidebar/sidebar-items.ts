@@ -89,7 +89,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [
       {
         path: '/admin/courses/all-courses',
-        title: 'List',
+        title: 'MENUITEMS.COURSE.LIST.ALL-COURSES',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -100,8 +100,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/dashboard/dashboard2',
-        title: 'Create course',
+        path: '/admin/courses/add-course',
+        title: 'MENUITEMS.COURSE.LIST.CREATE-COURSE',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -112,8 +112,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/dashboard/teacher-dashboard',
-        title: 'Course Approval',
+        path: '/admin/courses/course-approval',
+        title: 'MENUITEMS.COURSE.LIST.COURSE-APPROVAL',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
@@ -124,8 +124,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/dashboard/student-dashboard',
-        title: 'Course Kit',
+        path: '/admin/courses/course-kit',
+        title: 'MENUITEMS.COURSE.LIST.COURSE-KIT',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
@@ -136,8 +136,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/dashboard/student-dashboard',
-        title: 'Categories',
+        path: '/admin/courses/categories',
+        title: 'MENUITEMS.COURSE.LIST.CATEGORIES',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
@@ -161,8 +161,8 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
-        title: 'List',
+        path: '/admin/schedule/class-list',
+        title: 'MENUITEMS.COURSE.LIST.ALL-CLASS',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -173,8 +173,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
-        title: 'Create Class',
+        path: '/admin/schedule/create-class',
+        title: 'MENUITEMS.COURSE.LIST.CREATE-CLASS',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -185,8 +185,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
-        title: 'Approve List',
+        path: '/admin/schedule/approve-list',
+        title: 'MENUITEMS.COURSE.LIST.APPROVE-LIST',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
@@ -197,8 +197,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
-        title: 'Completion List',
+        path: '/admin/schedule/completion-list',
+        title: 'MENUITEMS.COURSE.LIST.COMPLETION-LIST',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
