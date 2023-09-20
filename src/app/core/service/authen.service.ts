@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Logger } from './logger.service';
 import { Users } from '../models/user.model';
@@ -14,16 +14,26 @@ const Logging = new Logger('AuthenticationService');
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService {
+export class AuthenService {
+    private currentUserSubject!: BehaviorSubject<any>;
+    public currentUser!: Observable<any>;
+  
   defaultUrl = environment['apiUrl'];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<any>(
+        JSON.parse(localStorage.getItem('currentUser') || '{}')
+      );
+      this.currentUser = this.currentUserSubject.asObservable();
+  
+  }
+  public get currentUserValue(): any {
+    return this.currentUserSubject.value;
+  }
 
-  loginUser(email: any, password: any,logintype: any,type: any): Observable<Users> {
+  loginUser(email: any, password: any): Observable<Users> {
     const body = {
       email,
-      password,
-      logintype,
-      type
+      password
     };
 
     const loginUrl =this.defaultUrl + 'auth/login';
@@ -31,8 +41,9 @@ export class AuthenticationService {
     headers = headers.set('no-auth' , 'true');
     return this.http.post<ApiResponse>(loginUrl, body, { headers }).pipe(
       map((response) => {
-        localStorage.setItem('currentUser', JSON.stringify(response.data.user.type));
-        return response.data;
+        localStorage.setItem('currentUser', JSON.stringify(response.data));
+        this.currentUserSubject.next(response.data);
+      return response.data;
       },
       (error: any) =>{
         console.log('err',error)

@@ -16,7 +16,7 @@ const users: User[] = [
   {
     id: 1,
     img: 'assets/images/user/admin.jpg',
-    username: 'admin@school.org',
+    email: 'admin@school.org',
     password: 'admin@123',
     firstName: 'Sarah',
     lastName: 'Smith',
@@ -25,18 +25,18 @@ const users: User[] = [
   },
   {
     id: 2,
-    img: 'assets/images/user/teacher.jpg',
-    username: 'teacher@school.org',
-    password: 'teacher@123',
+    img: 'assets/images/user/Instructor.jpg',
+    email: 'Instructor@school.org',
+    password: 'Instructor@123',
     firstName: 'Ashton',
     lastName: 'Cox',
-    role: Role.Teacher,
-    token: 'teacher-token',
+    role: Role.Instructor,
+    token: 'Instructor-token',
   },
   {
     id: 3,
     img: 'assets/images/user/student.jpg',
-    username: 'student@school.org',
+    email: 'student@school.org',
     password: 'student@123',
     firstName: 'Ashton',
     lastName: 'Cox',
@@ -68,17 +68,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     // route functions
 
     function authenticate() {
-      const { username, password } = body;
+      const { email, password } = body;
       const user = users.find(
-        (x) => x.username === username && x.password === password
+        (x) => x.email === email && x.password === password
       );
       if (!user) {
-        return error('Username or password is incorrect');
+        return error('email or password is incorrect');
       }
       return ok({
         id: user.id,
         img: user.img,
-        username: user.username,
+        email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role,
@@ -91,7 +91,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function ok(body?: {
       id: number;
       img: string;
-      username: string;
+      email: string;
       firstName: string;
       lastName: string;
       role: Role;
