@@ -77,7 +77,7 @@ export class SigninComponent
               this.router.navigate(['/authentication/signin']);
             }
             this.loading = false;
-          }, 1000);            this.authenticationService.saveUserInfo(user);
+          }, 100);            this.authenticationService.saveUserInfo(user);
         }, (error) => {
           this.isLoading = false;
           this.error = error;
