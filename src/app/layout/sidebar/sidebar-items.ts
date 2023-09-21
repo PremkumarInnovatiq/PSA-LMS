@@ -24,7 +24,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    role: ['All'],
     submenu: [
       {
         path: '/admin/dashboard/main',
@@ -85,7 +85,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    role: ['All'],
     submenu: [
       {
         path: '/admin/courses/all-courses',
@@ -158,7 +158,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    role: ['All'],
     submenu: [
       {
         path: '/admin/schedule/class-list',
@@ -219,7 +219,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    role: ['All'],
     submenu: [
       // {
       //   path: '',
