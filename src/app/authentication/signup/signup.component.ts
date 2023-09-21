@@ -5,6 +5,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { LanguageService } from '@core/service/language.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -12,6 +13,7 @@ import {
 })
 export class SignupComponent implements OnInit {
   authForm!: UntypedFormGroup;
+  langStoreValue?: string;
   submitted = false;
   returnUrl!: string;
   hide = true;
@@ -19,9 +21,16 @@ export class SignupComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translate: LanguageService
   ) {}
+  listLang = [
+    { text: 'English', flag: 'assets/images/flags/us.svg', lang: 'en' },
+    { text: 'Chinese', flag: 'assets/images/flags/spain.svg', lang: 'ch' },
+    { text: 'Tamil', flag: 'assets/images/flags/germany.svg', lang: 'ts' },
+  ];
   ngOnInit() {
+    this.startSlideshow()
     this.authForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: [
@@ -45,5 +54,19 @@ export class SignupComponent implements OnInit {
     } else {
       this.router.navigate(['/admin/dashboard/main']);
     }
+  }
+  setLanguage(event: any) {  
+    console.log("=======",event)
+    // this.countryName = text;
+    // this.flagvalue = flag;
+    this.langStoreValue = event.target.value;
+    this.translate.setLanguage(event.target.value);
+  }
+  images: string[] = ['/assets/images/login/Image 1- PSA.jpg', '/assets/images/login/Image 2- PSA.jpg', '/assets/images/login/register-img.jpg',];
+    currentIndex = 0;
+  startSlideshow() {
+    setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }, 4000);
   }
 }
