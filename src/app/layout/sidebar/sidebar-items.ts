@@ -162,7 +162,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [
       {
         path: '/admin/schedule/class-list',
-        title: 'MENUITEMS.COURSE.LIST.ALL-CLASS',
+        title: 'MENUITEMS.SCHEDULECLASS.LIST.ALL-CLASS',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -174,7 +174,7 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: '/admin/schedule/create-class',
-        title: 'MENUITEMS.COURSE.LIST.CREATE-CLASS',
+        title: 'MENUITEMS.SCHEDULECLASS.LIST.CREATE-CLASS',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -186,7 +186,7 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: '/admin/schedule/approve-list',
-        title: 'MENUITEMS.COURSE.LIST.APPROVE-LIST',
+        title: 'MENUITEMS.SCHEDULECLASS.LIST.APPROVE-LIST',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
@@ -198,7 +198,7 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: '/admin/schedule/completion-list',
-        title: 'MENUITEMS.COURSE.LIST.COMPLETION-LIST',
+        title: 'MENUITEMS.SCHEDULECLASS.LIST.COMPLETION-LIST',
         iconType: 'material-icons-two-tone',
         icon: '',
         class: 'ml-menu',
