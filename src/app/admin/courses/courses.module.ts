@@ -11,6 +11,8 @@ import { ComponentsModule } from '@shared/components/components.module';
 import { CourseApprovalComponent } from './course-approval/course-approval.component';
 import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { TruncatePipe } from '@core/service/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { CategoriesComponent } from './categories/categories.component';
     CourseApprovalComponent,
     CourseKitComponent,
     CategoriesComponent,
+    TruncatePipe,
   ],
   imports: [
     CommonModule,
@@ -29,6 +32,7 @@ import { CategoriesComponent } from './categories/categories.component';
     CoursesRoutingModule,
     ComponentsModule,
     SharedModule,
+    MatStepperModule,
   ],
 })
 export class CoursesModule {}
