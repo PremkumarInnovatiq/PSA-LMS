@@ -9,7 +9,7 @@
   position: relative;
   margin-bottom: 24px;
   border: 1px solid #f2f4f9;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
   -webkit-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
 
@@ -189,7 +189,8 @@
   &.card-statistic-1,
   &.card-statistic-2 {
     display: inline-block;
-    width: 100%;
+    width: 235px;
+    height: 170px;
   }
 
   &.card-statistic-1 .card-icon,
@@ -276,7 +277,8 @@
     }
     .card-right {
       float: right;
-      margin: 15px 15px 15px 0px;
+      margin: -77px 15px 15px 0px;
+    
     }
   }
 }
