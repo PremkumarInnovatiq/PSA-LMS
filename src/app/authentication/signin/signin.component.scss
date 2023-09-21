@@ -37,3 +37,64 @@
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
   }
+  .uglms p{
+    margin-left: -187px;
+    font-weight: bold; 
+    font-size: 12px;
+    margin-bottom: 12px;
+    white-space: nowrap;
+  }
+  @media only screen and (max-width: 1024px) and (min-width: 280px) {
+    .uglms p {
+      margin-left: 0px;
+    }
+  }
+  
+  .policy a{
+    text-decoration: none;
+    color: black; 
+    font-size: 12px;
+  }
+  .terms p{
+    margin-left: 15px;
+    display: inline;
+  }
+  @media only screen and (max-width: 540px) and (min-width: 280px) {
+    .terms p{
+      margin-left: 0px;
+      
+    }
+  }
+  @media only screen and (max-width: 1024px) and (min-width: 768px) {
+    .policy{
+      margin-top: 15px;
+      margin-left: -45px;
+      
+    }
+  }
+  @media only screen and (max-width: 1024px) and (min-width: 768px) {
+    .powered{
+      margin-top: 15px;
+      margin-left: -65px;
+      
+    }
+  }
+ 
+  .privacy p{
+     display: inline;
+  }
+  .powered p{
+    margin-right: -25px; 
+    white-space: nowrap;
+    margin-left: 125px;
+    font-style: italic;
+    color: black;
+    font-size: 14px;
+  }
+  @media only screen and (max-width: 912px) and (min-width: 280px) {
+    .powered p{
+    margin-left: 0px;
+     margin-right: 0px;
+     margin-top: 15px;
+    }
+  }
