@@ -1,0 +1,62 @@
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+
+::ng-deep.mat-stepper-label-position-bottom .mat-horizontal-stepper-header-container {
+  width: fit-content;
+  margin: 0 auto;
+}
+::ng-deep .mat-stepper-horizontal-line {
+flex: none !important;
+}
+label{
+font-size: 20px;
+font-weight: 500;
+}
+#back {
+  margin-left: 15px;
+  margin-bottom: 20px;
+  background: #FFF;
+  border: 1px solid #000000;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  color: black;
+  font-weight: 700;
+}
+#next {
+  margin-left: 85px;
+  margin-bottom: 20px;
+  background: #6777ef;
+  border: none;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  color: #FFF;
+  font-weight: 700;
+}
+
+::ng-deep .example-full-width .mdc-text-field--outlined{
+  --mdc-outlined-text-field-container-shape : 12px !important;
+  font-style: italic;
+}
+
+.mandatory{
+  color: red;
+}
+::ng-deep.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before { 
+  border-top-width: 3px!important;
+  border-top-color: #6777ef;
+}
+
+::ng-deep.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 3px!important;
+  border-top-color: #6777ef;
+}
+::ng-deep.mat-stepper-horizontal-line {
+  border-top-width: 3px!important;
+  border-top-color: #6777ef;
+}
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: #6777ef; 
+}

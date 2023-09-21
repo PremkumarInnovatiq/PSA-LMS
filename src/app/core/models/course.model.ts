@@ -13,7 +13,54 @@ export interface CourseKit {
 	__v: number;
 	id: string;
 }
+export interface MainCategory {
+	subCategories: any;
+	_id: string;
+	category_name: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
 
+}
+export interface SubCategory {
+	_id: string;
+	main_category_id: string;
+	category_name: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
+}
+export interface CourseUploadData {
+	title?: string;
+   courseCode?: string;
+   main_category?: string;
+   sub_category?: string;
+   course_duration_in_days?: number;
+   training_hours?: number;
+   fee?: number;
+   currency_code: number;
+   skill_connect_code?: string;
+   course_description?: string;
+   course_detailed_description?: string;
+   pdu_technical?: number;
+   pdu_leadership?: number;
+   pdu_strategic?: number;
+   funding_grant?: string[];
+   survey?: string[];
+   course_instructor?: string[];
+   course_kit?: string[];
+ }
+ export interface MainCategory {
+    subCategories: any;
+    _id: string;
+    category_name: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+    id: string;
+}
 export interface CourseModel {
   category_name: string ;
 	status: string;
@@ -49,6 +96,96 @@ export interface CourseModel {
 	updatedAt: string;
 	__v: number;
 	id: string;
+}
+export interface FundingGrant {
+	_id: string;
+	grant_type: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
+}
+export interface Survey {
+	_id: string;
+	name: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
+}
+export interface Instructor {
+	_id: string;
+	user_id: User_id;
+	linkedin: string;
+	about: string;
+	experience: string;
+	website: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
+}
+export interface User_id {
+	gender: string;
+	slug: string;
+	active: boolean;
+	password_Activation: string;
+	type: string;
+	user_roles: any[];
+	attemptCalculation: number;
+	attemptBlock: boolean;
+	passwordChange: boolean;
+	forgetPasswordChange: boolean;
+	followcount: number;
+	_id: string;
+	last_name: string;
+	email: string;
+	password: string;
+	phone_number: any[];
+	studentType: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	reset_password_expires: string;
+	reset_password_token: string;
+	city: number;
+	country: number;
+	state: number;
+	avatar: string;
+	bannerImage: string;
+	mentorFollow: any[];
+	qualification: string;
+	// allbannerImage: AllbannerImage[];
+	// student_profile: Student_profile;
+	name: string;
+	status: number;
+	// profile_completion: Profile_completion;
+	id: string;
+}
+export interface CourseKit {
+	_id: string;
+	name: string;
+	docs: CourseKit[];
+	shortDescription: string;
+	longDescription: string;
+	videoLink:string[];
+	documentLink: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
+}
+export interface Certificate {
+	course: string;
+	createdAt: string;
+	id: string;
+	image:string;
+	isDeleted:boolean;
+	name:string;
+	passStatus: string;
+	title: string;
+	updatedAt: string;
+	_id: string;
 }
 export interface CoursePaginationModel extends Pagination {
 	docs: CourseModel[];
