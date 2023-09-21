@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
-import { CoursePaginationModel } from "@core/models/course.module";
+import { CoursePaginationModel } from "@core/models/course.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class CourseService {
   private apiUrl = 'http://localhost:3000/api/'
   defaultUrl = environment['apiUrl'];
 
-  constructor(private _Http : HttpClient) { }
+  constructor(private _Http : HttpClient) {
+
+  }
   private buildParams(filter?: Partial<CoursePaginationModel>): HttpParams {
     let params = new HttpParams();
     if (filter) {
