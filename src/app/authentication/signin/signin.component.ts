@@ -8,6 +8,7 @@ import {
 import { AuthService, Role } from '@core';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import { AuthenService } from '@core/service/authen.service';
+import { LanguageService } from '@core/service/language.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -18,6 +19,7 @@ export class SigninComponent
   implements OnInit
 {
   authForm!: UntypedFormGroup;
+  langStoreValue?: string;
   submitted = false;
   loading = false;
   isLoading= false;
@@ -30,7 +32,8 @@ export class SigninComponent
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private authenticationService:AuthenService
+    private authenticationService:AuthenService,
+    private translate: LanguageService
   ) {
     super();
   }
@@ -43,6 +46,11 @@ export class SigninComponent
 
     });
   }
+  listLang = [
+    { text: 'English', flag: 'assets/images/flags/us.svg', lang: 'en' },
+    { text: 'Chinese', flag: 'assets/images/flags/spain.svg', lang: 'ch' },
+    { text: 'Tamil', flag: 'assets/images/flags/germany.svg', lang: 'ts' },
+  ];
   get f() {
     return this.authForm.controls;
   }
@@ -92,6 +100,13 @@ export class SigninComponent
           }
 
           )
+  }
+  setLanguage(event: any) {  
+    console.log("=======",event)
+    // this.countryName = text;
+    // this.flagvalue = flag;
+    this.langStoreValue = event.target.value;
+    this.translate.setLanguage(event.target.value);
   }
 
   onSubmit() {
