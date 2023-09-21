@@ -61,6 +61,13 @@ export class CourseService {
       params: this.buildParams(filter),
     });
   }
+  getCount(
+    filter?: Partial<CoursePaginationModel>
+  ): Observable<ApiResponse> {
+    const apiUrl = this.defaultUrl+'admin/courses-new/count';
+    console.log("==new=",apiUrl)
+    return this._Http.get<ApiResponse>(apiUrl);
+  }
   getMainCategories(): Observable<MainCategory[]> {
     const apiUrl = `${this.prefix}admin/main-category/`;
     return this._Http.get<any>(apiUrl).pipe(map((response:any) => response.data.docs));
@@ -113,5 +120,6 @@ export class CourseService {
       .pipe(map((response) => { }));
   }
 }
+
 
 

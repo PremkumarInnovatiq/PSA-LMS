@@ -29,9 +29,9 @@ export class EditTeacherComponent {
   };
   breadscrums = [
     {
-      title: 'Edit Teacher',
-      items: ['Teacher'],
-      active: 'Edit Teacher',
+      title: 'Edit Instructor',
+      items: ['Instructor'],
+      active: 'Edit Instructor',
     },
   ];
   constructor(private fb: UntypedFormBuilder) {
