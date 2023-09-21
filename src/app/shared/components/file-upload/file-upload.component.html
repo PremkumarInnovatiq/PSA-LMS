@@ -1,5 +1,8 @@
 <div class="file-drop-area">
-  <button mat-raised-button color="primary">Choose file</button>
-  <span>{{file ? file.name : ' or drag and drop file here' }}</span>
+  <div class="file">
+  <!-- <button mat-raised-button color="primary">Choose file</button> -->
+  <img src="/assets/add-image-icon.svg" >
+  <h5>{{file ? file.name : 'Drag and Drop File Here' }}</h5>
   <input class="file-input" type="file">
+  </div>
 </div>

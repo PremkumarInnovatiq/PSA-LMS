@@ -13,31 +13,32 @@
           </div>
           <div class="body">
             <div class="row" >
-              <div class="col-md-3" *ngFor="let data of dataSource">
+              <div class="col-md-3" *ngFor="let data of courseData">
                 <div class="course-card course-card-blog">
                   <div class="course-card-image">
-                    <img class="img" src="{{data.src}}">
+                    <img class="img" src="{{data.image_link}}">
                   </div>
                   <div class="blog-table">
                     <div class="post-user mt-3">
-                      <span class="float-start msr-3">
-                        <img class="img-circle" src="{{data.circleSrc}}" alt="...">
-                      </span>
-                      <h6 class="mb-xs mt-xs"> {{data.courseName}}</h6>
-                      <p class="text-muted"><time>{{data.hours}}</time></p>
+                      <!-- <span class="float-start msr-3">
+                        <img class="img-circle" src="{{data.image_link}}" alt="...">
+                      </span> -->
+                      <h6 class="mb-xs mt-xs"> {{data.title}}</h6>
+                      <p class="text-muted"><time>{{data.training_hours}} hours</time></p>
                     </div>
                     <h6>John Deo</h6>
-                    <p class="course-card-description">{{data.description}}</p>
+                    <p class="course-card-description">{{data.course_detailed_description |truncate : 30}}</p>
                     <div class="text-center mb-3">
-                      <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/dashboard/dashboard2']">
+                      <button mat-icon-button class="tbl-action-btn">
+                        <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                      </button>
+                      <button mat-icon-button class="tbl-action-btn">
                         <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                       </button>
                       <button mat-icon-button class="tbl-action-btn">
                         <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                       </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
-                      </button>
+                     
                     </div>
                     <div class="ftr">
                       <div class="author">
@@ -51,6 +52,9 @@
               </div>
               </div>
           </div>
+          <mat-paginator class="paginator rounded-5" #paginator [length]="totalItems" (page)="pageSizeChange($event)" [pageSizeOptions]="pageSizeArr"
+        aria-label="select pagination option">
+      </mat-paginator>
         </div>
       </div>
     </div>
