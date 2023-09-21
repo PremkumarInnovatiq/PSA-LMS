@@ -138,6 +138,6 @@ export class SigninComponent
   startSlideshow() {
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
-    }, 5000);
+    }, 4000);
   }
 }

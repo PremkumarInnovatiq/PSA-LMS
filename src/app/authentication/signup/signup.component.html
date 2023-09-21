@@ -1,13 +1,13 @@
 <div class="auth-container">
   <div class="row auth-main">
     <div class="col-sm-6 px-0 d-none d-sm-block">
-      <div class="left-img" style="background-image: url(assets/images/pages/bg-02.png);">
+      <div class="left-img" style="background-image: url(/assets/images/login/register-image.jpg);">
       </div>
     </div>
     <div class="col-sm-6 auth-form-section">
       <div class="form-section">
         <div class="auth-wrapper">
-          <h2 class="welcome-msg"> Sign Up </h2>
+          <h2 class="welcome-msg"> Register with PSA </h2>
           <p class="auth-signup-text text-muted">Enter details to create your account</p>
           <form class="validate-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
             <div class="row">
@@ -60,22 +60,23 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="flex-sb-m w-full  p-b-20">
-              <div>
-                <span>Already Registered? <a routerLink="/authentication/signin">
-                    Login
-                  </a></span>
-              </div>
-            </div>
+           
             <div class="container-auth-form-btn">
               <button mat-raised-button color="primary" class="auth-form-btn" [disabled]="!authForm.valid "
                 type="submit">
                 Register
               </button>
             </div>
+            <div class="flex-sb-m w-full  p-b-20">
+              <div>
+                <span style="font-style: italic;">Already Registered? <a routerLink="/authentication/signin">
+                    Login
+                  </a></span>
+              </div>
+            </div>
           </form>
-          <h6 class="social-login-title">OR</h6>
-          <ul class="list-unstyled social-icon mb-0 mt-3">
+          <!-- <h6 class="social-login-title">OR</h6> -->
+          <!-- <ul class="list-unstyled social-icon mb-0 mt-3">
             <li class="list-inline-item"><a href="javascript:void(0)" class="rounded">
                 <i class="fab fa-google"></i>
               </a></li>
@@ -88,7 +89,15 @@
             <li class="list-inline-item"><a href="javascript:void(0)" class="rounded">
                 <i class="fab fa-linkedin-in"></i>
               </a></li>
-          </ul>
+          </ul> -->
+          <!-- <div class="container-auth-form-btn">
+            <div style="text-align:center">
+              <button type="button" class="btn btn-singPass d-flex align-items-center justify-content-center">
+                <img src="/assets/images/login/singpass.svg" alt="singPass">
+                <span class="px-5" style="font-size: 15px;font-weight: bold;">{{ 'Login with SingPass' | translate }}</span>
+              </button>
+            </div>
+          </div> -->
         </div>
       </div>
     </div>
