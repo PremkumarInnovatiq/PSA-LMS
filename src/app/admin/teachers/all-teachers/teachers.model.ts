@@ -1,7 +1,8 @@
 import { formatDate } from '@angular/common';
 export class Teachers {
+  
   id: number;
-  img: string;
+  avatar: string;
   name: string;
   email: string;
   date: string;
@@ -12,7 +13,7 @@ export class Teachers {
   constructor(teachers: Teachers) {
     {
       this.id = teachers.id || this.getRandomID();
-      this.img = teachers.img || 'assets/images/user/user1.jpg';
+      this.avatar = teachers.avatar || 'assets/images/user/user1.jpg';
       this.name = teachers.name || '';
       this.email = teachers.email || '';
       this.date = formatDate(new Date(), 'yyyy-MM-dd', 'en') || '';
