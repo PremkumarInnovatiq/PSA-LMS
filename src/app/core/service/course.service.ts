@@ -1,16 +1,18 @@
 
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
 import { CoursePaginationModel } from "@core/models/course.model";
+import { FundingGrant, Instructor, MainCategory, SubCategory, Survey } from "@core/models/course.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = 'http://localhost:3000/api/'
+  private apiUrl = 'http://localhost:3000/api/';
+  private prefix: string = environment.apiUrl;
   defaultUrl = environment['apiUrl'];
 
   constructor(private _Http : HttpClient) {
@@ -59,4 +61,55 @@ export class CourseService {
       params: this.buildParams(filter),
     });
   }
+  getCount(
+    filter?: Partial<CoursePaginationModel>
+  ): Observable<ApiResponse> {
+    const apiUrl = this.defaultUrl+'admin/courses-new/count';
+    console.log("==new=",apiUrl)
+    return this._Http.get<ApiResponse>(apiUrl);
+  }
+  getMainCategories(): Observable<MainCategory[]> {
+    const apiUrl = `${this.prefix}admin/main-category/`;
+    return this._Http.get<any>(apiUrl).pipe(map((response:any) => response.data.docs));
+
+  }
+  getSubCategories(): Observable<SubCategory[]> {
+    const apiUrl = `${this.prefix}admin/sub-category/`;
+    return this._Http.get<any>(apiUrl).pipe(map((response:any) => response.docs));
+  }
+  getFundingGrant(): Observable<FundingGrant[]> {
+    const apiUrl = `${this.prefix}admin/funding-grant/`;
+    return this._Http.get<any>(apiUrl).pipe(map((response:any) => response.data));
+  }
+  getSurvey(): Observable<Survey[]> {
+    const apiUrl = `${this.prefix}admin/survey/`;
+    return this._Http
+      .get<any>(apiUrl)
+      .pipe(map((response:any) => response.data?.docs));
+  }
+  getInstructors(): Observable<Instructor[]> {
+    const apiUrl = `${this.prefix}admin/instructor/`;
+    return this._Http
+      .get<any>(apiUrl)
+      .pipe(map((response:any) => response.data?.docs));
+  }
+  getCourseKit(filter?: Partial<CoursePaginationModel>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/`;
+    return this._Http
+      .get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
+      .pipe(
+        map((response:any) => {
+          return response.data;
+        })
+      );
+  }
+  saveCourse(course: any) {
+    const apiUrl = `${this.prefix}admin/courses-new/`;
+    return this._Http
+      .post<ApiResponse>(apiUrl, course)
+      .pipe(map((response) => { }));
+  }
 }
+
+
+
