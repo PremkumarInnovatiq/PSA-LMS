@@ -8,6 +8,8 @@ import {
 import { AuthService, Role } from '@core';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import { AuthenService } from '@core/service/authen.service';
+import { UtilsService } from '@core/service/utils.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -23,25 +25,31 @@ export class SigninComponent
   isLoading= false;
   error = '';
   hide = true;
+  isSubmitted = false;
   email:any;
   password:any;
+  emailError: any;
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private authenticationService:AuthenService
+    private authenticationService:AuthenService,
+    public utils: UtilsService,
+    private toaster: ToastrService
   ) {
     super();
+
+    this.authForm = this.formBuilder.group({
+      email: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)] ],
+      password: ['', Validators.required],
+
+    });
   }
 
   ngOnInit() {
     this.startSlideshow();
-    this.authForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-
-    });
+   
   }
   get f() {
     return this.authForm.controls;
@@ -59,6 +67,7 @@ export class SigninComponent
     this.authForm.get('password')?.setValue('12345678');
   }
   loginUser(){
+    // if(this.authForm.valid){
   let formData =this.authForm.getRawValue()
   console.log(formData)
   this.isLoading = true;
@@ -80,18 +89,19 @@ export class SigninComponent
           }, 100);            this.authenticationService.saveUserInfo(user);
         }, (error) => {
           this.isLoading = false;
-          this.error = error;
-          if(error?.errors){
-          this.email=error?.errors.map((test: { email: any; }) =>test.email&&test.email?test.email:"");
-          this.password= error?.errors.map((test: { password: any; }) =>test.password&&test.password?test.password:"");
-          }
-          if(error.message){
-          this.email=error.message
-          }
+          this.email = error;
+            this.isSubmitted=true;
+          setTimeout(()=>{
+            this.email=''
+          },2500)
+
 
           }
 
           )
+        // } else {
+        //   this.isSubmitted= true;
+        // }
   }
 
   onSubmit() {
