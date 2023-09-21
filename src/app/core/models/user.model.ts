@@ -1,6 +1,31 @@
+import { Pagination } from "./pagination.model";
+
 export interface Student {
     docs: Users[];
     totalDocs: number;
+  }
+  export interface Instructor {
+    data: Users[];
+    
+  }
+  export interface UsersModel extends Pagination {
+    status: string;
+    data: Users[];
+    totalCount: number;
+    filterText: string;
+    limit: number;
+    sortBy: string;
+    sortByDirection: string
+  }
+  
+  export interface UsersPaginationModel extends Pagination {
+    docs: UsersModel[];
+    main_category: string|undefined;
+    sub_category: string|undefined;
+    filterText: string;
+    sortBy: string;
+    sortByDirection: string;
+    status: string;
   }
   
   export interface Users {
@@ -18,8 +43,10 @@ export interface Student {
     updatedAt?: Date;
     type?: string;
     password: string;
+    joiningDate:Date,
     Active: any;
     menuItems: [];
+    avatar:string;
   }
   
   export interface StudentDetail extends Users {

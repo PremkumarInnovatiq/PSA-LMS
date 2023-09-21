@@ -9,7 +9,7 @@ export class AboutTeacherComponent {
   breadscrums = [
     {
       title: 'Profile',
-      items: ['Teacher'],
+      items: ['Instructor'],
       active: 'Profile',
     },
   ];
