@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, map } from "rxjs";
 import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
-import { CoursePaginationModel } from "@core/models/course.model";
+import { CourseModel, CoursePaginationModel } from "@core/models/course.model";
 import { FundingGrant, Instructor, MainCategory, SubCategory, Survey } from "@core/models/course.model";
 
 @Injectable({
@@ -107,6 +107,16 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/courses-new/`;
     return this._Http
       .post<ApiResponse>(apiUrl, course)
+      .pipe(map((response) => { }));
+  }
+  getCourseById(id: string) {
+    const apiUrl = `${this.prefix}admin/courses-new/${id}`;
+    return this._Http.get<CourseModel>(apiUrl).pipe(map((response) => response));
+  }
+  updateCourse(course:any) {
+    const apiUrl = `${this.prefix}admin/courses-new/${course.id}`;
+    return this._Http
+      .put<ApiResponse>(apiUrl, course)
       .pipe(map((response) => { }));
   }
 }

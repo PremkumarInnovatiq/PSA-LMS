@@ -18,6 +18,14 @@ const routes: Routes = [
     component: AddCourseComponent
   },
   {
+    path: 'edit-course/:id',
+    component: AddCourseComponent
+  },
+  {
+    path: 'view-course/:id',
+    component: AddCourseComponent
+  },
+  {
     path: 'edit-course',
     component: EditCourseComponent
   },
