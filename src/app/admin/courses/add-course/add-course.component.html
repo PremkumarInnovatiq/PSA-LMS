@@ -16,7 +16,7 @@
           <mat-horizontal-stepper linear labelPosition="bottom" #stepper>
             <mat-step [stepControl]="firstFormGroup" completed="false">
               <form [formGroup]="firstFormGroup">
-                <ng-template matStepLabel>{{ editUrl ? 'Edit Course' : 'Course Create'}}</ng-template>
+                <ng-template matStepLabel>{{viewUrl ? 'View Course' : editUrl ? 'Edit Course' : 'Course Create'}}</ng-template>
                 <div class="body" >
                   <!-- <form class="m-4" [formGroup]="firstFormGroup" (ngSubmit)="onSubmit()"> -->
                     <div class="row">
@@ -25,7 +25,7 @@
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <!-- <mat-label>Course Name</mat-label> -->
                           
-                          <input matInput formControlName="title" placeholder="Enter Course Name" required>
+                          <input matInput formControlName="title" placeholder="Enter Course Name" [readonly]="isInputReadonly()" required>
                           <mat-error *ngIf="isSubmitted"
                           [class.invalid-text]="isSubmitted && firstFormGroup.get('title')?.invalid || firstFormGroup.get('title')?.invalid && firstFormGroup.get('title')?.touched">
                             Course name is required
@@ -35,7 +35,7 @@
                       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                         <label>Course Code <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="courseCode"  placeholder="Enter Course Code" required>
+                          <input matInput formControlName="courseCode"  placeholder="Enter Course Code" [readonly]="isInputReadonly()" required>
                         </mat-form-field>
                         <mat-error *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('courseCode')?.invalid || firstFormGroup.get('courseCode')?.invalid && firstFormGroup.get('sub_category')?.touched">
@@ -46,7 +46,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                           <label>Main Category <span class="mandatory">&nbsp;*</span></label>
                           <mat-form-field class="example-full-width mb-3" appearance="outline">
-                            <mat-select formControlName="main_category" required (selectionChange)="mainCategoryChange()" >
+                            <mat-select formControlName="main_category" required (selectionChange)="mainCategoryChange()">
                               <mat-option *ngFor="let item of mainCategories" [value]="item.id">
                                 {{item.category_name}}
                               </mat-option>
@@ -76,7 +76,7 @@
                       <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-2">
                         <label>Days</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="course_duration_in_days"  placeholder="Enter Days">
+                          <input matInput formControlName="course_duration_in_days" [readonly]="isInputReadonly()"  placeholder="Enter Days">
                         </mat-form-field>
                         <mat-error *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('course_duration_in_days')?.invalid || firstFormGroup.get('course_duration_in_days')?.invalid && firstFormGroup.get('course_duration_in_days')?.touched">
@@ -85,7 +85,7 @@
                       <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-2">
                         <label>Training Hours</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="training_hours" placeholder="Enter Training Days">
+                          <input matInput formControlName="training_hours" [readonly]="isInputReadonly()" placeholder="Enter Training Days">
                         </mat-form-field>
                         <mat-error *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('training_hours')?.invalid || firstFormGroup.get('training_hours')?.invalid && firstFormGroup.get('training_hours')?.touched">
@@ -94,7 +94,7 @@
                       <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-2">
                         <label>Fees</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="fee" placeholder="Enter Fees">
+                          <input matInput formControlName="fee" [readonly]="isInputReadonly()" placeholder="Enter Fees">
                         </mat-form-field>
                         <mat-error *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('fee')?.invalid || firstFormGroup.get('fee')?.invalid && firstFormGroup.get('fee')?.touched">
@@ -122,7 +122,7 @@
                       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                         <label>Skill Connect Code</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="skill_connect_code" placeholder="Enter Skill Connect Code">
+                          <input matInput formControlName="skill_connect_code" [readonly]="isInputReadonly()" placeholder="Enter Skill Connect Code">
                         </mat-form-field>
                         <mat-error *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('skill_connect_code')?.invalid || firstFormGroup.get('skill_connect_code')?.invalid && firstFormGroup.get('skill_connect_code')?.touched">
@@ -131,7 +131,7 @@
                       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                         <label>Description</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="course_description" placeholder="Enter Description">
+                          <input matInput formControlName="course_description" [readonly]="isInputReadonly()" placeholder="Enter Description">
                         </mat-form-field>
                         <mat-error *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('course_description')?.invalid || firstFormGroup.get('course_description')?.invalid && firstFormGroup.get('course_description')?.touched">
@@ -142,7 +142,7 @@
                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                         <label>Course Detailed Description</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="course_detailed_description">
+                          <input matInput formControlName="course_detailed_description" [readonly]="isInputReadonly()">
                         </mat-form-field>
                         <mat-error  *ngIf="isSubmitted"
                         [class.invalid-text]="isSubmitted && firstFormGroup.get('course_detailed_description')?.invalid || firstFormGroup.get('course_detailed_description')?.invalid && firstFormGroup.get('course_detailed_description')?.touched">
@@ -176,7 +176,7 @@
                       <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
                         <label>PDU Technical</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="pdu_technical">
+                          <input matInput formControlName="pdu_technical" [readonly]="isInputReadonly()">
                         </mat-form-field>
                         <mat-error *ngIf="isWbsSubmitted"
                         [class.invalid-text]="isWbsSubmitted && secondFormGroup.get('pdu_technical')?.invalid || secondFormGroup.get('pdu_technical')?.invalid && secondFormGroup.get('pdu_technical')?.touched">
@@ -185,7 +185,7 @@
                       <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
                         <label>PDU Leadership</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="pdu_leadership">
+                          <input matInput formControlName="pdu_leadership" [readonly]="isInputReadonly()">
                         </mat-form-field>
                         <mat-error  *ngIf="isWbsSubmitted"
                         [class.invalid-text]="isWbsSubmitted && secondFormGroup.get('pdu_leadership')?.invalid || secondFormGroup.get('pdu_leadership')?.invalid && secondFormGroup.get('pdu_leadership')?.touched">
@@ -194,24 +194,28 @@
                       <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
                         <label>PDU Startegic</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="pdu_strategic">
+                          <input matInput formControlName="pdu_strategic" [readonly]="isInputReadonly()">
                         </mat-form-field>
                         <mat-error *ngIf="isWbsSubmitted"
                         [class.invalid-text]="isWbsSubmitted && secondFormGroup.get('pdu_strategic')?.invalid || secondFormGroup.get('pdu_strategic')?.invalid && secondFormGroup.get('pdu_strategic')?.touched">
                         </mat-error>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf=!viewUrl>
                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
                         <label>Thumbnail</label>
                         <app-file-upload formControlName="image_link" (change)="onFileUpload($event)"></app-file-upload>
                       </div>
                     </div>
+                    <div *ngIf="viewUrl" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                      <label>Thumbnail</label><br>
+                      <img *ngIf="uploadedImage"   class="thumbnail-img" src="{{image_link}}" >
+                  </div>
                     <div class="row">
                       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                         <label>Website Link</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <input matInput formControlName="website_link" placeholder="www">
+                          <input matInput formControlName="website_link" placeholder="www" [readonly]="isInputReadonly()">
                         </mat-form-field>
                         <mat-error *ngIf="isWbsSubmitted"
                         [class.invalid-text]="isWbsSubmitted && secondFormGroup.get('website_link')?.invalid || secondFormGroup.get('website_link')?.invalid && secondFormGroup.get('website_link')?.touched">
@@ -299,12 +303,15 @@
                     </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-9">
+                  <div class="col-md-8">
                     <button mat-button matStepperPrevious id="back">Back</button>
                   </div>
-                  <div class="col-md-2">
-                    <button mat-button (click)="submit()" *ngIf="!editUrl" id="next" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null">Submit</button>
-                    <button mat-button *ngIf="editUrl" id="next" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null"> Save </button>
+                  <div class="col-md-4">
+                    <div class="d-grid gap-4 d-md-flex">
+                    <button *ngIf="!viewUrl" type="button"  id="cancel" [routerLink]="['/admin/courses/all-courses']">Cancel</button>
+                    <button mat-button (click)="submit()" *ngIf="!editUrl  && !viewUrl" id="submit" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null">Submit</button>
+                    <button mat-button *ngIf="editUrl  && !viewUrl" id="save" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null" (click)="save()"> Save </button>
+                    </div>
                   </div>
                 </div>
               </form>

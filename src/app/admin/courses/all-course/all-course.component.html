@@ -23,16 +23,16 @@
                       <!-- <span class="float-start msr-3">
                         <img class="img-circle" src="{{data.image_link}}" alt="...">
                       </span> -->
-                      <h6 class="mb-xs mt-xs"> {{data.title}}</h6>
+                      <h6 class="mb-xs mt-xs title"> {{data.title |truncate : 25}}</h6>
                       <p class="text-muted"><time>{{data.training_hours}} hours</time></p>
                     </div>
                     <h6>John Deo</h6>
                     <p class="course-card-description">{{data.course_detailed_description |truncate : 30}}</p>
                     <div class="text-center mb-3">
-                      <button mat-icon-button class="tbl-action-btn">
+                      <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/view-course/',data.id]">
                         <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
                       </button>
-                      <button mat-icon-button class="tbl-action-btn">
+                      <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/edit-course/',data.id]">
                         <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                       </button>
                       <button mat-icon-button class="tbl-action-btn">

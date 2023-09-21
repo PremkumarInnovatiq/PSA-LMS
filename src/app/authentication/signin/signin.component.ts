@@ -8,8 +8,8 @@ import {
 import { AuthService, Role } from '@core';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import { AuthenService } from '@core/service/authen.service';
+import { LanguageService } from '@core/service/language.service';
 import { UtilsService } from '@core/service/utils.service';
-import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -20,6 +20,7 @@ export class SigninComponent
   implements OnInit
 {
   authForm!: UntypedFormGroup;
+  langStoreValue?: string;
   submitted = false;
   loading = false;
   isLoading= false;
@@ -36,7 +37,7 @@ export class SigninComponent
     private authService: AuthService,
     private authenticationService:AuthenService,
     public utils: UtilsService,
-    private toaster: ToastrService
+    private translate: LanguageService
   ) {
     super();
 
@@ -46,6 +47,11 @@ export class SigninComponent
 
     });
   }
+  listLang = [
+    { text: 'English', flag: 'assets/images/flags/us.svg', lang: 'en' },
+    { text: 'Chinese', flag: 'assets/images/flags/spain.svg', lang: 'ch' },
+    { text: 'Tamil', flag: 'assets/images/flags/germany.svg', lang: 'ts' },
+  ];
 
   ngOnInit() {
     this.startSlideshow();
@@ -99,9 +105,13 @@ export class SigninComponent
           }
 
           )
-        // } else {
-        //   this.isSubmitted= true;
-        // }
+  }
+  setLanguage(event: any) {  
+    console.log("=======",event)
+    // this.countryName = text;
+    // this.flagvalue = flag;
+    this.langStoreValue = event.target.value;
+    this.translate.setLanguage(event.target.value);
   }
 
   onSubmit() {

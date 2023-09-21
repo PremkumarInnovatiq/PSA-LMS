@@ -1,23 +1,30 @@
 <div class="auth-container">
   <div class="row auth-main">
     <div class="col-sm-6 px-0 d-none d-sm-block">
-      <div class="left-img" style="background-image: url(/assets/images/login/register-image.jpg);">
+      <div class="slideshow">
+        <img *ngFor="let image of images; let i = index" [src]="'' + image" [alt]="'Psa-login' + (i + 1)"
+          [class.active]="i === currentIndex">
       </div>
     </div>
     <div class="col-sm-6 auth-form-section">
       <div class="form-section">
         <div class="auth-wrapper">
-          <h2 class="welcome-msg"> Register with PSA </h2>
-          <p class="auth-signup-text text-muted">Enter details to create your account</p>
+          <h2 class="welcome-msg"> {{"Register with" | translate}} PSA </h2>
+          <select (change)="setLanguage($event)">
+            <option *ngFor="let item of listLang" [value]="item.lang">
+              {{item.text}}
+            </option>
+          </select>
+          <p class="auth-signup-text text-muted">{{"Enter details to create your account" | translate}}</p>
           <form class="validate-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
             <div class="row">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Username</mat-label>
+                  <mat-label>{{"Username" | translate}}</mat-label>
                   <input matInput formControlName="username" required>
                   <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
                   <mat-error *ngIf="authForm.get('username')?.hasError('required')">
-                    Username is required
+                    {{"Username is required" | translate}}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -25,11 +32,11 @@
             <div class="row">
               <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Email</mat-label>
+                  <mat-label>{{"Email" | translate}}</mat-label>
                   <input matInput formControlName="email" required>
                   <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>mail</mat-icon>
                   <mat-error *ngIf="authForm.get('email')?.hasError('required') || authForm.get('email')?.touched">
-                    Please enter a valid email address
+                    {{"Please enter a valid email address" | translate}}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -37,12 +44,12 @@
             <div class="row">
               <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Password</mat-label>
+                  <mat-label>{{"Password" | translate}}</mat-label>
                   <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
                   <mat-icon matSuffix (click)="hide = !hide">
                     {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                   <mat-error *ngIf="authForm.get('password')?.hasError('required')">
-                    Password is required
+                    {{"Password is required" | translate}}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -50,12 +57,12 @@
             <div class="row">
               <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Confirm Password</mat-label>
+                  <mat-label>{{"Confirm Password" | translate}}</mat-label>
                   <input matInput formControlName="cpassword" [type]="chide ? 'password' : 'text'" required>
                   <mat-icon matSuffix (click)="chide = !chide">
                     {{chide ? 'visibility_off' : 'visibility'}}</mat-icon>
                   <mat-error *ngIf="authForm.get('cpassword')?.hasError('required')">
-                    Confirm Password is required
+                    {{"Confirm Password is required" | translate}}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -64,13 +71,13 @@
             <div class="container-auth-form-btn">
               <button mat-raised-button color="primary" class="auth-form-btn" [disabled]="!authForm.valid "
                 type="submit">
-                Register
+                {{"Register" | translate}}
               </button>
             </div>
             <div class="flex-sb-m w-full  p-b-20">
               <div>
-                <span style="font-style: italic;">Already Registered? <a routerLink="/authentication/signin">
-                    Login
+                <span style="font-style: italic;">{{"Already Registered?" | translate}} <a routerLink="/authentication/signin">
+                    {{"Login" | translate}}
                   </a></span>
               </div>
             </div>

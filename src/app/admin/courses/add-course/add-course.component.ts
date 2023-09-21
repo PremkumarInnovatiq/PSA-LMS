@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
-  UntypedFormBuilder,
-  UntypedFormGroup,
   Validators,
   FormControl,
   FormGroup
@@ -13,7 +11,7 @@ import Swal from 'sweetalert2';
 import { CourseService } from '@core/service/course.service';
 import { forkJoin } from 'rxjs';
 import { CertificateService } from '@core/service/certificate.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
@@ -23,7 +21,6 @@ export class AddCourseComponent implements OnInit {
   mainCategories!: MainCategory[];
   subCategories!: SubCategory[];
   allSubCategories!: SubCategory[];
-  // courseForm: UntypedFormGroup;
   mainCategoryControl!: FormControl;
   bulkUploadData: CourseUploadData[] = [];
   subCategoryControl!: FormControl;
@@ -31,7 +28,6 @@ export class AddCourseComponent implements OnInit {
   training_hours!:number;
   fee!:number;
   currencyControl!: FormControl;
-  // secondFormGroup!: FormGroup;
   pdu_technical!:number;
   pdu_leadership!:number;
   image_link: any;
@@ -57,6 +53,10 @@ export class AddCourseComponent implements OnInit {
   isEditable = false;
   editUrl: any;
   viewUrl: any;
+  course:any;
+  courseId!: string;
+  subscribeParams: any;
+  mode: string = 'editUrl';
 
   breadscrums = [
     {
@@ -69,10 +69,12 @@ export class AddCourseComponent implements OnInit {
   constructor(private router: Router,private fb: FormBuilder, private _formBuilder: FormBuilder,
     private courseService: CourseService,
     private certificateService:CertificateService,
+    private cd: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
     ) {
       let urlPath = this.router.url.split('/')
-    this.editUrl = urlPath.includes('edit'); 
-    // this.viewUrl = urlPath.includes('view'); 
+    this.editUrl = urlPath.includes('edit-course'); 
+    this.viewUrl = urlPath.includes('view-course'); 
       this.firstFormGroup = this._formBuilder.group({
         title: ['', [Validators.required]],
         courseCode: ['', [Validators.required]],
@@ -100,7 +102,13 @@ export class AddCourseComponent implements OnInit {
       course_kit: new FormControl('', [Validators.required]),
       certificates: new FormControl('',[Validators.required]),
       });
-      
+      this.subscribeParams = this.activatedRoute.params.subscribe((params:any) => {
+        this.courseId = params.id;
+      });
+      if(this.editUrl || this.viewUrl){
+      this.getData();
+      }
+  
   
   }
 
@@ -114,14 +122,92 @@ export class AddCourseComponent implements OnInit {
     this.instuctorCategoryControl = this.secondFormGroup.get('course_instructor') as FormControl;
     this.courseKitCategoryControl = this.secondFormGroup.get('course_kit') as FormControl;
     this.certificatesCategoryControl = this.secondFormGroup.get('certificates') as FormControl;
-    this.setup();
-  }
+    this.setMainCategoryControlState();
+    this.setSubCategoryControlState();
+    this.setCurrencyControlState();
+    this.setFundingControlState();
+    this.setSurveyControlState();
+    this.setInstructorControlState();
+    this.setCourseKitControlState();
+    this.setCertificatesControlState();
+    if(!this.editUrl){
+      this.setup();
+    }
+    if(this.viewUrl){
+      this.mode = 'viewUrl';
+  
+    }
+}
  
-  mainCategoryChange(): void {
+isInputReadonly(): boolean {
+  return this.mode === 'viewUrl'; // If mode is 'viewUrl', return true (readonly); otherwise, return false (editable).
+}
+isInputDisabled(): boolean {
+  return this.mode === 'viewUrl'; // If mode is 'viewUrl', return true (disabled); otherwise, return false (enabled).
+}
+
+setMainCategoryControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.mainCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.mainCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setSubCategoryControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.subCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.subCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setCurrencyControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.currencyControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.currencyControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setFundingControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.fundingGrant.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.fundingGrant.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setSurveyControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.surveyCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.surveyCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setInstructorControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.instuctorCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.instuctorCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setCourseKitControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.courseKitCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.courseKitCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+setCertificatesControlState(): void {
+  if (this.mode === 'viewUrl') {
+    this.certificatesCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+  } else {
+    this.certificatesCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+  }
+}
+
+mainCategoryChange(): void {
     this.subCategories = this.allSubCategories.filter(
       (item) => item.main_category_id === this.firstFormGroup.controls['main_category'].value
     );
-  }
+}
 
   onFileUpload(event:any) {
     const file = event.target.files[0];
@@ -137,6 +223,7 @@ export class AddCourseComponent implements OnInit {
       });
     });
   }
+
 
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -262,7 +349,48 @@ export class AddCourseComponent implements OnInit {
 
     fileReader.readAsArrayBuffer(file);
   }
+  save() {
+    if(this.secondFormGroup.valid){
+    const courseData = this.firstFormGroup.value;
+    const wbsData = this.secondFormGroup.value;
+    let payload = {
+      title: courseData?.title,
+      courseCode: courseData?.courseCode,
+      main_category: courseData?.main_category,
+      sub_category: courseData?.sub_category,
+      course_duration_in_days: courseData?.course_duration_in_days,
+      training_hours:courseData?.training_hours,
+      fee:courseData?.fee,
+      currency_code:courseData?.currency_code,
+      skill_connect_code:courseData?.skill_connect_code,
+      course_description:courseData?.course_description,
+      course_detailed_description:courseData?.course_detailed_description,
+      pdu_technical:wbsData?.pdu_technical,
+      pdu_leadership:wbsData?.pdu_leadership,
+      pdu_strategic:wbsData?.pdu_strategic,
+      funding_grant:wbsData?.funding_grant,
+      survey:wbsData?.survey,
+      course_instructor:wbsData?.course_instructor,
+      // assign_exam:wbsData.assign_exam,
+      course_kit:wbsData?.course_kit,
+      certificates:wbsData?.certificates,
+      image_link:this.image_link,
+      id:this.courseId
+    }
+    this.secondFormGroup.value.course_kit = this.firstFormGroup.value.course_kit?.map((item:any) => item.id);
+    this.courseService.updateCourse(payload).subscribe((response:any) => {
+      Swal.fire({
+        title: 'Successful',
+        text: 'Course saved successfully',
+        icon: 'success',
+      });
+      this.router.navigate(['/admin/courses/all-courses'])
+    });
 
+  }  else {
+    this.isWbsSubmitted = true;
+  }
+  }
 
   setup() {
     forkJoin({
@@ -332,6 +460,66 @@ export class AddCourseComponent implements OnInit {
     this.isWbsSubmitted = true;
   }
   }
-
+  getData() {
+    forkJoin({
+      mainCategory: this.courseService.getMainCategories(),
+      subCategory: this.courseService.getSubCategories(),
+      survey: this.courseService.getSurvey(),
+      fundingGrant: this.courseService.getFundingGrant(),
+      courseKit: this.courseService.getCourseKit(),
+      course: this.courseService.getCourseById(this.courseId),
+      instructor: this.courseService.getInstructors(),
+      certificates: this.certificateService.getcertificateBuilders()
+    }).subscribe((response: any) => {
+      this.mainCategories = response.mainCategory;
+      this.fundingGrants = response.fundingGrant;
+      this.courseKits = response.courseKit?.docs;
+      this.survey = response.survey;
+      this.allSubCategories = response.subCategory;
+      this.course = response.course;
+      // this. = response.assign_exam;
+      this.instructors = response.instructor;
+      // this.surveys = response.surveys.data.docs;
+      this.certificates = response.certificates.data.docs;
+      this.image_link = this.course.image_link;
+      this.uploaded=this.image_link?.split('/')
+      this.uploadedImage = this.uploaded?.pop();
+      let sub_categoryId = this.course?.sub_category?.id;
+      let categoryId = this.course?.main_category?.id;
+      let fundingGrantId = this.course?.funding_grant?.id;
+      this.firstFormGroup.patchValue({
+        currency_code: this.course.currency_code ? this.course.currency_code: null,
+        training_hours: this.course?.training_hours?.toString(),
+        title: this.course?.title,
+        courseCode: this.course?.courseCode,
+        main_category: categoryId,
+        sub_category: sub_categoryId,
+        course_description:this.course?.course_description,
+        course_detailed_description:this.course?.course_detailed_description,
+        skill_connect_code: this.course?.skill_connect_code,
+        fee: this.course?.fee?.toString(),
+        course_duration_in_days: this.course?.course_duration_in_days?.toString(),
+      });
+      this.secondFormGroup.patchValue({
+        website_link: this.course?.website_link,
+        funding_grant: fundingGrantId,
+        // assign_exam: this.assign_exam?.assign_exam,
+        certificates: this.course?.certificates,
+        survey: this.course?.survey?.id,
+        course_description: this.course?.course_description,
+        course_detailed_description: this.course?.course_detailed_description,
+        id: this.course?.id,
+        pdu_technical: this.course?.pdu_technical?.toString(),
+        pdu_leadership: this.course?.pdu_leadership?.toString(),
+        pdu_strategic: this.course?.pdu_strategic?.toString(),
+        course_instructor: this.course?.course_instructor?.id,
+        course_kit: this.course?.course_kit[0].id,
+        uploadedImage:this.course?.image_link,
+      });
+      this.mainCategoryChange();
+      this.cd.detectChanges();
+    });
   
+  
+}
 }
