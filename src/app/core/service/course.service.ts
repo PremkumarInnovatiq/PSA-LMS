@@ -57,4 +57,12 @@ export class CourseService {
       params: this.buildParams(filter),
     });
   }
+  getCount(
+    filter?: Partial<CoursePaginationModel>
+  ): Observable<ApiResponse> {
+    const apiUrl = this.defaultUrl+'admin/courses-new/count';
+    console.log("==new=",apiUrl)
+    return this._Http.get<ApiResponse>(apiUrl);
+  }
 }
+

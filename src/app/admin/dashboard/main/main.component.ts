@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CourseService } from '@core/service/course.service';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -57,13 +58,21 @@ export class MainComponent implements OnInit {
       active: 'Dashboard 1',
     },
   ];
-  constructor() {
+  count: any;
+  constructor(private courseService: CourseService) {
     //constructor
+    this.getCount();
+  }
+
+  getCount(){
+    this.courseService.getCount().subscribe(response => {
+     this.count=response?.data;
+    })
   }
 
   ngOnInit() {
     this.chart1();
-    this.chart2();
+    this.chart2();                                                                                 
     this.chart3();
     this.chart4();
   }
