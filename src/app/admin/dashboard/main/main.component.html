@@ -80,10 +80,10 @@
             </div>
             <div class="card-right">
               <div>
-                <h5 class="float-end">Total Teachers</h5>
+                <h5 class="float-end">Total Instructors</h5>
               </div>
               <div class="col-green">
-                <h3 class="font-weight-bold float-end mb-0">89</h3>
+                <h3 class="font-weight-bold float-end mb-0">{{count?.instructors}}</h3>
               </div>
             </div>
           </div>
@@ -123,10 +123,10 @@
           <div class="header mt-3">
             <h2>
               Students Survey</h2>
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
               <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
+            </button> -->
+            <!-- <mat-menu #menu="matMenu">
               <button mat-menu-item>
                 <mat-icon>add_circle_outline</mat-icon>
                 <span>Add</span>
@@ -139,7 +139,7 @@
                 <mat-icon>refresh</mat-icon>
                 <span>Refresh</span>
               </button>
-            </mat-menu>
+            </mat-menu> -->
           </div>
           <div class="body">
             <apx-chart [series]="areaChartOptions.series!" [chart]="areaChartOptions.chart!"
@@ -153,7 +153,7 @@
         <div class="card" style="border-radius: 31px;">
           <div class="header mt-3">
             <h2>Student Performance Chart</h2>
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -169,7 +169,7 @@
                 <mat-icon>refresh</mat-icon>
                 <span>Refresh</span>
               </button>
-            </mat-menu>
+            </mat-menu> -->
           </div>
           <div class="body">
             <apx-chart [series]="barChartOptions.series!" [chart]="barChartOptions.chart!"

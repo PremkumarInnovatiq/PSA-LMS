@@ -26,7 +26,8 @@
             </div>
             <div>
               <button mat-raised-button color="accent" type="button" (click)="teacherSet();">Instructor</button>
-            </div>
+            </
+            div>
             <div>
               <button mat-raised-button color="warn" type="button" (click)="studentSet();">Student</button>
             </div>
@@ -42,9 +43,13 @@
                   <mat-error *ngIf="authForm.get('email')?.hasError('required')">
                     {{"Email is required" | translate}}
                   </mat-error>
+                  <mat-error  *ngIf="authForm.get('email')?.hasError('pattern') && authForm.get('email')?.touched">
+                    {{"Enter a valid email" | translate}}
+                   </mat-error>
                 </mat-form-field>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
@@ -59,6 +64,9 @@
                     {{"Password is required" | translate}}
                   </mat-error>
                 </mat-form-field>
+                <div  class="invalid-text"*ngIf="isSubmitted" >
+                  {{email}}
+                    </div>
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -105,7 +113,7 @@
             
             
 
-            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+            <!-- <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div> -->
            
           </form>
           
