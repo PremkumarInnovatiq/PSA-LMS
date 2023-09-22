@@ -4,8 +4,8 @@ import { Injectable } from "@angular/core";
 // import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
 import { CoursePaginationModel } from "@core/models/course.model";
-import { BehaviorSubject, Observable } from "rxjs";
-import { ClassModel, StudentApproval } from "./class.model";
+import { BehaviorSubject, Observable, map } from "rxjs";
+import { ClassListingModel, ClassModel, StudentApproval } from "./class.model";
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import { ApiResponse } from "@core/models/response";
 
@@ -64,6 +64,14 @@ export class ClassService extends UnsubscribeOnDestroyAdapter {
   saveApprovedClasses(id: string, item: StudentApproval): Observable<ApiResponse> {
     const apiUrl = `${this.prefix}admin/studentClasses/${id}`;
     return this.http.put<ApiResponse>(apiUrl, item);
+  }
+  getClassList(filter?:any): Observable<ClassListingModel> {
+    const apiUrl = `${this.prefix}admin/class/`;
+    return this.http.get<ApiResponse>(apiUrl, { params: this.buildParams(filter) }).pipe(
+      map((response:any) => {
+        return response.data;
+      })
+    );
   }
 }
 

@@ -308,6 +308,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="d-grid gap-4 d-md-flex">
+                      <button *ngIf="!editUrl" type="button"  id="viewcancel" [routerLink]="['/admin/courses/all-courses']">Cancel</button>
                     <button *ngIf="!viewUrl" type="button"  id="cancel" [routerLink]="['/admin/courses/all-courses']">Cancel</button>
                     <button mat-button (click)="submit()" *ngIf="!editUrl  && !viewUrl" id="submit" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null">Submit</button>
                     <button mat-button *ngIf="editUrl  && !viewUrl" id="save" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null" (click)="save()"> Save </button>

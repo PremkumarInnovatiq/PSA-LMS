@@ -35,7 +35,7 @@
                       <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/edit-course/',data.id]">
                         <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                       </button>
-                      <button mat-icon-button class="tbl-action-btn">
+                      <button mat-icon-button class="tbl-action-btn" (click)="delete(data.id)">
                         <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                       </button>
                      
