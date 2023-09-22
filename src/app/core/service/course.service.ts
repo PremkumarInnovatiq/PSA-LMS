@@ -120,6 +120,12 @@ export class CourseService {
       .put<ApiResponse>(apiUrl, course)
       .pipe(map((response) => { }));
   }
+  deleteCourse(id: string) {
+    const apiUrl = `${this.prefix}admin/courses-new/${id}`;
+    return this._Http
+      .delete<CourseModel>(apiUrl)
+      .pipe(map((response) => response));
+  }
 }
 
 
