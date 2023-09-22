@@ -126,6 +126,20 @@ export class CourseService {
       .delete<CourseModel>(apiUrl)
       .pipe(map((response) => response));
   }
+  getMainCategoriesWithPagination(filter?:Partial<CoursePaginationModel>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/main-category/`;
+    return this._Http
+      .get<ApiResponse>(apiUrl,{
+        params: this.buildParams(filter),
+      });
+  }
+  createSubCategory(
+    subCategories: Partial<SubCategory>[]
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/sub-category/`;
+    return this._Http.post<ApiResponse>(apiUrl, subCategories);
+  }
+
 }
 
 
