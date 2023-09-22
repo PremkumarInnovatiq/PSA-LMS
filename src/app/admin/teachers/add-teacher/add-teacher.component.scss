@@ -7,7 +7,9 @@
     padding: 26px 20px 30px;
     transition: 0.2s;
   }
-  
+  .file{
+   text-align: center;
+  }
   .file-input {
     position: absolute;
     left: 0;
@@ -24,4 +26,6 @@
     font-weight: 500;
     color: #5b5bff;
   }
-  
+  h5{
+    margin-top: 20px;
+  }

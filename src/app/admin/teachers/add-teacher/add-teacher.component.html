@@ -163,11 +163,19 @@
               <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
                   <label>Upload</label>
-                  <div class="file-drop-area">
+                 <div class="file-drop-area">
+  <div class="file">
+  <!-- <button mat-raised-button color="primary">Choose file</button> -->
+  <img src="/assets/add-image-icon.svg" >
+  <h5>{{fileName ? fileName : 'Drag and Drop File Here' }}</h5>
+  <input formControlName="avatar" (change)="onFileUpload($event)" class="file-input" type="file">
+  </div>
+</div>
+                  <!-- <div class="file-drop-area">
                     <button mat-raised-button color="primary">Choose file</button>
                     <span>{{fileName ? fileName : ' or drag and drop file here' }}</span>
                     <input formControlName="avatar" (change)="onFileUpload($event)" class="file-input" type="file">
-                  </div>
+                  </div> -->
                   
                 </div>
               </div>

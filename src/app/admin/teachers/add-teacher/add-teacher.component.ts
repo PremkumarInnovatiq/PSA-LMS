@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {
+  FormGroup,
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
@@ -49,6 +50,8 @@ export class AddTeacherComponent {
       avatar: [''],
     });
   }
+  
+  
   onFileUpload(event:any) {
     this.fileName = event.target.files[0].name;
     this.files=event.target.files[0]
@@ -66,14 +69,18 @@ export class AddTeacherComponent {
   }
   onSubmit() {
     console.log('Form Value', this.proForm.value);
+    if(!this.proForm.invalid){
     this.instructor.uploadVideo(this.files).subscribe(
       (response: any) => {
         const inputUrl = response.inputUrl;
+        
         const userData: Users = this.proForm.value;
         //this.commonService.setVideoId(videoId)
 
         userData.avatar = inputUrl;
+        userData.filename= response.filename
         userData.type = "Trainers";
+        userData.role = "Instructor";
 
         //this.currentVideoIds = [...this.currentVideoIds, ...videoId]
         // this.currentVideoIds.push(videoId);
@@ -90,7 +97,9 @@ export class AddTeacherComponent {
         Swal.close();
       }
     );
+    }
   }
+  
   private createInstructor(userData: Users): void {
     this.instructor.CreateUser(userData).subscribe(
       () => {

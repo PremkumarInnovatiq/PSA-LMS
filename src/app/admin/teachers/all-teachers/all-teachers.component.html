@@ -155,8 +155,41 @@
                         <ng-container matColumnDef="actions">
                           <mat-header-cell class="pr-0" *matHeaderCellDef>Actions
                           </mat-header-cell>
-                          <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
-                            <button mat-icon-button (click)="$event.stopPropagation()" (click)="editCall(row)"
+                          
+
+                            
+                          
+                           <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                            <!-- <div class="input-group">
+                              <svg class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                                xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                class="bi bi-three-dots rounded-circle" viewBox="0 0 16 16">
+                                <path
+                                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                              </svg>
+          
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li [routerLink]="['/course/view',row.id]">  
+                                  <img src="/assets/eye.svg" alt="view">
+                                  <a type="button"  class="menu_text">View</a>
+                                </li>
+                                <li [routerLink]="['/course/edit',row.id]">
+                                  <img src="/assets/pencil.svg" alt="pencil">
+                                  <a type="button" class="menu_text">Edit</a> -->
+                                  <!-- <a class="dropdown-item" [routerLink]="['/course/edit',item.id]"> <i class='bx bx-edit-alt'></i> Edit</a> -->
+                                <!-- </li>
+                                <li  [routerLink]="['/Course/List']" (click)="deleteItem(row.id)">
+                                  <img src="/assets/delete.svg" alt="delete">
+                                  <a type="button"
+                                    class="menu_text">Delete</a>
+                                </li>
+                                <li class="disabled">
+                                  <img src="/assets/people.svg" alt="person">
+                                  <a href="#" class="menu_text">Attendance</a>
+                                </li>
+                              </ul>
+                            </div> -->
+                            <button mat-icon-button (click)="$event.stopPropagation()"  [routerLink]="['/admin/teachers/edit-teacher',row.id]"
                               class="tbl-action-btn">
                               <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                             </button>
@@ -164,7 +197,7 @@
                               class="tbl-action-btn">
                               <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                             </button>
-                          </mat-cell>
+                          </mat-cell> 
                         </ng-container>
                         <mat-header-row *matHeaderRowDef="displayedColumns">
                         </mat-header-row>
