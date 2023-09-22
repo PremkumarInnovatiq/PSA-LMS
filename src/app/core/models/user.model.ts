@@ -29,6 +29,7 @@ export interface Student {
   }
   
   export interface Users {
+    role: string;
     designation: any;
     _id: string;
     id:string;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input,OnChanges } from '@angular/core';
 import {  ActivatedRoute, Router } from '@angular/router';
 import {
   UntypedFormBuilder,
@@ -19,6 +19,7 @@ export class SigninComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {
+  // strength: string = '';
   authForm!: UntypedFormGroup;
   langStoreValue?: string;
   submitted = false;
@@ -29,7 +30,6 @@ export class SigninComponent
   isSubmitted = false;
   email:any;
   password:any;
-  emailError: any;
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
@@ -160,4 +160,50 @@ export class SigninComponent
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
     }, 4000);
   }
+  // ngOnChanges() {
+  //   this.updateStrengthIndicator();
+  // }
+
+  // private calculatePasswordStrength(password: string): string {
+  //   let minLength = 8;
+  //   let lengthCount = 1;
+  //   let upperCaseCount = 1;
+  //   let lowerCaseCount = 1;
+  //   let numbersCount = 1;
+  //   let specialCharsCount = 1;
+  
+  //   const upperCaseRegex = /[A-Z]/;
+  //   const lowerCaseRegex = /[a-z]/;
+  //   const numbersRegex = /[0-9]/;
+  //   const specialCharsRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/;
+  
+  //   for (const char of password) {
+  //     lengthCount++;
+  //     if (upperCaseRegex.test(char)) {
+  //       upperCaseCount++;
+  //     } else if (lowerCaseRegex.test(char)) {
+  //       lowerCaseCount++;
+  //     } else if (numbersRegex.test(char)) {
+  //       numbersCount++;
+  //     } else if (specialCharsRegex.test(char)) {
+  //       specialCharsCount++;
+  //     }
+  //   }
+
+  //   if (lengthCount < minLength) {
+  //     return 'weak';
+  //   }
+  
+  //   const typesCount = [upperCaseCount, lowerCaseCount, numbersCount, specialCharsCount].filter(count => count > 0).length;
+  
+  //   if (typesCount < 3) {
+  //     return 'fair';
+  //   }
+  
+  //   return 'strong';
+  // }
+
+  // private updateStrengthIndicator() {
+  //   this.strength = this.calculatePasswordStrength(this.password);
+  // }
 }
