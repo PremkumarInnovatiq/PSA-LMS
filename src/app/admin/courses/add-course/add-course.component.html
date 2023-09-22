@@ -16,7 +16,7 @@
           <mat-horizontal-stepper linear labelPosition="bottom" #stepper>
             <mat-step [stepControl]="firstFormGroup" completed="false">
               <form [formGroup]="firstFormGroup">
-                <ng-template matStepLabel>{{viewUrl ? 'View Course' : editUrl ? 'Edit Course' : 'Course Create'}}</ng-template>
+                <ng-template matStepLabel>{{viewUrl ? 'View Course' : editUrl ? 'Edit Course' : 'Create Course'}}</ng-template>
                 <div class="body" >
                   <!-- <form class="m-4" [formGroup]="firstFormGroup" (ngSubmit)="onSubmit()"> -->
                     <div class="row">
