@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CourseService } from '@core/service/course.service';
 import { InstructorService } from '@core/service/instructor.service';
 import { UserService } from '@core/service/user.service';
+import { ClassService } from 'app/admin/schedule-class/class.service';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -81,22 +82,34 @@ export class MainComponent implements OnInit {
   tillPreviousEightMonthsStudents: any;
   tillPreviousTenMonthsStudents: any;
   tillPreviousTwelveMonthsStudents: any;
+  classesList: any;
+  instructorCount: any;
+  adminCount: any;
+  studentCount: any;
   constructor(private courseService: CourseService,
     private userService: UserService,
-    private instructorService: InstructorService) {
+    private instructorService: InstructorService,
+    private classService: ClassService) {
     //constructor
     this.getCount();
     this.getInstructorsList();
     this.getStudentsList();
     this.chart2();
     this.chart3();
-    this.chart4();
+
+  
   }
 
   getCount() {
     this.courseService.getCount().subscribe(response => {
       this.count = response?.data;
+      this.instructorCount=this.count?.instructors;
+      this.adminCount=this.count?.admins
+      this.studentCount=this.count?.students
+      this.chart4();
+  
     })
+       
   }
   getInstructorsList() {
     let payload = {
@@ -241,7 +254,23 @@ export class MainComponent implements OnInit {
 
 
   ngOnInit() {
-
+this.getClassList()
+  }
+  getClassList() {
+    this.classService
+      .getClassListWithPagination()
+      .subscribe(
+        (response) => {
+          console.log('classRes', response);
+          if (response.data) {
+            this.classesList = response.data.docs.slice(0,5).sort();
+          }
+       
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
   }
   private chart1() {
     this.areaChartOptions = {
@@ -481,9 +510,11 @@ export class MainComponent implements OnInit {
       },
     };
   }
-  public chart4() {
+  private chart4() {
     this.polarChartOptions = {
-      series2: [44, 55, 13, 43],
+      series2: [      this.instructorCount,
+        this.studentCount,
+      this.adminCount  ],
       chart: {
         type: 'pie',
         height: 400,
@@ -495,8 +526,8 @@ export class MainComponent implements OnInit {
       dataLabels: {
         enabled: false,
       },
-      labels: ['Science', 'Mathes', 'Economics', 'History'],
-      colors: ['#6777ef', '#ff9800', '#B71180', '#2C495B'],
+      labels: ['Instructors', 'Students', 'Admin'],
+      colors: ['#6777ef', '#ff9800', '#B71180'],
       responsive: [
         {
           breakpoint: 480,
