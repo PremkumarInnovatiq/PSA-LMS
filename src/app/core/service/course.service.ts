@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Observable, map } from "rxjs";
 import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
-import { CourseModel, CoursePaginationModel } from "@core/models/course.model";
+import { CourseModel, CoursePaginationModel, Program } from "@core/models/course.model";
 import { FundingGrant, Instructor, MainCategory, SubCategory, Survey } from "@core/models/course.model";
 
 @Injectable({
@@ -61,6 +61,16 @@ export class CourseService {
     return this._Http.get<ApiResponse>(apiUrl, {
       params: this.buildParams(filter),
     });
+  }
+  getCourseProgram(filter?: Partial<Program>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/courseprogram`;
+    return this._Http
+      .get<ApiResponse>(apiUrl, { params: this.buildParams(filter)})
+      .pipe(
+        map((response) => {
+          return response.data;
+        })
+      );
   }
   getCount(
     filter?: Partial<CoursePaginationModel>

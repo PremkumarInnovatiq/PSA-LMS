@@ -73,4 +73,8 @@ getInstructor(body:any): Observable<ApiResponse> {
       })
     );
 }
+deleteUser(userId: string): Observable<ApiResponse> {
+  const apiUrl = `${this.defaultUrl}auth/instructorDelete/${userId}`;
+  return this.http.delete<ApiResponse>(apiUrl);
+}
 }

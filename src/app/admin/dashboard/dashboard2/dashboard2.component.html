@@ -51,15 +51,15 @@
             <div class="row mb-2">
               <div class="col-4">
                 <label class="font-14">Today</label>
-                <h5>105<i class="material-icons col-green">trending_up</i></h5>
+                <h5>{{todayInstructors?.length}}<i class="material-icons col-orange">trending_down</i></h5>
               </div>
               <div class="col-4">
                 <label class="font-14">This Week</label>
-                <h5>425<i class="material-icons col-orange">trending_down</i></h5>
+                <h5>{{weekInstructors?.length}}<i class="material-icons col-green">trending_up</i></h5>
               </div>
               <div class="col-4">
                 <label class="font-14">This Month</label>
-                <h5>867<i class="material-icons col-green">trending_up</i></h5>
+                <h5>{{oneMonthAgoInstructors?.length}}<i class="material-icons col-green">trending_up</i></h5>
               </div>
             </div>
             <div class="progress shadow-style mb-2 mt-3">
@@ -97,7 +97,7 @@
         <div class="card">
           <div class="header mt-3">
             <h2>Instructor Performance</h2>
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -113,7 +113,7 @@
                 <mat-icon>refresh</mat-icon>
                 <span>Refresh</span>
               </button>
-            </mat-menu>
+            </mat-menu> -->
           </div>
           <div class="body">
             <apx-chart [series]="lineChartOptions.series!" [chart]="lineChartOptions.chart!"
@@ -132,7 +132,7 @@
         <div class="card">
           <div class="header mt-3">
             <h2>Instructors List</h2>
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -148,7 +148,7 @@
                 <mat-icon>refresh</mat-icon>
                 <span>Refresh</span>
               </button>
-            </mat-menu>
+            </mat-menu> -->
           </div>
           <div class="tableBody">
             <div class="table-responsive">
@@ -167,182 +167,29 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr *ngFor="let instructor of instructors">
                     <td class="table-img">
-                      <img src="assets/images/banner/profile-1.png" alt="">
+                      <img src="{{instructor?.avatar}}" alt="">
                     </td>
-                    <td>Jens Brincker</td>
+                    <td>{{instructor?.name}}</td>
                     <td>
-                      <div class="badge col-green">Computer</div>
+                      <div class="badge col-green">{{instructor?.department}}</div>
                     </td>
-                    <td>Male</td>
-                    <td>M.Sc., PHD.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>02/25/2018</td>
+                    <td>{{instructor?.gender}}</td>
+                    <td>{{instructor?.qualification}}</td>
+                    <td>{{instructor?.email}}</td>
+                    <td>{{instructor?.mobile}}</td>
+                    <td>{{instructor?.joiningDate | date}}</td>
                     <td>
-                      <button mat-icon-button class="tbl-action-btn">
+                      <button mat-icon-button class="tbl-action-btn"  [routerLink]="['/admin/teachers/edit-teacher',instructor.id]">
                         <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                       </button>
-                      <button mat-icon-button class="tbl-action-btn">
+                      <button mat-icon-button class="tbl-action-btn" (click)="deleteItem(instructor)">
                         <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                       </button>
                     </td>
                   </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/girl-img-4.jpeg" alt="">
-                    </td>
-                    <td>Mark Hay</td>
-                    <td>
-                      <div class="badge col-orange">Mechanical</div>
-                    </td>
-                    <td>Female</td>
-                    <td>M.Sc.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>02/21/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/girl-img-1.jpg" alt="">
-                    </td>
-                    <td>Airi Satou</td>
-                    <td>
-                      <div class="badge col-red">Mathematics</div>
-                    </td>
-                    <td>Female</td>
-                    <td>M.Sc., P.H.D.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>03/11/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/boy-img-1.webp" alt="">
-                    </td>
-                    <td>Ashton Cox</td>
-                    <td>
-                      <div class="badge col-purple">Music</div>
-                    </td>
-                    <td>Male</td>
-                    <td>B.A.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>05/21/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/girl-img-2.webp" alt="">
-                    </td>
-                    <td>Cara Stevens</td>
-                    <td>
-                      <div class="badge col-cyan">Civil</div>
-                    </td>
-                    <td>Female</td>
-                    <td>B.E., M.E.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>04/03/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/boy-img-3.jpg" alt="">
-                    </td>
-                    <td>Angelica Ramos</td>
-                    <td>
-                      <div class="badge col-orange">Sport</div>
-                    </td>
-                    <td>Male</td>
-                    <td>CP.Ed.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>04/23/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/profile-photos-4.webp" alt="">
-                    </td>
-                    <td>Sarah Smith</td>
-                    <td>
-                      <div class="badge col-green">Administrator</div>
-                    </td>
-                    <td>Female</td>
-                    <td>M.E., P.H.D.</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>07/12/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-img">
-                      <img src="assets/images/banner/unnamed.png" alt="">
-                    </td>
-                    <td>John Doe</td>
-                    <td>
-                      <div class="badge col-red">Agriculture</div>
-                    </td>
-                    <td>Female</td>
-                    <td>B.E. Agree</td>
-                    <td>prof@example.com</td>
-                    <td>1234567890</td>
-                    <td>17/12/2018</td>
-                    <td>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                      </button>
-                      <button mat-icon-button class="tbl-action-btn">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
-                    </td>
-                  </tr>
+                 
 
                 </tbody>
               </table>
@@ -439,7 +286,7 @@
         <div class="card">
           <div class="header mt-3">
             <h2>Upcoming Programs</h2>
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="header-dropdown">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -455,43 +302,22 @@
                 <mat-icon>refresh</mat-icon>
                 <span>Refresh</span>
               </button>
-            </mat-menu>
+            </mat-menu> -->
           </div>
           <div class="body">
             <div class="card-block">
-              <div class="row m-b-20">
+              <div  *ngFor="let program of upcomingPrograms" class="row m-b-20">
                 <div class="col-auto p-r-0">
                   <img src="assets/images/banner/cargo-container-ship.jpg" alt="user image" class="latest-posts-img">
                 </div>
                 <div class="col">
-                  <h6>Vessel Berthing Course</h6>
+                  <h6>{{program?.title}}</h6>
                   <p class="text-end">
-                    <i class="fa fa-play-circle-o"></i> Video | 10 minutes ago</p>
-                  <p>This Training is designed for Skippers to learn the basic steps of departing and berthing at a marina. </p>
+                    <i class="fa fa-play-circle-o"></i> {{program?.sessionStartDate | date}}</p>
+                  <p>{{program?.learningOutcomes}}</p>
                 </div>
               </div>
-              <div class="row m-b-20">
-                <div class="col-auto p-r-0">
-                  <img src="assets/images/banner/image-1.jpg" alt="user image" class="latest-posts-img">
-                </div>
-                <div class="col">
-                  <h6>Lifting Supervisors Safety Course</h6>
-                  <p class="text-end m-b-5">
-                    <i class="fa fa-play-circle-o"></i> Video | 24 minutes ago</p>
-                  <p>Covers a range of common equipment and associated hazards.</p>
-                </div>
-              </div>
-              <div class="row m-b-20">
-                <div class="col-auto p-r-0">
-                  <img src="assets/images/banner/image-2.jpg" alt="user image" class="latest-posts-img">
-                </div>
-                <div class="col">
-                  <h6>Conventional Operations Course</h6>
-                  <p class="text-end m-b-5">
-                    <i class="fa fa-play-circle-o"></i> Video | 53 minutes ago</p>
-                  <p>A Generic term encompassing all armed conflicts that are above the level of peaceful co-existence amongst states.</p>
-                </div>
-              </div>
+           
               <div class="text-center">
                 <button mat-stroked-button color="primary">View More</button>
               </div>
