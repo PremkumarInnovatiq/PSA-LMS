@@ -50,6 +50,31 @@
     margin-left: 32%;
 
   }
+  @media only screen and (max-width: 540px) and (min-width: 280px) {
+    select{
+      margin-left: 73%;
+      margin-top: -40px;
+      
+    }
+  }
+  @media only screen and (max-width: 769px) and (min-width: 539px) {
+    select{
+      margin-left: 38.5%;
+      margin-top: -40px;
+      
+    }
+  }
+  @media only screen and (max-width: 912px) and (min-width: 768px) {
+    select{
+      margin-left: 37%;
+      margin-top: -50px;
+      
+    }
+  }
+  ::ng-deep .example-full-width .mdc-text-field--outlined{
+    --mdc-outlined-text-field-container-shape : 12px;
+    font-style: italic;
+  }
   .uglms p{
     margin-left: -187px;
     font-weight: bold; 
