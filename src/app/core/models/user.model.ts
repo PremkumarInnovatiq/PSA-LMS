@@ -20,8 +20,6 @@ export interface Student {
   
   export interface UsersPaginationModel extends Pagination {
     docs: UsersModel[];
-    main_category: string|undefined;
-    sub_category: string|undefined;
     filterText: string;
     sortBy: string;
     sortByDirection: string;
@@ -29,6 +27,7 @@ export interface Student {
   }
   
   export interface Users {
+    role: string;
     designation: any;
     _id: string;
     id:string;
@@ -47,6 +46,9 @@ export interface Student {
     Active: any;
     menuItems: [];
     avatar:string;
+    filename:string
+    education:string;
+
   }
   
   export interface StudentDetail extends Users {

@@ -60,7 +60,7 @@ export class AddCourseComponent implements OnInit {
 
   breadscrums = [
     {
-      title: 'Create Course',
+      title:'Create Course',
       items: ['Course'],
       active: 'Create Course',
     },
@@ -73,8 +73,28 @@ export class AddCourseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     ) {
       let urlPath = this.router.url.split('/')
-    this.editUrl = urlPath.includes('edit-course'); 
-    this.viewUrl = urlPath.includes('view-course'); 
+    this.editUrl = urlPath.includes('edit-course');
+    this.viewUrl = urlPath.includes('view-course');
+    
+    if(this.editUrl===true){
+      this.breadscrums = [
+        {
+          title:'Edit Course',
+          items: ['Course'],
+          active: 'Edit Course',
+        },
+      ];
+    }
+    else if(this.viewUrl===true){
+      this.breadscrums = [
+        {
+          title:'View Course',
+          items: ['Course'],
+          active: 'View Course',
+        },
+      ];
+    }
+   
       this.firstFormGroup = this._formBuilder.group({
         title: ['', [Validators.required]],
         courseCode: ['', [Validators.required]],
@@ -453,7 +473,7 @@ mainCategoryChange(): void {
           icon: 'success',
         });
         this.courseAdded=true;  
-        this.router.navigate(['/admin/courses/all-courses'])
+        this.router.navigate(['/admin/courses/course-approval'])
       });
 
   } else {

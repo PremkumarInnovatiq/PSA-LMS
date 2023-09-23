@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Teachers } from './teachers.model';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
-import { UsersPaginationModel } from '@core/models/user.model';
+import { Users,UsersPaginationModel } from '@core/models/user.model';
 import { ApiResponse } from '@core/models/general.response';
 import { environment } from 'environments/environment';
 @Injectable()
@@ -61,12 +61,7 @@ export class TeachersService extends UnsubscribeOnDestroyAdapter {
       if (filter.page) {
         params = params.set("page", filter.page?.toString());
       }
-      if (filter.main_category && +filter.main_category !== 0) {
-        params = params.set("main_category", filter.main_category);
-      }
-      if (filter.sub_category && +filter.sub_category !== 0) {
-        params = params.set("sub_category", filter.sub_category);
-      }
+      
       if (filter.filterText) {
         params = params.set("title", filter.filterText?.toString());
       }
@@ -78,6 +73,7 @@ export class TeachersService extends UnsubscribeOnDestroyAdapter {
     }
     return params;
   }
+
   addTeachers(teachers: Teachers): void {
     this.dialogData = teachers;
 
@@ -116,5 +112,20 @@ export class TeachersService extends UnsubscribeOnDestroyAdapter {
     //          // error code here
     //       },
     //     });
+  }
+  getUserById(id: string) {
+    const apiUrl = `${this.prefix}auth/instructorListByID/${id}`;
+    return this.httpClient.get<Users>(apiUrl).pipe(map((response) => response));
+  }
+  updateUser(
+    id: string,
+    users: Users
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}auth/instructorUpdate/${id}`;
+    return this.httpClient.put<ApiResponse>(apiUrl, users);
+  }
+  deleteUser(userId: string): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}auth/instructorDelete/${userId}`;
+    return this.httpClient.delete<ApiResponse>(apiUrl);
   }
 }

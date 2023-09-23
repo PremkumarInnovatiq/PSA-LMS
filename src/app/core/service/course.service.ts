@@ -1,7 +1,7 @@
 
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable, map } from "rxjs";
+import { BehaviorSubject, Observable, map } from "rxjs";
 import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
 import { CourseModel, CoursePaginationModel } from "@core/models/course.model";
@@ -14,6 +14,7 @@ export class CourseService {
   private apiUrl = 'http://localhost:3000/api/';
   private prefix: string = environment.apiUrl;
   defaultUrl = environment['apiUrl'];
+  dataChange: BehaviorSubject<CourseModel[]> = new BehaviorSubject<CourseModel[]>([]);
 
   constructor(private _Http : HttpClient) {
 
@@ -119,6 +120,26 @@ export class CourseService {
       .put<ApiResponse>(apiUrl, course)
       .pipe(map((response) => { }));
   }
+  deleteCourse(id: string) {
+    const apiUrl = `${this.prefix}admin/courses-new/${id}`;
+    return this._Http
+      .delete<CourseModel>(apiUrl)
+      .pipe(map((response) => response));
+  }
+  getMainCategoriesWithPagination(filter?:Partial<CoursePaginationModel>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/main-category/`;
+    return this._Http
+      .get<ApiResponse>(apiUrl,{
+        params: this.buildParams(filter),
+      });
+  }
+  createSubCategory(
+    subCategories: Partial<SubCategory>[]
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/sub-category/`;
+    return this._Http.post<ApiResponse>(apiUrl, subCategories);
+  }
+
 }
 
 

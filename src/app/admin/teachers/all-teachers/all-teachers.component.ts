@@ -25,6 +25,8 @@ import {
 } from '@shared';
 import { formatDate } from '@angular/common';
 import { UsersModel } from '@core/models/user.model';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-teachers',
@@ -67,9 +69,11 @@ export class AllTeachersComponent
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public teachersService: TeachersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private route :Router
   ) {
     super();
+    this.UsersModel = {};
   }
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -86,35 +90,9 @@ export class AllTeachersComponent
     this.loadData();
   }
   addNew() {
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        teachers: this.teachers,
-        action: 'add',
-      },
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataServicex
-        this.exampleDatabase?.dataChange.value.unshift(
-          this.teachersService.getDialogData()
-        );
-        this.refreshTable();
-        this.showNotification(
-          'snackbar-success',
-          'Add Record Successfully...!!!',
-          'bottom',
-          'center'
-        );
-      }
-    });
+    this.route.navigateByUrl("/admin/teachers/add-teacher")
+
+    
   }
   editCall(row: Teachers) {
     this.id = row.id;
@@ -153,36 +131,40 @@ export class AllTeachersComponent
       }
     });
   }
-  deleteItem(row: Teachers) {
-    this.id = row.id;
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: row,
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
+  deleteItem(row: any) {
+   // this.id = row.id;
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: "Are you sure you want to delete this Instructor?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.teachersService.deleteUser(row.id).subscribe(
+          () => {
+            Swal.fire({
+              title: "Deleted",
+              text: "Instructor deleted successfully",
+              icon: "success",
+            });
+            //this.fetchCourseKits();
+            this.instructorData()
+          },
+          (error: { message: any; error: any; }) => {
+            Swal.fire(
+              "Failed to delete  Instructor",
+              error.message || error.error,
+              "error"
+            );
+          }
         );
-        // for delete we use splice in order to remove single object from DataService
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-          this.refreshTable();
-          this.showNotification(
-            'snackbar-danger',
-            'Delete Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
       }
     });
+    
   }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
@@ -239,16 +221,17 @@ export class AllTeachersComponent
   public instructorData() {
     this.teachersService.getInstructor({ ...this.UsersModel })
       .subscribe((response: {
-        docs: any[] | undefined; totalDocs: any; data: any; page: any; limit: any; 
+        docs: any;
+        totalDocs: any; data: any; page: any; limit: any; 
 }) => {
         console.log("===response==",response)
         this.totalItems = response.totalDocs
         
-        this.dataSource = response.docs
-        this.UsersModel.docs = response.docs;
-        this.UsersModel.page = response.page;
-        this.UsersModel.limit = response.limit;
-        this.UsersModel.totalDocs = response.totalDocs;
+        this.dataSource = response?.docs
+        this.UsersModel.docs = response?.docs;
+        this.UsersModel.page = response?.page;
+        this.UsersModel.limit = response?.limit;
+        this.UsersModel.totalDocs = response?.totalDocs;
 
         //this.getJobTemplates();
 

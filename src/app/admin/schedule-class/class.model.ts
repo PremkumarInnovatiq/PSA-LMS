@@ -104,3 +104,12 @@ export interface Session {
   sessionStartDate: string;
   sessionStartTime: string;
 }
+
+export interface ClassListingModel extends Pagination {
+  data: any;
+  docs: ClassModel[];
+  totalDocs: number;
+  limit: number;
+  sortBy: string;
+  sortByDirection: string;
+}
