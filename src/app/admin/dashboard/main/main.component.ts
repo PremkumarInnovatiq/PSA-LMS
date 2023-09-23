@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CourseService } from '@core/service/course.service';
+import { InstructorService } from '@core/service/instructor.service';
 import { UserService } from '@core/service/user.service';
 import {
   ChartComponent,
@@ -20,6 +21,7 @@ import {
   ApexTheme,
   ApexNonAxisChartSeries,
 } from 'ng-apexcharts';
+import Swal from 'sweetalert2';
 export type chartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -61,42 +63,210 @@ export class MainComponent implements OnInit {
   ];
   count: any;
   instructors: any;
+  students: any;
+  newStudents: any;
+  oldStudents: any;
+  twoMonthsStudents: any;
+  fourMonthsStudents: any;
+  twoMonthsAgoStudents: any;
+  fourMonthsAgoStudents: any;
+  sixMonthsAgoStudents: any;
+  twelveMonthsAgoStudents: any;
+  tenMonthsAgoStudents: any;
+  eightMonthsAgoStudents: any;
+  monthsAgoStudents: any;
+  tillPreviousTwoMonthsStudents: any;
+  tillPreviousFourMonthsStudents: any;
+  tillPreviousSixMonthsStudents: any;
+  tillPreviousEightMonthsStudents: any;
+  tillPreviousTenMonthsStudents: any;
+  tillPreviousTwelveMonthsStudents: any;
   constructor(private courseService: CourseService,
-    private userService: UserService) {
+    private userService: UserService,
+    private instructorService: InstructorService) {
     //constructor
     this.getCount();
     this.getInstructorsList();
+    this.getStudentsList();
+    this.chart2();
+    this.chart3();
+    this.chart4();
   }
 
-  getCount(){
+  getCount() {
     this.courseService.getCount().subscribe(response => {
-     this.count=response?.data;
+      this.count = response?.data;
     })
   }
-  getInstructorsList(filters?:any) {
-    this.userService.getUserList().subscribe((response: any) => {
-      this.instructors = response.data.data;
+  getInstructorsList() {
+    let payload = {
+      type: "Instructor"
+    }
+    this.instructorService.getInstructor(payload).subscribe((response: any) => {
+      this.instructors = response.slice(0, 5);
     }, error => {
     });
   }
-  
+  getStudentsList() {
+    let payload = {
+      type: "Student"
+    }
+    this.instructorService.getInstructor(payload).subscribe((response: any) => {
+      this.students = response.slice(0, 5)
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth();
+      const currentYear = currentDate.getFullYear();
+
+      const twoMonthsAgoStart = new Date(currentYear, currentMonth - 2, 1);
+      const twoMonthsAgoEnd = currentDate;
+
+      const fourMonthsAgoStart = new Date(currentYear, currentMonth - 4, 1);
+      const fourMonthsAgoEnd = new Date(currentYear, currentMonth - 2, 0);
+
+      const sixMonthsAgoStart = new Date(currentYear, currentMonth - 6, 1);
+      const sixMonthsAgoEnd = new Date(currentYear, currentMonth - 4, 0);
+
+      const eightMonthsAgoStart = new Date(currentYear, currentMonth - 8, 1);
+      const eightMonthsAgoEnd = new Date(currentYear, currentMonth - 6, 0);
+
+      const tenMonthsAgoStart = new Date(currentYear, currentMonth - 10, 1);
+      const tenMonthsAgoEnd = new Date(currentYear, currentMonth - 8, 0);
+
+      const twelveMonthsAgoStart = new Date(currentYear, currentMonth - 12, 1);
+      const twelveMonthsAgoEnd = new Date(currentYear, currentMonth - 10, 0);
+
+      const monthsAgo = new Date(currentYear, currentMonth - 12, 1);
+      const twoMonths = new Date(currentYear, currentMonth - 2, 0);
+      const fourMonths = new Date(currentYear, currentMonth - 4, 0);
+      const sixMonths = new Date(currentYear, currentMonth - 6, 0);
+      const eightMonths = new Date(currentYear, currentMonth - 8, 0);
+      const tenMonths = new Date(currentYear, currentMonth - 10, 0);
+      const twelveMonths = new Date(currentYear, currentMonth - 12, 0);
+
+      this.tillPreviousTwoMonthsStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= monthsAgo && createdAtDate <=twoMonths
+        );
+      });
+
+      this.tillPreviousFourMonthsStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= monthsAgo && createdAtDate <=fourMonths
+        );
+      });
+
+      this.tillPreviousSixMonthsStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= monthsAgo && createdAtDate <=sixMonths
+        );
+      });
+
+      this.tillPreviousEightMonthsStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= monthsAgo && createdAtDate <=eightMonths
+        );
+      });
+
+      this.tillPreviousTenMonthsStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= monthsAgo && createdAtDate <=tenMonths
+        );
+      });
+
+      this.tillPreviousTwelveMonthsStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= monthsAgo && createdAtDate <=twelveMonths
+        );
+      });
+
+      // Filtered students who joined in the specified time periods
+      this.twoMonthsAgoStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= twoMonthsAgoStart && createdAtDate <= twoMonthsAgoEnd
+        );
+      });
+
+      this.fourMonthsAgoStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= fourMonthsAgoStart && createdAtDate <= fourMonthsAgoEnd
+        );
+      });
+
+      this.sixMonthsAgoStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= sixMonthsAgoStart && createdAtDate <= sixMonthsAgoEnd
+        );
+      });
+      this.eightMonthsAgoStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= eightMonthsAgoStart && createdAtDate <= eightMonthsAgoEnd
+        );
+      });
+      this.tenMonthsAgoStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= tenMonthsAgoStart && createdAtDate <= tenMonthsAgoEnd
+        );
+      });
+      this.twelveMonthsAgoStudents = response.filter((item: { createdAt: string | number | Date; }) => {
+        const createdAtDate = new Date(item.createdAt);
+        return (
+          createdAtDate >= twelveMonthsAgoStart && createdAtDate <= twelveMonthsAgoEnd
+        );
+      });
+      this.chart1();
+    }, error => {
+    });
+  }
+  deleteStudent(id: any) {
+    this.userService.deleteUser(id).subscribe(() => {
+      this.getStudentsList();
+      Swal.fire({
+        title: 'Success',
+        text: 'Student deleted successfully.',
+        icon: 'success',
+      });
+    });
+  }
+
 
   ngOnInit() {
-    this.chart1();
-    this.chart2();                                                                                 
-    this.chart3();
-    this.chart4();
+
   }
   private chart1() {
     this.areaChartOptions = {
       series: [
         {
           name: 'new students',
-          data: [31, 40, 28, 51, 42, 85, 77],
+          data: [
+            this.twoMonthsAgoStudents.length,
+            this.fourMonthsAgoStudents.length,
+            this.sixMonthsAgoStudents.length,
+            this.eightMonthsAgoStudents.length,
+            this.tenMonthsAgoStudents.length,
+            this.twelveMonthsAgoStudents.length
+          ],
         },
         {
           name: 'old students',
-          data: [11, 32, 45, 32, 34, 52, 41],
+          data: [
+            this.tillPreviousTwoMonthsStudents.length,
+            this.tillPreviousFourMonthsStudents.length,
+            this.tillPreviousSixMonthsStudents.length,
+            this.tillPreviousEightMonthsStudents.length,
+            this.tillPreviousTenMonthsStudents.length,
+            this.tillPreviousTwelveMonthsStudents.length,
+          ],
         },
       ],
       chart: {
@@ -120,16 +290,8 @@ export class MainComponent implements OnInit {
         strokeDashArray: 1,
       },
       xaxis: {
-        type: 'datetime',
-        categories: [
-          '2018-09-19T00:00:00.000Z',
-          '2018-09-19T01:30:00.000Z',
-          '2018-09-19T02:30:00.000Z',
-          '2018-09-19T03:30:00.000Z',
-          '2018-09-19T04:30:00.000Z',
-          '2018-09-19T05:30:00.000Z',
-          '2018-09-19T06:30:00.000Z',
-        ],
+        type: 'category',
+        categories: ['2 Months', '4 Months', '6 Months', '8 Months', '10 Months', '12 Months']
       },
       legend: {
         show: true,
@@ -141,7 +303,7 @@ export class MainComponent implements OnInit {
 
       tooltip: {
         x: {
-          format: 'dd/MM/yy HH:mm',
+          format: 'MMMM',
         },
       },
     };

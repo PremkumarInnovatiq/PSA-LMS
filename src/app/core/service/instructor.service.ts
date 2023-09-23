@@ -17,7 +17,6 @@ const Logging = new Logger('AuthenticationService');
 export class InstructorService {
     private currentUserSubject!: BehaviorSubject<any>;
     public currentUser!: Observable<any>;
-  
   defaultUrl = environment['apiUrl'];
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(
@@ -63,5 +62,15 @@ export class InstructorService {
 
   saveUserInfo(info:any) {
     localStorage.setItem(AppConstants.KEY_USER_DATA, JSON.stringify(info));
+}
+getInstructor(body:any): Observable<ApiResponse> {
+  const apiUrl = `${this.defaultUrl}auth/instructorList/`;
+  return this.http
+    .post<ApiResponse>(apiUrl,body)
+    .pipe(
+      map((response:any) => {
+        return response.data;
+      })
+    );
 }
 }

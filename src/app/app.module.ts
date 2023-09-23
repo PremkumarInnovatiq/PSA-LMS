@@ -30,6 +30,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { ApiIntereptor } from '@core/interceptor/api.interceptor';
 import { ErrorHandlerInterceptor } from '@core/interceptor/error-handler.interceptor';
+import { DatePipe } from '@core/service/date.pipe';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -64,6 +65,7 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule,
   ],
   providers: [
+    DatePipe,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

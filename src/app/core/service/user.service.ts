@@ -28,6 +28,12 @@ export class UserService {
       })
       .pipe(map((response) => response));
   }
+  deleteUser(id: string) {
+    const apiUrl = `${this.defaultUrl}admin/adminUserListing/${id}`;
+    return this.http
+      .delete<ApiResponse>(apiUrl)
+      .pipe(map((response) => response));
+  }
   getAllUserList(filter?:any): Observable<any> {
     const apiUrl = this.defaultUrl + 'admin/adminUserListing/instructors    ';
     return this.http

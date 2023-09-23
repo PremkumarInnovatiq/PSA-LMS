@@ -39,7 +39,7 @@ export class TeachersService extends UnsubscribeOnDestroyAdapter {
   getInstructor(filter?: Partial<UsersPaginationModel>): Observable<ApiResponse> {
     const apiUrl = `${this.prefix}auth/instructorList/`;
     return this.httpClient
-      .get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
+      .post<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
       .pipe(
         map((response:any) => {
           return response.data;
