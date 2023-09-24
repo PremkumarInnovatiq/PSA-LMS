@@ -84,11 +84,11 @@ export class AllDepartmentsComponent
   contextMenuPosition = { x: '0px', y: '0px' };
 
   ngOnInit() {
-    this.loadData();
+    // this.loadData();
     this.getAllDepartments()
   }
   refresh() {
-    this.loadData();
+    this.getAllDepartments();
   }
   addNew() {
 
