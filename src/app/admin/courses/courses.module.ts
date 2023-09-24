@@ -12,7 +12,6 @@ import { CourseApprovalComponent } from './course-approval/course-approval.compo
 import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { TruncatePipe } from '@core/service/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { TruncatePipe } from '@core/service/truncate.pipe';
     CourseApprovalComponent,
     CourseKitComponent,
     CategoriesComponent,
-    TruncatePipe,
   ],
   imports: [
     CommonModule,

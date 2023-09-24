@@ -8,11 +8,10 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from '@shared';
 import { ComponentsModule } from '@shared/components/components.module';
-import { TruncatePipe } from '@core/service/truncate.pipe';
 
 @NgModule({
   declarations: [MainComponent, Dashboard2Component,    
-    TruncatePipe,
+   
   ],
   imports: [
     CommonModule,

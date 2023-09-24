@@ -312,9 +312,23 @@
                 </div>
                 <div class="col">
                   <h6>{{program?.title}}</h6>
+                  <div class="row">
+                    <div class="col">
+                      <b>{{ program?.courseCode }}</b>
+                  </div>
+                  <div class="col">
+                      <b>{{ program?.duration }} Hours</b>
+                  </div>
+                  <div class="col">
+                      <b>{{ program?.courseFee }}$</b>
+                  </div>
+                  <div class="col">
+                      <b>{{ program?.deliveryMode }}</b>
+                  </div>
+                  </div>
+
                   <p class="text-end">
                     <i class="fa fa-play-circle-o"></i> {{program?.sessionStartDate | date}}</p>
-                  <p>{{program?.learningOutcomes}}</p>
                 </div>
               </div>
            
