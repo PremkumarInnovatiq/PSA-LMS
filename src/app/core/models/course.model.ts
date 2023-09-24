@@ -223,3 +223,22 @@ export interface Program {
 	electiveCourse: string;
 }
 
+export interface DepartmentModel {
+	category_name: string ;
+	  status: string;
+	  slug: string;
+	  _id: string;
+	  department: string;
+	  hod: string;
+	  mobile: number;
+	  email: string;
+	  departmentStartDate: any;
+	  studentCapacity: string;
+	  //   main_category_id: string;
+	  details: string;
+	  createdAt: string;
+	  updatedAt: string;
+	  __v: number;
+	  id: string;
+  }
+

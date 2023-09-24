@@ -1,6 +1,5 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
-import { DepartmentService } from '../../department.service';
 import {
   UntypedFormControl,
   Validators,
@@ -9,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Department } from '../../department.model';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { DepartmentService } from '../../department.service';
 
 export interface DialogData {
   id: number;

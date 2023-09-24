@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DepartmentService } from './department.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -23,6 +22,11 @@ import {
   TableElement,
   UnsubscribeOnDestroyAdapter,
 } from '@shared';
+import { DepartmentService } from './department.service';
+import { DeptService } from '@core/service/dept.service';
+import { CoursePaginationModel } from '@core/models/course.model';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-departments',
@@ -44,10 +48,12 @@ export class AllDepartmentsComponent
     'actions',
   ];
   exampleDatabase?: DepartmentService;
-  dataSource!: ExampleDataSource;
+  dataSource!: any;
   selection = new SelectionModel<Department>(true, []);
   id?: number;
   department?: Department;
+  departmentPaginationModel!: Partial<CoursePaginationModel>;
+
   breadscrums = [
     {
       title: 'All Department',
@@ -55,13 +61,20 @@ export class AllDepartmentsComponent
       active: 'All',
     },
   ];
+  totalItems: any;
+  pageSizeArr = [10, 25, 50, 100];
+  departmentsData: any;
+
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public departmentService: DepartmentService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private deptService:DeptService,
+    private router: Router
   ) {
     super();
+    this.departmentPaginationModel = {};
   }
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -72,77 +85,56 @@ export class AllDepartmentsComponent
 
   ngOnInit() {
     this.loadData();
+    this.getAllDepartments()
   }
   refresh() {
     this.loadData();
   }
   addNew() {
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        department: this.department,
-        action: 'add',
-      },
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataService
-        this.exampleDatabase?.dataChange.value.unshift(
-          this.departmentService.getDialogData()
-        );
-        this.refreshTable();
-        this.showNotification(
-          'snackbar-success',
-          'Add Record Successfully...!!!',
-          'bottom',
-          'center'
-        );
-      }
-    });
+
+  }
+  delete(id: string) {
+    // this.classService.getClassList({ courseId: id }).subscribe((classList: any) => {
+    //   const matchingClasses = classList.docs.filter((classItem: any) => {
+    //     return classItem.courseId && classItem.courseId.id === id;
+    //   });
+      // if (matchingClasses.length > 0) {
+      //   Swal.fire({
+      //     title: 'Error',
+      //     text: 'Classes have been registered with this course. Cannot delete.',
+      //     icon: 'error',
+      //   });
+      //   return;
+      // }
+      this.deptService.deleteDepartment(id).subscribe(() => {
+        this.getAllDepartments();
+        Swal.fire({
+          title: 'Success',
+          text: 'Department deleted successfully.',
+          icon: 'success',
+        });
+      });
+    // });
+  }
+  getAllDepartments(){
+    this.deptService.getAllDepartments({ ...this.departmentPaginationModel, status: 'active' }).subscribe((response: { data: { docs: any; totalDocs: any; page: any; limit: any; }; }) =>{
+     this.dataSource = response.data.docs;
+     this.totalItems = response.data.totalDocs
+     this.departmentPaginationModel.docs = response.data.docs;
+     this.departmentPaginationModel.page = response.data.page;
+     this.departmentPaginationModel.limit = response.data.limit;
+     this.departmentPaginationModel.totalDocs = response.data.totalDocs;
+    })
+  }
+  pageSizeChange($event: any) {
+    this.departmentPaginationModel.page = $event?.pageIndex + 1;
+    this.departmentPaginationModel.limit = $event?.pageSize;
+    this.getAllDepartments();
   }
   editCall(row: Department) {
     this.id = row.id;
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        department: row,
-        action: 'edit',
-      },
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // Then you update that record using data from dialogData (values you enetered)
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value[foundIndex] =
-            this.departmentService.getDialogData();
-          // And lastly refresh table
-          this.refreshTable();
-          this.showNotification(
-            'black',
-            'Edit Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
-      }
-    });
+    this.router.navigate(['/admin/departments/edit-department/' + this.id])
+
   }
   deleteItem(row: Department) {
     this.id = row.id;
@@ -189,7 +181,7 @@ export class AllDepartmentsComponent
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.renderedData.forEach((row) =>
+      : this.dataSource.renderedData.forEach((row: Department) =>
           this.selection.select(row)
         );
   }
@@ -197,7 +189,7 @@ export class AllDepartmentsComponent
     const totalSelect = this.selection.selected.length;
     this.selection.selected.forEach((item) => {
       const index: number = this.dataSource.renderedData.findIndex(
-        (d) => d === item
+        (d: Department) => d === item
       );
       // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
       this.exampleDatabase?.dataChange.value.splice(index, 1);
@@ -231,7 +223,7 @@ export class AllDepartmentsComponent
   exportExcel() {
     // key name with space add in brackets
     const exportData: Partial<TableElement>[] =
-      this.dataSource.filteredData.map((x) => ({
+      this.dataSource.filteredData.map((x: { dName: any; hod: any; phone: any; email: any; sYear: any; sCapacity: any; }) => ({
         'Department Name': x.dName,
         'Head Of Department': x.hod,
         Phone: x.phone,
@@ -269,6 +261,7 @@ export class AllDepartmentsComponent
 }
 export class ExampleDataSource extends DataSource<Department> {
   filterChange = new BehaviorSubject('');
+  departmentsData: any;
   get filter(): string {
     return this.filterChange.value;
   }
@@ -280,11 +273,12 @@ export class ExampleDataSource extends DataSource<Department> {
   constructor(
     public exampleDatabase: DepartmentService,
     public paginator: MatPaginator,
-    public _sort: MatSort
+    public _sort: MatSort,
   ) {
     super();
     // Reset to the first page when the user changes the filter.
     this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
+
   }
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Department[]> {
@@ -358,4 +352,5 @@ export class ExampleDataSource extends DataSource<Department> {
       );
     });
   }
+
 }

@@ -14,8 +14,8 @@ const routes: Routes = [
     component: AddDepartmentComponent
   },
   {
-    path: 'edit-department',
-    component: EditDepartmentComponent
+    path: 'edit-department/:id',
+    component: AddDepartmentComponent
   }
 ];
 
