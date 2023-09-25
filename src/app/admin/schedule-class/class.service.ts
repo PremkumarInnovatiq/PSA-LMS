@@ -73,8 +73,23 @@ export class ClassService extends UnsubscribeOnDestroyAdapter {
       })
     );
   }
+//getById
+  getClassById(id: string) {
+    const apiUrl = `${this.prefix}admin/class/${id}`;
+    return this.http.get<any>(apiUrl).pipe(map((response) => response.data));
+  }
+  //delete
   deleteClass(id: any): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${environment.apiUrl}admin/class/${id}`).pipe(
+      map((response) => {
+        return response.data;
+      })
+    );
+  }
+  //update
+  updateClass(id: string, formData: any): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/class/${id}`;
+    return this.http.put<ApiResponse>(apiUrl, formData).pipe(
       map((response) => {
         return response.data;
       })

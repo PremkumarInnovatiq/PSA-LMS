@@ -16,14 +16,6 @@ const routes: Routes = [
     component:CreateClassComponent
   },
   {
-    path:'edit-class/:id' ,
-    component:CreateClassComponent
-  },
-  // {
-  //   path:'edit-class',
-  //   component:EditClassComponent
-  // },
-  {
     path:'approve-list',
     component:ApproveListComponent
   },

@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 // import { fromEvent } from 'rxjs';
 import { UnsubscribeOnDestroyAdapter } from '@shared/UnsubscribeOnDestroyAdapter';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-class-list',
@@ -41,7 +42,7 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
   isLoading = true;
   pageSizeArr = [10, 20, 50, 100]
 
-  constructor(public _classService: ClassService, private snackBar: MatSnackBar) {
+  constructor(public _classService: ClassService, private snackBar: MatSnackBar,private _router: Router) {
 
     super();
     this.coursePaginationModel = {};
@@ -166,7 +167,11 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
       'right'
     );
   }
-
+  //edit
+  editClass(id:string){
+    this._router.navigate([`admin/schedule/create-class`], { queryParams: {id: id}});
+  }
+  //delete
   delete(id: string) {
     console.log(id)
     this._classService.getClassList({ courseId: id }).subscribe((classList: any) => {
