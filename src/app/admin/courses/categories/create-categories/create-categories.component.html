@@ -1,0 +1,74 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header" *ngFor="let breadscrum of breadscrums">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+            </app-breadcrumb>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <!-- <h2>Create Course</h2> -->
+
+                    </div>
+                    <form [formGroup]="mainCategoryForm" (ngSubmit)="createMainCategory()">
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Main Category Name <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="category_name" formControlName="category_name"
+                                            class="form-control" required>
+                                        <mat-error *ngIf="mainCategoryForm.get('category_name')?.hasError('required')">
+                                            Enter Course Name
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <button mat-button type="submit" class="btn crt-color ">Create Main Categories
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form [formGroup]="subCategoryForm" (ngSubmit)="createSubCategory()">
+                        <div class="body">
+                            <input type="hidden" formControlName="main_category_id" [value]="mainCategoryId">
+                            <div class="row cat" formArrayName="subcategories">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"
+                                    *ngFor="let subcategory of subcategories.controls; let i = index"
+                                    [formGroupName]="i">
+                                    <label for="subcategory_name_{{i}}">Sub Category Name <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <input matInput type="text" id="subcategory_name_{{i}}"
+                                            formControlName="category_name">
+                                        <mat-error *ngIf="subCategoryForm.get('category_name')?.hasError('required')">
+                                            Enter Sub Category
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <button mat-button type="submit" class="btn crt-color">Create Sub Categories</button>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <button class="btn sub"  (click)="addSubCategoryField()" >
+                                    <img src="/assets/Close.svg" alt="plus" style="display: inline;margin-top: -3px;">
+                                    Add Sub Categories</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row body">
+                        <div class="col-md-8">
+                            <button mat-button id="back" [routerLink]="['/admin/courses/categories']">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

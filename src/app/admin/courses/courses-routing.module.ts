@@ -7,6 +7,7 @@ import { AboutCourseComponent } from './about-course/about-course.component';
 import { CourseApprovalComponent } from './course-approval/course-approval.component';
 import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { CreateCategoriesComponent } from './categories/create-categories/create-categories.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,14 @@ const routes: Routes = [
     path: 'categories',
     component: CategoriesComponent
   },
+  {
+    path: 'create-categories',
+    component:  CreateCategoriesComponent
+  },
+  {
+    path: 'edit-categories/:id',
+    component:  CreateCategoriesComponent,
+  }
 ];
 
 @NgModule({

@@ -149,7 +149,30 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/sub-category/`;
     return this._Http.post<ApiResponse>(apiUrl, subCategories);
   }
-
+  createMainCategory(mainCategory: MainCategory): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/main-category/`;
+    return this._Http.post<ApiResponse>(apiUrl, mainCategory);
+  }
+  deleteCategory(id: string): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/main-category/${id}`;
+    return this._Http.delete<ApiResponse>(apiUrl);
+  }
+  updateMainCategory(id:any,category:any) {
+    const apiUrl = `${this.prefix}admin/main-category/${id}`;
+    return this._Http
+      .put<ApiResponse>(apiUrl, category)
+      .pipe(map((response) => { }));
+  }
+  updateSubCategory(id:any,category:any) {
+    const apiUrl = `${this.prefix}admin/sub-category/${id}`;
+    return this._Http
+      .put<ApiResponse>(apiUrl, category)
+      .pipe(map((response) => { }));
+  }
+  getcategoryById(id: string) {
+    const apiUrl = `${this.prefix}admin/main-category/${id}`;
+    return this._Http.get<ApiResponse>(apiUrl).pipe(map((response) => response));
+  }
 }
 
 

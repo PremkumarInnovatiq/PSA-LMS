@@ -12,6 +12,7 @@ import { CourseApprovalComponent } from './course-approval/course-approval.compo
 import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { CreateCategoriesComponent } from './categories/create-categories/create-categories.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     CourseApprovalComponent,
     CourseKitComponent,
     CategoriesComponent,
+    CreateCategoriesComponent,
   ],
   imports: [
     CommonModule,
