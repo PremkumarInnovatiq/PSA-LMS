@@ -115,8 +115,8 @@ export interface ClassListingModel extends Pagination {
 }
 
 export interface DataSourceModel {
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   instructor: string;
   lab: string;
 }
