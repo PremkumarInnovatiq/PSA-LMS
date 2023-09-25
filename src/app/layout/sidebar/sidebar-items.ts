@@ -613,7 +613,7 @@ export const ROUTES: RouteInfo[] = [
       },
     ],
   },
-  
+
   {
     path: '',
     title: 'Announcement',

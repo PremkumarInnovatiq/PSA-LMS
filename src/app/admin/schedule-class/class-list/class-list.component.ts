@@ -10,6 +10,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { MatPaginator } from '@angular/material/paginator';
 // import { fromEvent } from 'rxjs';
 import { UnsubscribeOnDestroyAdapter } from '@shared/UnsubscribeOnDestroyAdapter';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-class-list',
@@ -166,6 +167,29 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
     );
   }
 
-
+  delete(id: string) {
+    console.log(id)
+    this._classService.getClassList({ courseId: id }).subscribe((classList: any) => {
+      const matchingClasses = classList.docs.filter((classItem: any) => {
+        return classItem.courseId && classItem.courseId.id === id;
+      });
+      if (matchingClasses.length > 0) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Classes have been registered with this course. Cannot delete.',
+          icon: 'error',
+        });
+        return;
+      }
+      this._classService.deleteClass(id).subscribe(() => {
+        Swal.fire({
+          title: 'Success',
+          text: 'Course deleted successfully.',
+          icon: 'success',
+        });
+        this.getClassList();
+      });
+    });
+  }
 
 }
