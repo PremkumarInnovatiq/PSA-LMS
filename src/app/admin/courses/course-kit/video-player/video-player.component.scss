@@ -1,0 +1,22 @@
+.video-wrapper{
+    max-height: calc(100vh - 10rem);
+}
+.video-wrapper .customClose_model{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    color: white;
+}
+.play-icon-button{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    margin-left: 10px;
+}
+.module-title{
+    display: flex;
+    align-items: center;
+}

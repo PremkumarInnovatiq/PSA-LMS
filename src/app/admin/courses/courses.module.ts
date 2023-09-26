@@ -13,6 +13,8 @@ import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CreateCategoriesComponent } from './categories/create-categories/create-categories.component';
+import { VideoPlayerComponent } from './course-kit/video-player/video-player.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { CreateCategoriesComponent } from './categories/create-categories/create
     CourseKitComponent,
     CategoriesComponent,
     CreateCategoriesComponent,
+    VideoPlayerComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,7 @@ import { CreateCategoriesComponent } from './categories/create-categories/create
     ComponentsModule,
     SharedModule,
     MatStepperModule,
+    ModalModule.forRoot(),
   ],
 })
 export class CoursesModule {}

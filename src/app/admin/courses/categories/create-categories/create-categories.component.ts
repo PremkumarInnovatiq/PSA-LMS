@@ -47,7 +47,7 @@ export class CreateCategoriesComponent implements OnInit{
     private activatedRoute: ActivatedRoute, 
   ){
     let urlPath = this.router.url.split('/')
-    this.editUrl = urlPath.includes('edit');
+    this.editUrl = urlPath.includes('edit-categories');
 
     if(this.editUrl===true){
       this.breadscrums = [
