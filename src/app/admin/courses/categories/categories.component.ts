@@ -13,6 +13,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import {
   CourseModel,
   CoursePaginationModel,
@@ -42,7 +43,7 @@ export class CategoriesComponent implements OnInit {
     },
   ];
 
-  listCat: any;
+  
   subCategoryForm!: FormGroup;
   mainCategoryForm!: FormGroup;
   mainCategoryId: string = '';
@@ -57,11 +58,11 @@ export class CategoriesComponent implements OnInit {
   dataSource: any;
   isLoading = true;
   selection = new SelectionModel<CourseModel>(true, []);
-  // subCategory = [];
-  subCategory: string[] = [];
+  subCategory = [];
   data: any;
 
   constructor(
+    private router: Router,
     private courseService: CourseService,
     private formBuilder: FormBuilder,
     public utils: UtilsService,
@@ -75,9 +76,9 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchSubCategories();
-    this.initSubCategoryForm();
-    this.addSubCategoryField();
-    this.initMainCategoryForm();
+    // this.initSubCategoryForm();
+    // this.addSubCategoryField();
+    // this.initMainCategoryForm();
   }
   fetchSubCategories(): void {
     this.courseService
@@ -96,66 +97,45 @@ export class CategoriesComponent implements OnInit {
         }
       );
   }
+
+  deleteItem(item: any) {
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: "Are you sure you want to delete this course kit?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.deleteCategory(item._id).subscribe(
+          () => {
+            Swal.fire({
+              title: "Deleted",
+              text: "Category deleted successfully",
+              icon: "success",
+            });
+            this.fetchSubCategories();
+          },
+          (error: { message: any; error: any; }) => {
+            Swal.fire(
+              "Failed to delete course kit",
+              error.message || error.error,
+              "error"
+            );
+          }
+        );
+      }
+    });
+  }
   pageSizeChange($event: any) {
     this.coursePaginationModel.page = $event?.pageIndex + 1;
     this.coursePaginationModel.limit = $event?.pageSize;
     this.fetchSubCategories();
   }
-  get subcategories(): FormArray {
-    return this.subCategoryForm.get('subcategories') as FormArray;
-  }
-  addSubCategoryField(): void {
-    this.subcategories.push(
-      this.formBuilder.group({
-        category_name: ['', Validators.required],
-      })
-    );
-  }
-  initSubCategoryForm(): void {
-    this.subCategoryForm = this.formBuilder.group({
-      main_category_id: [''],
-      subcategories: this.formBuilder.array([]),
-    });
-  }
-  initMainCategoryForm(): void {
-    this.mainCategoryForm = this.formBuilder.group({
-      category_name: new FormControl('', [
-        Validators.required,
-        ...this.utils.validators.category_name,
-        ...this.utils.validators.noLeadingSpace,
-      ]),
-    });
-  }
-  createSubCategory(): void {
-    this.isSubmitted = true;
-    if (this.subCategoryForm.invalid) {
-      this.validations = true;
-      return;
-    }
-
-    this.subCategoryData = this.subcategories.value;
-    this.subCategoryData.forEach((subcategory) => {
-      subcategory.main_category_id = this.mainCategoryId;
-    });
-
-    this.courseService.createSubCategory(this.subCategoryData).subscribe(
-      (response) => {
-        Swal.fire('Success', 'Subcategories created successfully!', 'success');
-        this.mainCategoryForm.reset();
-        this.subCategoryForm.reset();
-        this.initSubCategoryForm();
-        this.addSubCategoryField();
-        this.list = !this.list;
-        this.create = !this.create;
-        // this.list = !this.list;
-        this.fetchSubCategories();
-      },
-      (error) => {
-        Swal.fire('Error', 'Failed to create subcategories!', 'error');
-      }
-    );
-    this.isSubmitted = false;
-  }
+ 
 
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
@@ -205,4 +185,7 @@ export class CategoriesComponent implements OnInit {
       'right'
     );
   }
+edit(id:any){
+  this.router.navigate(['/admin/courses/edit-categories/'+ id]);
+}
 }
