@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Observable, map } from "rxjs";
 import { ApiResponse } from "@core/models/response";
 import { environment } from "environments/environment";
-import { CourseModel, CoursePaginationModel, Program } from "@core/models/course.model";
+import { CourseKit, CourseModel, CoursePaginationModel, Program } from "@core/models/course.model";
 import { FundingGrant, Instructor, MainCategory, SubCategory, Survey } from "@core/models/course.model";
 
 @Injectable({
@@ -182,7 +182,33 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/video/${videoId}`;
     return this._Http.get(apiUrl);
   }
-
+  createCourseKit(courseKit: CourseKit): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/`;
+    return this._Http.post<ApiResponse>(apiUrl, courseKit);
+  }
+  uploadVideo(files: File[]): Observable<any> {
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('Files', file, file.name);
+    }
+    const apiUrl = `${this.prefix}admin/video/`;
+    return this._Http.post(apiUrl, formData);
+  }
+  getCourseKitById(id: string) {
+    const apiUrl = `${this.prefix}admin/course-kit/${id}`;
+    return this._Http.get<CourseKit>(apiUrl).pipe(map((response) => response));
+  }
+  editCourseKit(
+    courseKitId: string,
+    courseKit: CourseKit
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/${courseKitId}`;
+    return this._Http.put<ApiResponse>(apiUrl, courseKit);
+  }
+  deleteCourseKit(courseKitId: string): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/${courseKitId}`;
+    return this._Http.delete<ApiResponse>(apiUrl);
+  }
 }
 
 
