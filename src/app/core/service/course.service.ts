@@ -173,6 +173,16 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/main-category/${id}`;
     return this._Http.get<ApiResponse>(apiUrl).pipe(map((response) => response));
   }
+
+  getJobTempletes(): Observable<any>{
+    const url = `${this.prefix}admin/job/templates`;
+    return this._Http.get(url);
+  }
+  getVideoById(videoId: string): Observable<any> {
+    const apiUrl = `${this.prefix}admin/video/${videoId}`;
+    return this._Http.get(apiUrl);
+  }
+
 }
 
 

@@ -241,4 +241,12 @@ export interface DepartmentModel {
 	  __v: number;
 	  id: string;
   }
-
+  export interface CourseKitModel extends Pagination {
+	status: string;
+	  data: CourseKit[];
+	  totalCount: number;
+	  filterText: string;
+	  limit: number;
+	  sortBy: string;
+	  sortByDirection: string
+  }
