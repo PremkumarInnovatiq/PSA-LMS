@@ -92,6 +92,7 @@ export class CreateCategoriesComponent implements OnInit{
   }
   initSubCategoryForm(): void {
     this.subCategoryForm = this.formBuilder.group({
+      category_name: new FormControl('', [Validators.required,...this.utils.validators.category_name,...this.utils.validators.noLeadingSpace]),
       main_category_id: [''],
       subcategories: this.formBuilder.array([])
     });

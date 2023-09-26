@@ -1,0 +1,37 @@
+ul{
+    border-radius: 10px;
+}
+li:hover {
+    background-color: #c6c6c6;
+}
+
+li img {
+
+    padding-left: 10px;
+}
+li img{
+  height: 20px;
+  margin-top: -3px;
+}
+
+.menu_text {
+  text-decoration: none;
+  color: black;
+  padding-left: 15px;
+}
+
+li {
+    width: auto;
+    padding: 7px;
+}
+
+svg {
+    position: absolute;
+    fill: #000;
+    background-color: #d3cdcd;
+    margin-top: -49px; 
+    margin-left: 94%;
+    border-radius: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
