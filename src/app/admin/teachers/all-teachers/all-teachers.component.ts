@@ -27,6 +27,10 @@ import { formatDate } from '@angular/common';
 import { UsersModel } from '@core/models/user.model';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
+//import 'jspdf-autotable';
+import 'jspdf-autotable';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-all-teachers',
@@ -35,6 +39,7 @@ import Swal from 'sweetalert2';
 })
 export class AllTeachersComponent
   extends UnsubscribeOnDestroyAdapter
+  
   
   implements OnInit
 {
@@ -57,6 +62,7 @@ export class AllTeachersComponent
   teachers?: Teachers;
   UsersModel!: Partial<UsersModel>
   dataSource!: any;
+  isTblLoading = true;
   breadscrums = [
     {
       title: 'All Instructor',
@@ -70,7 +76,8 @@ export class AllTeachersComponent
     public dialog: MatDialog,
     public teachersService: TeachersService,
     private snackBar: MatSnackBar,
-    private route :Router
+    private route :Router,
+    private location: Location
   ) {
     super();
     this.UsersModel = {};
@@ -81,18 +88,34 @@ export class AllTeachersComponent
   @ViewChild(MatMenuTrigger)
   contextMenu?: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
+  searchTerm: string = '';
 
   ngOnInit() {
     this.loadData();
     this.instructorData()
   }
   refresh() {
-    this.loadData();
+    //this.loadData();
+    window.location.reload();
+
+    //this.location.re
   }
   addNew() {
     this.route.navigateByUrl("/admin/teachers/add-teacher")
 
     
+  }
+  performSearch() {
+    console.log(this.dataSource)
+    console.log(this.searchTerm)
+    if(this.searchTerm){
+    this.dataSource = this.dataSource?.filter((item: { name: string; }) =>
+      item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    } else {
+      this.instructorData()
+      
+    }
   }
   editCall(row: Teachers) {
     this.id = row.id;
@@ -209,14 +232,14 @@ export class AllTeachersComponent
     //   this.paginator,
     //   this.sort
     // );
-    this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
-      () => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      }
-    );
+    // this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
+    //   () => {
+    //     if (!this.dataSource) {
+    //       return;
+    //     }
+    //     this.dataSource.filter = this.filter.nativeElement.value;
+    //   }
+    // );
   }
   public instructorData() {
     this.teachersService.getInstructor({ ...this.UsersModel })
@@ -224,6 +247,7 @@ export class AllTeachersComponent
         docs: any;
         totalDocs: any; data: any; page: any; limit: any; 
 }) => {
+  this.isTblLoading=false;
         console.log("===response==",response)
         this.totalItems = response.totalDocs
         
@@ -242,19 +266,52 @@ export class AllTeachersComponent
   }
   // export table data in excel file
   exportExcel() {
-    // key name with space add in brackets
-   // const exportData: Partial<TableElement>[] =
-      // this.dataSource.filteredData.map((x) => ({
-      //   Name: x.name,
-      //   Department: x.department,
-      //   Gender: x.gender,
-      //   Degree: x.degree,
-      //   Mobile: x.mobile,
-      //   Email: x.email,
-      //   'Joining Date': formatDate(new Date(x.date), 'yyyy-MM-dd', 'en') || '',
-      // }));
+    //k//ey name with space add in brackets
+   const exportData: Partial<TableElement>[] =
+      this.dataSource.map((x: { name: any; department: any; gender: any; qualification: any; mobile: any; email: any; joiningDate: string | number | Date; }) => ({
+        Name: x.name,
+        Department: x.department,
+        Gender: x.gender,
+        Degree: x.qualification,
+        Mobile: x.mobile,
+        Email: x.email,
+        'Joining Date': formatDate(new Date(x.joiningDate), 'yyyy-MM-dd', 'en') || '',
+      }));
 
-    //TableExportUtil.exportToExcel(exportData, 'excel');
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Name', 'Department', 'Gender','Degree','Mobile','Email','Joining Date']];
+    const data = this.dataSource.map((user: {
+      //formatDate(arg0: Date, arg1: string, arg2: string): unknown;
+      
+      name: any; department: any; gender: any; qualification: any; mobile: any; email: any; joiningDate: string | number | Date;
+    }, index: any) => [user.name, user.department, user.gender,user.qualification,
+      user.mobile,
+      user.email,
+      formatDate(new Date(user.joiningDate), 'yyyy-MM-dd', 'en') || '',
+      
+     
+    ]);
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+      
+      
+      
+    });
+
+    // Save or open the PDF
+    doc.save('instrucor-list.pdf');
   }
 
   showNotification(

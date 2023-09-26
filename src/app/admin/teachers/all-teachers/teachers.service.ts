@@ -43,6 +43,7 @@ export class TeachersService extends UnsubscribeOnDestroyAdapter {
       .pipe(
         map((response:any) => {
           return response.data;
+          //this.isTblLoading = false;
         })
       );
   }
