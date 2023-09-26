@@ -113,3 +113,40 @@ export interface ClassListingModel extends Pagination {
   sortBy: string;
   sortByDirection: string;
 }
+
+export interface DataSourceModel {
+  start: string;
+  end: string;
+  instructor: string;
+  lab: string;
+}
+
+export interface CourseTitleModel extends Pagination {
+  _id: string;
+  id: string;
+  title: string;
+
+}
+export interface InstructorList {
+  user_id: InstructorDetail[];
+  instructor_id: String;
+}
+
+export interface InstructorDetail {
+  name: String;
+  last_name: String;
+}
+
+
+
+export interface LabDetail {
+  name: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  id: string;
+}
+export interface LabListModel {
+  docs: LabDetail[];
+}

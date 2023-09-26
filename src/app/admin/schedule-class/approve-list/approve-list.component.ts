@@ -1,15 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ClassService } from '../class.service';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Session, Student, StudentApproval, StudentPaginationModel } from '../class.model';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import {
+  ClassModel,
+  Session,
+  Student,
+  StudentApproval,
+  StudentPaginationModel,
+} from '../class.model';
 import * as moment from 'moment';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-approve-list',
   templateUrl: './approve-list.component.html',
-  styleUrls: ['./approve-list.component.scss']
+  styleUrls: ['./approve-list.component.scss'],
 })
 export class ApproveListComponent {
   displayedColumns = [
@@ -31,14 +43,18 @@ export class ApproveListComponent {
     },
   ];
   studentPaginationModel: StudentPaginationModel;
+  selection = new SelectionModel<ClassModel>(true, []);
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   totalItems: any;
   approveData: any;
-  pageSizeArr = [10,20,30,50,100]
-
-  constructor(public _classService: ClassService, private snackBar: MatSnackBar) {
+  pageSizeArr = [10, 20, 30, 50, 100];
+  isLoading = true;
+  constructor(
+    public _classService: ClassService,
+    private snackBar: MatSnackBar
+  ) {
     this.studentPaginationModel = {} as StudentPaginationModel;
     // super();
-
   }
 
   ngOnInit(): void {
@@ -46,23 +62,29 @@ export class ApproveListComponent {
   }
 
   pageSizeChange($event: any) {
-    this.studentPaginationModel.page= $event?.pageIndex + 1;
-    this.studentPaginationModel.limit= $event?.pageSize;
+    this.studentPaginationModel.page = $event?.pageIndex + 1;
+    this.studentPaginationModel.limit = $event?.pageSize;
     this.getRegisteredClasses();
-   }
+  }
 
   getRegisteredClasses() {
     this._classService
-      .getRegisteredClasses(this.studentPaginationModel.page, this.studentPaginationModel.limit, this.studentPaginationModel.filterText)
-      .subscribe((response: { data: StudentPaginationModel; }) => {
-        console.log(response.data.docs)
-        this.studentPaginationModel = response.data;
-      this.mapClassList();
-      this.approveData = response.data.docs;
-      this.totalItems = response.data.totalDocs;
-      })
+      .getRegisteredClasses(
+        this.studentPaginationModel.page,
+        this.studentPaginationModel.limit,
+        this.studentPaginationModel.filterText
+      )
+      .subscribe((response: { data: StudentPaginationModel }) => {
+        if (response) {
+          console.log(response.data.docs);
+          this.isLoading = false;
+          this.studentPaginationModel = response.data;
+          this.mapClassList();
+          this.approveData = response.data.docs;
+          this.totalItems = response.data.totalDocs;
+        }
+      });
   }
-
 
   mapClassList() {
     this.studentPaginationModel.docs.forEach((item: Student) => {
@@ -74,9 +96,15 @@ export class ApproveListComponent {
       });
       const minStartDate = new Date(Math.min.apply(null, startDateArr));
       const maxEndDate = new Date(Math.max.apply(null, endDateArr));
-      item.classStartDate = !isNaN(minStartDate.valueOf()) ? moment(minStartDate).format("YYYY-DD-MM") : "";
-      item.classEndDate = !isNaN(maxEndDate.valueOf()) ? moment(maxEndDate).format("YYYY-DD-MM") : "";
-      item.registeredOn = item.registeredOn ? moment(item.registeredOn).format("YYYY-DD-MM") : "";
+      item.classStartDate = !isNaN(minStartDate.valueOf())
+        ? moment(minStartDate).format('YYYY-DD-MM')
+        : '';
+      item.classEndDate = !isNaN(maxEndDate.valueOf())
+        ? moment(maxEndDate).format('YYYY-DD-MM')
+        : '';
+      item.registeredOn = item.registeredOn
+        ? moment(item.registeredOn).format('YYYY-DD-MM')
+        : '';
       item.studentId.name = `${item.studentId.name} ${item.studentId.last_name}`;
     });
   }
@@ -95,55 +123,59 @@ export class ApproveListComponent {
   }
 
   getCurrentUserId(): string {
-    return JSON.parse(localStorage.getItem("user_data")!).user.id;
+    return JSON.parse(localStorage.getItem('user_data')!).user.id;
   }
 
-  changeStatus(element: Student, status:string) {
+  changeStatus(element: Student, status: string) {
     const item: StudentApproval = {
       approvedBy: this.getCurrentUserId(),
-      approvedOn: moment().format("YYYY-MM-DD"),
+      approvedOn: moment().format('YYYY-MM-DD'),
       classId: element.classId._id,
       status,
       studentId: element.studentId.id,
-      session: this.getSessions(element)
+      session: this.getSessions(element),
     };
-    this._classService.saveApprovedClasses(element.id, item).subscribe((_response:any) => {
-      // Swal.fire({
-      //   title: 'Success',
-      //   text: 'Course approved successfully.',
-      //   icon: 'success',
-      //   confirmButtonColor: '#526D82',
-      // });
+    this._classService
+      .saveApprovedClasses(element.id, item)
+      .subscribe((_response: any) => {
+        // Swal.fire({
+        //   title: 'Success',
+        //   text: 'Course approved successfully.',
+        //   icon: 'success',
+        //   confirmButtonColor: '#526D82',
+        // });
 
+        this.showNotification(
+          'snackbar-success',
+          ' Course approved successfully...!!!',
+          'top',
+          'right'
+        );
+        this.getRegisteredClasses();
+      });
+    () => {
       this.showNotification(
-        'snackbar-success',
-        ' Course approved successfully...!!!',
+        'snackbar-danger',
+        ' Failed to approve course. Please try again...!!!',
         'top',
         'right'
       );
-      this.getRegisteredClasses();
-    });
-    () => {
-          this.showNotification(
-            'snackbar-danger',
-            ' Failed to approve course. Please try again...!!!',
-            'top',
-            'right'
-          );
-        };
+    };
   }
 
-   Status(element: Student, status:string) {
-      const item: StudentApproval = {
-        approvedBy: this.getCurrentUserId(),
-        approvedOn: moment().format("YYYY-MM-DD"),
-        classId: element.classId._id,
-        status,
-        studentId: element.studentId.id,
-        session: this.getSessions(element)
-      };
+  Status(element: Student, status: string) {
+    const item: StudentApproval = {
+      approvedBy: this.getCurrentUserId(),
+      approvedOn: moment().format('YYYY-MM-DD'),
+      classId: element.classId._id,
+      status,
+      studentId: element.studentId.id,
+      session: this.getSessions(element),
+    };
 
-      this._classService.saveApprovedClasses(element.id, item).subscribe((response:any) => {
+    this._classService
+      .saveApprovedClasses(element.id, item)
+      .subscribe((response: any) => {
         this.showNotification(
           'snackbar-success',
           ' Course Withdraw successfully...!!!',
@@ -152,17 +184,36 @@ export class ApproveListComponent {
         );
         this.getRegisteredClasses();
       });
-      () => {
-            this.showNotification(
-              'snackbar-success',
-              ' Failed to approve course. Please try again.',
-              'top',
-              'right'
-            );
-          };
-    }
+    () => {
+      this.showNotification(
+        'snackbar-success',
+        ' Failed to approve course. Please try again.',
+        'top',
+        'right'
+      );
+    };
+  }
 
-  getSessions(element: { classId: { sessions: any[]; }; }) {
+  private refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.approveData.length;
+    return numSelected === numRows;
+  }
+
+   /** Selects all rows if they are not all selected; otherwise clear selection. */
+   masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.approveData.forEach((row: ClassModel) =>
+          this.selection.select(row)
+        );
+  }
+
+  getSessions(element: { classId: { sessions: any[] } }) {
     const sessions = element.classId?.sessions?.map((_: any, index: number) => {
       const session: Session = {} as Session;
       session.sessionNumber = index + 1;

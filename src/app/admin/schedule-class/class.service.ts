@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { CoursePaginationModel } from "@core/models/course.model";
 import { BehaviorSubject, Observable, map } from "rxjs";
-import { ClassListingModel, ClassModel, StudentApproval } from "./class.model";
+import { ClassListingModel, ClassModel, CourseTitleModel, InstructorList, LabListModel, StudentApproval } from "./class.model";
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import { ApiResponse } from "@core/models/response";
 
@@ -73,6 +73,74 @@ export class ClassService extends UnsubscribeOnDestroyAdapter {
       })
     );
   }
+//getById
+  getClassById(id: string) {
+    const apiUrl = `${this.prefix}admin/class/${id}`;
+    return this.http.get<any>(apiUrl).pipe(map((response) => response.data));
+  }
+  //delete
+  deleteClass(id: any): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${environment.apiUrl}admin/class/${id}`).pipe(
+      map((response) => {
+        return response.data;
+      })
+    );
+  }
+  //update
+  updateClass(id: string, formData: any): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/class/${id}`;
+    return this.http.put<ApiResponse>(apiUrl, formData).pipe(
+      map((response) => {
+        return response.data;
+      })
+    );
+  }
+//getAllTitle
+getAllCoursesTitle(status: string): Observable<CourseTitleModel[]> {
+  const apiUrl = `${this.prefix}admin/courses-new/title?status=${status}`;
+  return this.http.get<ApiResponse>(apiUrl).pipe(map((response) => response.data));
+}
+//getAllInstructor
+getAllInstructor(): Observable<InstructorList[]> {
+  const apiUrl = `${this.prefix}admin/instructor/name/`;
+  return this.http.get<ApiResponse>(apiUrl).pipe(map((response) => response.data));
+}
+//getAllLab
+getAllLaboratory(): Observable<LabListModel[]> {
+  const apiUrl = `${this.prefix}admin/laboratory`;
+  return this.http
+    .get<ApiResponse>(apiUrl, { params: this.buildParams() })
+    .pipe(map((response) => response.data?.docs));
+}
+validateLaboratory(
+  id?: string,
+  startdate?: string,
+  enddate?: string,
+  starttime?: string,
+  endtime?: string
+): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}admin/class/lab/${id}/check-available?sessionStartDate=${startdate}&sessionStartTime=${starttime}&sessionEndDate=${enddate}&sessionEndTime=${endtime}`;
+  return this.http.get<ApiResponse>(apiUrl).pipe(map((response) => response));
+}
+
+validateInstructor(
+  id?: string,
+  startdate?: string,
+  enddate?: string,
+  starttime?: string,
+  endtime?: string
+): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}admin/class/instructor/${id}/check-available?sessionStartDate=${startdate}&sessionStartTime=${starttime}&sessionEndDate=${enddate}&sessionEndTime=${endtime}`;
+  return this.http.get<ApiResponse>(apiUrl).pipe(map((response) => response));
+}
+saveClass(formData: any): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}admin/class/`;
+  return this.http.post<ApiResponse>(apiUrl, formData).pipe(
+    map((response) => {
+      return response.data;
+    })
+  );
+}
 }
 
 

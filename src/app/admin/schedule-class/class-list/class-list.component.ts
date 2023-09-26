@@ -10,6 +10,8 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { MatPaginator } from '@angular/material/paginator';
 // import { fromEvent } from 'rxjs';
 import { UnsubscribeOnDestroyAdapter } from '@shared/UnsubscribeOnDestroyAdapter';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-class-list',
@@ -40,7 +42,7 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
   isLoading = true;
   pageSizeArr = [10, 20, 50, 100]
 
-  constructor(public _classService: ClassService, private snackBar: MatSnackBar) {
+  constructor(public _classService: ClassService, private snackBar: MatSnackBar,private _router: Router) {
 
     super();
     this.coursePaginationModel = {};
@@ -165,7 +167,34 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
       'right'
     );
   }
-
-
+  //edit
+  editClass(id:string){
+    this._router.navigate([`admin/schedule/create-class`], { queryParams: {id: id}});
+  }
+  //delete
+  delete(id: string) {
+    console.log(id)
+    this._classService.getClassList({ courseId: id }).subscribe((classList: any) => {
+      const matchingClasses = classList.docs.filter((classItem: any) => {
+        return classItem.courseId && classItem.courseId.id === id;
+      });
+      if (matchingClasses.length > 0) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Classes have been registered with this course. Cannot delete.',
+          icon: 'error',
+        });
+        return;
+      }
+      this._classService.deleteClass(id).subscribe(() => {
+        Swal.fire({
+          title: 'Success',
+          text: 'Course deleted successfully.',
+          icon: 'success',
+        });
+        this.getClassList();
+      });
+    });
+  }
 
 }

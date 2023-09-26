@@ -60,6 +60,7 @@
       "LIST": {
         "ALL-CLASS": "Class List",
         "CREATE-CLASS": "Create Class",
+        "EDIT-CLASS":"Edit Class",
         "APPROVE-LIST": "Approve List",
         "COMPLETION-LIST": "Completion List"
       }
