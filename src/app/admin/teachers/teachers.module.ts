@@ -11,6 +11,9 @@ import { AboutTeacherComponent } from './about-teacher/about-teacher.component';
 import { TeachersService } from './all-teachers/teachers.service';
 import { SharedModule } from '@shared';
 import { ComponentsModule } from '@shared/components/components.module';
+import { VideoResourceComponent } from './video-resource/video-resource.component';
+import { ArticleComponent } from './article/article.component';
+import { AgreementTCComponent } from './agreement-t-c/agreement-t-c.component';
 @NgModule({
   declarations: [
     AllTeachersComponent,
@@ -19,6 +22,9 @@ import { ComponentsModule } from '@shared/components/components.module';
     AddTeacherComponent,
     EditTeacherComponent,
     AboutTeacherComponent,
+    VideoResourceComponent,
+    ArticleComponent,
+    AgreementTCComponent,
   ],
   imports: [
     CommonModule,

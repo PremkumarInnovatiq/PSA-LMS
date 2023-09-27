@@ -737,7 +737,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/teachers/video-resource',
         title: 'Video Resources',
         iconType: '',
         icon: '',
@@ -749,7 +749,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/teachers/article',
         title: 'Articles',
         iconType: '',
         icon: '',
@@ -761,7 +761,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/teachers/agreement-t-c',
         title: 'Agreement T & C',
         iconType: '',
         icon: '',
