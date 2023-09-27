@@ -16,6 +16,7 @@ import {
   Role,
   AuthService,
 } from '@core';
+import { AuthenService } from '@core/service/authen.service';
 
 interface Notifications {
   message: string;
@@ -45,6 +46,8 @@ export class HeaderComponent
   isOpenSidebar?: boolean;
   docElement?: HTMLElement;
   isFullScreen = false;
+  userFullName: any;
+  userType!: Role;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -54,7 +57,8 @@ export class HeaderComponent
     private configService: ConfigService,
     private authService: AuthService,
     private router: Router,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    private authenService:AuthenService
   ) {
     super();
   }
@@ -115,6 +119,21 @@ export class HeaderComponent
     },
   ];
   ngOnInit() {
+    if (this.authenService.currentUserValue) {
+      const userRole = this.authenService.currentUserValue.user.role;
+      this.userFullName =
+        this.authenService.currentUserValue.user.name 
+      this.userImg = this.authenService.currentUserValue.user.avatar;
+      if (userRole === Role.Admin) {
+        this.userType = Role.Admin;
+      } else if (userRole === Role.Instructor) {
+        this.userType = Role.Instructor;
+      } else if (userRole === Role.Student) {
+        this.userType = Role.Student;
+      } else {
+        this.userType = Role.Admin;
+      }
+    }
     this.config = this.configService.configData;
 
     const userRole = this.authService.currentUserValue.role;
