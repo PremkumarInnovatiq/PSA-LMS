@@ -1,5 +1,4 @@
 
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -113,20 +112,7 @@ export class CreateClassComponent {
       }
     });
 
-    this.classForm = this._fb.group({
-      courseId: ['', Validators.required],
-      classType: [''],
-      classDeliveryType: ['', Validators.required],
-      instructorCost: ['', Validators.required],
-      currency: [''],
-      minimumEnrollment: ['', Validators.required],
-      maximumEnrollment: ['', Validators.required],
-      classStartDate: [''],
-      status: ['open'],
-      isGuaranteedToRun: ['false', Validators.required],
-      externalRoom: ['false', Validators.required],
-      sessions: [''],
-    });
+
 
 
 
@@ -140,9 +126,33 @@ export class CreateClassComponent {
     this.status = !this.status;
   }
 
+
+
+
   ngOnInit(): void {
-    // this.loadForm();
     this.loadClassList(this.classId);
+    this.classForm = this._fb.group({
+      courseId: ['', Validators.required],
+      classType: [''],
+      classDeliveryType: ['', Validators.required],
+      instructorCost: ['', Validators.required],
+      currency: [''],
+      minimumEnrollment: ['', Validators.required],
+      maximumEnrollment: ['', Validators.required],
+      classStartDate: [''],
+      status: ['open'],
+      isGuaranteedToRun: ['false', Validators.required],
+      externalRoom: ['false', Validators.required],
+      sessions:[''] ,
+    });
+    this.InstructorForm = this._fb.group({
+      start_date:[''],
+      end_date:[''],
+      instructor:[''],
+      lab:['']
+    })
+    // this.loadForm();
+    // this.loadClassList(this.classId);
     forkJoin({
       courses: this._classService.getAllCoursesTitle('active'),
       instructors: this._classService.getAllInstructor(),
@@ -152,46 +162,13 @@ export class CreateClassComponent {
       this.instructorList = response.instructors;
       this.labList = response.labs;
 
-      // this.cd.detectChanges();
+      this.cd.detectChanges();
     });
 
 
-    this.InstructorForm = this._fb.group({
-      instructor : new FormArray([
-        new FormGroup({
-          start_date:new FormControl(''),
-          end_date: new FormControl(''),
-          instructor: new FormControl(''),
-          lab: new FormControl(''),
-        })
-      ])
 
-    });
-
-
+    // this.addInst();
   }
-
-  get instructor(): FormArray {
-    return this.InstructorForm.get('instructor') as FormArray;
-  }
-
-  addInstructorLab() {
-    this.instructor.push(
-      new FormGroup({
-        name: new FormControl(''),
-        address: new FormControl(''),
-        number: new FormControl(''),
-        email: new FormControl('')
-      })
-    );
-  }
-
-
-  // deleteRecord(index: number) {
-  //   console.log(index)
-  //   this.instructor.clear();
-  //   // this.dataSource = this.dataSourceArray;
-  // }
 
   loadClassList(id:string) {
     this._classService.getClassById(id).subscribe((response) => {
@@ -210,20 +187,17 @@ export class CreateClassComponent {
         status: item?.status,
         sessions: item?.sessions,
       });
-      if (this.sessions) {
+      console.log("add",item.sessions)
         item.sessions.forEach((item: any) => {
           this.InstructorForm.patchValue({
             start_date: `${moment(item.sessionStartDate).format(
               'YYYY-MM-DD'
-            )}T${item.sessionStartTime}`,
-            end_date: `${moment(item.sessionEndDate).format('YYYY-MM-DD')}T${
-              item.sessionEndTime
-            }`,
+            )}`,
+            end_date: `${moment(item.sessionEndDate).format('YYYY-MM-DD')}`,
             instructor: item.instructorId?.id,
             lab: item.laboratoryId?.id,
           });
         });
-      }
     });
   }
 
@@ -240,25 +214,6 @@ export class CreateClassComponent {
       panelClass: colorName,
     });
   }
-  // loadForm() {
-  //   this.classForm = this._fb.group({
-  //     courseId: ["", [Validators.required]],
-  //     classType: ["public"],
-  //     classDeliveryType: ["", Validators.required],
-  //     instructorCost: ["", Validators.required],
-  //     instructorCostCurrency: ["USD"],
-  //     currency: [""],
-  //     isGuaranteedToRun:[false,Validators.required],
-  //     externalRoom:[false,Validators.required],
-  //     minimumEnrollment: ["", Validators.required],
-  //     maximumEnrollment: ["", Validators.required],
-  //     status: ["open"],
-  //     classStartDate: ["2023-05-20"],
-  //     classEndDate: ["2023-06-10"],
-  //     sessions: ["", Validators.required],
-  //   });
-  // }
-
   getSession() {
     console.log('inst', this.InstructorForm);
 
@@ -460,3 +415,5 @@ export class CreateClassComponent {
     });
   }
 }
+
+
