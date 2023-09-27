@@ -76,7 +76,9 @@ export class CreateCategoriesComponent implements OnInit{
   }
   ngOnInit(): void {
     // this.fetchSubCategories();
+    if(this.editUrl){
     this.getData();
+    }
     this.initMainCategoryForm();
     this.initSubCategoryForm();
     this.addSubCategoryField();

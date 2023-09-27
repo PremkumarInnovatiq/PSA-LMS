@@ -12,6 +12,7 @@ import { CourseService } from '@core/service/course.service';
 import { forkJoin } from 'rxjs';
 import { CertificateService } from '@core/service/certificate.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
@@ -57,6 +58,7 @@ export class AddCourseComponent implements OnInit {
   courseId!: string;
   subscribeParams: any;
   mode: string = 'editUrl';
+  public Editor: any = ClassicEditor;
 
   breadscrums = [
     {
@@ -96,24 +98,24 @@ export class AddCourseComponent implements OnInit {
     }
    
       this.firstFormGroup = this._formBuilder.group({
-        title: ['', [Validators.required]],
-        courseCode: ['', [Validators.required]],
+        title: ['', [Validators.required,Validators.pattern(/^[a-zA-Z ]/)]],
+        courseCode: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9]/)]],
         main_category: ['', [Validators.required]],
         sub_category: ['', [Validators.required]],
-        fee: new FormControl('',[Validators.required]),
-        currency_code: new FormControl('',[Validators.required]),
-        course_duration_in_days: new FormControl('',[Validators.required]),
-        training_hours: new FormControl('',[Validators.required]),        
-        skill_connect_code: new FormControl('',[Validators.required]),
-        course_description: new FormControl('',[Validators.required]),
-        course_detailed_description: new FormControl('',[Validators.required]),
+        fee: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
+        currency_code: new FormControl('',[]),
+        course_duration_in_days: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
+        training_hours: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),        
+        skill_connect_code: new FormControl('',[Validators.maxLength(20)]),
+        course_description: new FormControl('',[ Validators.maxLength(100)]),
+        course_detailed_description: new FormControl('',[]),
       });
       this.secondFormGroup = this._formBuilder.group({
-        pdu_technical: new FormControl('',[Validators.required]),
-      pdu_leadership: new FormControl('',[Validators.required]),
-      pdu_strategic: new FormControl('',[Validators.required]),
+        pdu_technical: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
+      pdu_leadership: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
+      pdu_strategic: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
       image_link: new FormControl('', [Validators.maxLength(255)]),
-      website_link: new FormControl('', []),
+      website_link: new FormControl('', [Validators.pattern(/^(https?:\/\/)?(www\.)?[a-zA-Z0-9]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/)]),
       funding_grant: new FormControl('',[Validators.required]),
       survey: new FormControl('',[Validators.required]),
       id: new FormControl(''),
@@ -229,20 +231,20 @@ mainCategoryChange(): void {
     );
 }
 
-  onFileUpload(event:any) {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('files', file);
-  
-    this.certificateService.uploadCourseThumbnail(formData).subscribe((response:any) => {
-      this.image_link = response.image_link;
-      this.uploaded=this.image_link.split('/')
-      this.uploadedImage = this.uploaded.pop();
-      this.firstFormGroup.patchValue({
-        // image_link: response,
-      });
+onFileUpload(event:any) {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append('files', file);
+
+  this.certificateService.uploadCourseThumbnail(formData).subscribe((response:any) => {
+    this.image_link = response.image_link;
+    this.uploaded=this.image_link.split('/')
+    this.uploadedImage = this.uploaded.pop();
+    this.firstFormGroup.patchValue({
+      // image_link: response,
     });
-  }
+  });
+}
 
 
   onFileChange(event: any) {

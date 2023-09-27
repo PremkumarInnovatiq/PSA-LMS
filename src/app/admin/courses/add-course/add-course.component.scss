@@ -96,6 +96,8 @@ font-weight: 500;
 .mandatory{
   color: red;
 }
+
+// mat-stepper-icon & horizontal styling
 ::ng-deep.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before { 
   border-top-width: 3px!important;
   border-top-color: #6777ef;
@@ -111,4 +113,55 @@ font-weight: 500;
 }
 ::ng-deep .mat-step-header .mat-step-icon-selected {
   background-color: #6777ef; 
+}
+
+// ckeditor styling
+:host ::ng-deep .ck-editor__editable_inline {
+  --mdc-outlined-text-field-container-shape : 12px;
+  min-height: 150px;
+}
+::ng-deep .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+  border-radius: var(--ck-border-radius);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+::ng-deep .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+  border-radius: var(--ck-border-radius);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.file-drop-area {
+  border: 1px dashed #7c7db3;
+  border-radius: 15px;
+  position: relative;
+  max-width: 100%;
+  margin-top: 5px;
+  padding: 26px 20px 30px;
+  transition: 0.2s;
+}
+.file-drop-area button{
+  border-radius: 12px;
+}
+.file{
+ text-align: center;
+}
+.file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+.file-msg {
+  display: inline-block;
+  margin-left: 20px;
+  vertical-align: middle;
+  font-size: 12px;
+  font-weight: 500;
+  // color: #5b5bff;
+}
+h5{
+  padding-top: 10px;
 }

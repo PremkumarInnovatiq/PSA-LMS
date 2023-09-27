@@ -38,7 +38,7 @@ export class Dashboard2Component implements OnInit {
     {
       title: 'Dashboad',
       items: [],
-      active: 'Dashboard 2',
+      active: 'Instructor Analytics',
     },
   ];
   instructors: any;

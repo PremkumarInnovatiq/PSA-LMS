@@ -26,25 +26,24 @@
                           <!-- <mat-label>Course Name</mat-label> -->
 
                           <input matInput formControlName="title" placeholder="Enter Course Name" [readonly]="isInputReadonly()" required>
-                          <mat-error 
-                          *ngIf="
-                          firstFormGroup.get('title')?.hasError('required') ||
-                          firstFormGroup.get('title')?.touched
-                          ">
+                          <mat-error *ngIf="firstFormGroup.get('title')?.hasError('required')">
                             Course name is required
                           </mat-error>
+                          <mat-error  *ngIf="firstFormGroup.get('title')?.hasError('pattern') && firstFormGroup.get('title')?.touched">
+                            Enter a valid Course name
+                           </mat-error>
                         </mat-form-field>
                       </div>
                       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                         <label>Course Code <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="courseCode"  placeholder="Enter Course Code" [readonly]="isInputReadonly()" required>
-                          <mat-error *ngIf="
-                        firstFormGroup.get('courseCode')?.hasError('required') ||
-                        firstFormGroup.get('courseCode')?.touched
-                        ">
-                          Course code is required
-                      </mat-error>
+                          <mat-error *ngIf="firstFormGroup.get('courseCode')?.hasError('required')">
+                            Course code is required
+                          </mat-error>
+                          <mat-error  *ngIf="firstFormGroup.get('courseCode')?.hasError('pattern') && firstFormGroup.get('courseCode')?.touched">
+                            Enter a valid Course code
+                           </mat-error>
                         </mat-form-field>
                         
                       </div>
@@ -89,24 +88,24 @@
                         <label>Days</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput type="number" formControlName="course_duration_in_days" [readonly]="isInputReadonly()"  placeholder="Enter Days">
-                          <mat-error *ngIf="
-                          firstFormGroup.get('course_duration_in_days')?.hasError('required') ||
-                          firstFormGroup.get('course_duration_in_days')?.touched
-                          ">
-                          Enter Days
-                        </mat-error>
+                          <!-- <mat-error *ngIf="firstFormGroup.get('course_duration_in_days')?.hasError('required')">
+                           Enter Days
+                          </mat-error> -->
+                          <mat-error  *ngIf="firstFormGroup.get('course_duration_in_days')?.hasError('pattern') && firstFormGroup.get('course_duration_in_days')?.touched">
+                            Enter Digits
+                           </mat-error>
                         </mat-form-field>
                       </div>
                       <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-2">
                         <label>Training Hours</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="training_hours" type="number" [readonly]="isInputReadonly()" placeholder="Enter Training Days">
-                          <mat-error *ngIf="
-                          firstFormGroup.get('training_hours')?.hasError('required') ||
-                          firstFormGroup.get('training_hours')?.touched
-                          ">
-                          Enter Training
-                        </mat-error>
+                          <!-- <mat-error *ngIf="firstFormGroup.get('training_hours')?.hasError('required')">
+                            Enter Training Hours
+                           </mat-error> -->
+                           <mat-error  *ngIf="firstFormGroup.get('training_hours')?.hasError('pattern') && firstFormGroup.get('training_hours')?.touched">
+                             Enter Digits
+                            </mat-error>
                         </mat-form-field>
                         
                       </div>
@@ -114,12 +113,12 @@
                         <label>Fees</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="fee" type="number" [readonly]="isInputReadonly()" placeholder="Enter Fees">
-                          <mat-error *ngIf="
-                          firstFormGroup.get('fee')?.hasError('required') ||
-                          firstFormGroup.get('fee')?.touched
-                          ">
-                          Enter Fees
-                        </mat-error>
+                          <!-- <mat-error *ngIf="firstFormGroup.get('fee')?.hasError('required')">
+                            Enter Days
+                           </mat-error> -->
+                           <mat-error  *ngIf="firstFormGroup.get('fee')?.hasError('pattern') && firstFormGroup.get('fee')?.touched">
+                             Enter Digits
+                            </mat-error>
                         </mat-form-field>
                        
                       </div>
@@ -152,12 +151,12 @@
                         <label>Skill Connect Code</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="skill_connect_code" [readonly]="isInputReadonly()" placeholder="Enter Skill Connect Code">
-                          <mat-error *ngIf="
-                          firstFormGroup.get('skill_connect_code')?.hasError('required') ||
-                          firstFormGroup.get('skill_connect_code')?.touched
-                          ">
-                          Enter Skill Connect Code
-                        </mat-error>
+                          <!-- <mat-error *ngIf="firstFormGroup.get('skill_connect_code')?.hasError('maxLength')">
+                            Enter Days
+                           </mat-error> -->
+                           <mat-error  *ngIf="firstFormGroup.get('skill_connect_code')?.hasError('maxLength') && firstFormGroup.get('skill_connect_code')?.touched">
+                             Enter Skill Connect Code
+                            </mat-error>
                         </mat-form-field>
                         
                       </div>
@@ -165,27 +164,24 @@
                         <label>Description</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="course_description" [readonly]="isInputReadonly()" placeholder="Enter Description">
-                          <mat-error *ngIf="
-                          firstFormGroup.get('course_description')?.hasError('required') ||
-                          firstFormGroup.get('course_description')?.touched
-                          ">
-                          Enter Description
-                        </mat-error>
+                          <mat-error  *ngIf="firstFormGroup.get('course_description')?.hasError('maxLength') && firstFormGroup.get('course_description')?.touched">
+                            Enter Description
+                           </mat-error>
                         </mat-form-field>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                         <label>Course Detailed Description</label>
-                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <ckeditor [editor]="Editor" formControlName="course_detailed_description" ></ckeditor>
+                        <!-- <mat-form-field class="example-full-width mb-3" appearance="outline">
+                          <ckeditor [editor]="Editor" ></ckeditor>
                           <input matInput formControlName="course_detailed_description" [readonly]="isInputReadonly()">
-                          <mat-error *ngIf="
-                          firstFormGroup.get('course_detailed_description')?.hasError('required') ||
-                          firstFormGroup.get('course_detailed_description')?.touched
-                          ">
+                          <mat-error  *ngIf="firstFormGroup.get('course_detailed_description')?.hasError('maxLength') && firstFormGroup.get('course_detailed_description')?.touched">
+                           
                           Enter Course Detailed Description
                         </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
                       </div>
 
                     </div>
@@ -216,11 +212,8 @@
                         <label>PDU Technical</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="pdu_technical" [readonly]="isInputReadonly()">
-                          <mat-error *ngIf="
-                          secondFormGroup.get('pdu_technical')?.hasError('required') ||
-                          secondFormGroup.get('pdu_technical')?.touched
-                          ">
-                          Enter PDU Technical
+                          <mat-error  *ngIf="secondFormGroup.get('pdu_technical')?.hasError('pattern') && secondFormGroup.get('pdu_technical')?.touched">
+                           Enter Digits
                         </mat-error>
                         </mat-form-field>
                        
@@ -229,11 +222,9 @@
                         <label>PDU Leadership</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="pdu_leadership" [readonly]="isInputReadonly()">
-                          <mat-error *ngIf="
-                          secondFormGroup.get('pdu_leadership')?.hasError('required') ||
-                          secondFormGroup.get('pdu_leadership')?.touched
-                          ">
-                          Enter PDU Leadership
+                          <mat-error  *ngIf="secondFormGroup.get('pdu_leadership')?.hasError('pattern') && secondFormGroup.get('pdu_leadership')?.touched">
+                           
+                          Enter Digits
                         </mat-error>
                         </mat-form-field>
                        
@@ -242,11 +233,8 @@
                         <label>PDU Startegic</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="pdu_strategic" [readonly]="isInputReadonly()">
-                          <mat-error *ngIf="
-                          secondFormGroup.get('pdu_strategic')?.hasError('required') ||
-                          secondFormGroup.get('pdu_strategic')?.touched
-                          ">
-                          Enter PDU Strategic
+                          <mat-error  *ngIf="secondFormGroup.get('pdu_strategic')?.hasError('pattern') && secondFormGroup.get('pdu_strategic')?.touched">
+                          Enter Digits
                         </mat-error>
                         </mat-form-field>
                       </div>
@@ -254,7 +242,14 @@
                     <div class="row" *ngIf=!viewUrl>
                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
                         <label>Thumbnail</label>
-                        <app-file-upload formControlName="image_link" (change)="onFileUpload($event)"></app-file-upload>
+                        <div class="file-drop-area">
+                          <div class="file">
+                          <button mat-raised-button color="primary">Choose file</button>
+                          <span class="file-msg"><h5>{{uploadedImage ? uploadedImage : 'Drag and Drop File Here' }}</h5></span>
+                          <input formControlName="image_link" (change)="onFileUpload($event)" [readonly]="isInputReadonly()" class="file-input" type="file">
+                          </div>
+                        </div>
+                        <!-- <app-file-upload formControlName="image_link" (change)="onFileUpload($event)"></app-file-upload> -->
                       </div>
                     </div>
                     <div *ngIf="viewUrl" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
@@ -266,10 +261,7 @@
                         <label>Website Link</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <input matInput formControlName="website_link" placeholder="www" [readonly]="isInputReadonly()">
-                          <mat-error *ngIf="
-                          secondFormGroup.get('website_link')?.hasError('required') ||
-                          secondFormGroup.get('website_link')?.touched
-                          ">
+                          <mat-error  *ngIf="secondFormGroup.get('website_link')?.hasError('pattern') && secondFormGroup.get('website_link')?.touched">
                           Enter Website
                         </mat-error>
                         </mat-form-field>

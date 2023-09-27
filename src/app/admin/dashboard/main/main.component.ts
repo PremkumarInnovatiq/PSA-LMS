@@ -59,7 +59,7 @@ export class MainComponent implements OnInit {
     {
       title: 'Dashboad',
       items: [],
-      active: 'Dashboard 1',
+      active: 'Student Analytics',
     },
   ];
   count: any;
