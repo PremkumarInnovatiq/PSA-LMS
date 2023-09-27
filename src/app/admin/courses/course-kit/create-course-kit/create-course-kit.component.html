@@ -1,0 +1,145 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header" *ngFor="let breadscrum of breadscrums">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+            </app-breadcrumb>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <!-- <h2>Create Course</h2> -->
+
+                    </div>
+                    <form [formGroup]="courseKitForm" (ngSubmit)="submitCourseKit()">
+                        <div class="body m-4">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Course Name <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="name"
+                                            class="form-control"  [readonly]="isInputReadonly()" required>
+                                        <mat-error *ngIf="courseKitForm.get('name')?.hasError('required')">
+                                            Enter Course Name
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Document Link<span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="documentLink"
+                                            class="form-control"  [readonly]="isInputReadonly()" required>
+                                        <mat-error *ngIf="courseKitForm.get('documentLink')?.hasError('required')">
+                                            Enter Document link
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Short Description</label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="shortDescription"
+                                            class="form-control"  [readonly]="isInputReadonly()" >
+                                        <mat-error *ngIf="courseKitForm.get('shortDescription')?.hasError('required')">
+                                            Enter Short Description
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Long Description</label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="longDescription"
+                                            class="form-control"  [readonly]="isInputReadonly()">
+                                        <mat-error *ngIf="courseKitForm.get('longDescription')?.hasError('required')">
+                                            Enter Long Description
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf=!viewUrl>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                                  <label>Upload Video</label>
+                                  <app-file-upload formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)"></app-file-upload>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Video Start Date</label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+                                        <input
+                                        matInput
+                                        [owlDateTimeTrigger]="date"
+                                        [owlDateTime]="date"
+                                        formControlName="startDate"
+                                      />
+                                      <mat-icon
+                                        matSuffix
+                                        [owlDateTimeTrigger]="date"
+                                        class="date-icon"
+                                        >today</mat-icon
+                                      >
+                                      <owl-date-time #date></owl-date-time>
+                                        
+                                        <!-- <mat-error *ngIf="courseKitForm.get('startDate')?.hasError('required')">
+                                            Enter Course Name
+                                        </mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Video End Date<span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+                                        <input
+                                        matInput
+                                        [owlDateTimeTrigger]="date"
+                                        [owlDateTime]="date"
+                                        formControlName="endDate"
+                                      />
+                                      <mat-icon
+                                        matSuffix
+                                        [owlDateTimeTrigger]="date"
+                                        class="date-icon"
+                                        >today</mat-icon
+                                      >
+                                      <owl-date-time #date></owl-date-time>
+                                        
+                                        <mat-error *ngIf="courseKitForm.get('endDate')?.hasError('required')">
+                                            End Date should be greater than Start Date.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </form>
+                    <div class="row body">
+                        <div class="col-md-8">
+                          <button mat-button id="back" [routerLink]="['/admin/courses/course-kit']">Back</button>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="d-grid gap-4 d-md-flex">
+                          <button *ngIf="editUrl  || viewUrl" type="button"  id="cancel" [routerLink]="['/admin/courses/course-kit']">Cancel</button>
+                          <button mat-button *ngIf="!editUrl  && !viewUrl" id="submit" (click)="submitCourseKit()" >Submit</button>
+                          <button mat-button *ngIf="editUrl  && !viewUrl" id="save" (click)="submitCourseKit()"> Save </button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

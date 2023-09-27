@@ -16,6 +16,8 @@ import { CreateCategoriesComponent } from './categories/create-categories/create
 
 import { VideoPlayerComponent } from './course-kit/video-player/video-player.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CreateCourseKitComponent } from './course-kit/create-course-kit/create-course-kit.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CreateCategoriesComponent,
 
     VideoPlayerComponent,
+    CreateCourseKitComponent,
 
   ],
   imports: [
@@ -41,6 +44,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     SharedModule,
     MatStepperModule,
     ModalModule.forRoot(),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
 })
 export class CoursesModule {}

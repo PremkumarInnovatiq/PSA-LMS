@@ -8,6 +8,7 @@ import { CourseApprovalComponent } from './course-approval/course-approval.compo
 import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CreateCategoriesComponent } from './categories/create-categories/create-categories.component';
+import { CreateCourseKitComponent } from './course-kit/create-course-kit/create-course-kit.component';
 
 const routes: Routes = [
   {
@@ -52,8 +53,20 @@ const routes: Routes = [
   },
   {
     path: 'edit-categories/:id',
-    component:  CreateCategoriesComponent,
-  }
+    component:  CreateCategoriesComponent
+  },
+  {
+    path: 'create-course-kit',
+    component: CreateCourseKitComponent
+  },
+  {
+    path: 'edit-course-kit/:id',
+    component:  CreateCourseKitComponent
+  },
+  {
+    path: 'view-course-kit/:id',
+    component:  CreateCourseKitComponent
+  },
 ];
 
 @NgModule({

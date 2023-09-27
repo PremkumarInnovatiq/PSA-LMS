@@ -140,6 +140,39 @@ export class CourseKitComponent implements OnInit{
     return new Date(dateString);
   }
 
+  deleteItem(item: any) {
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: "Are you sure you want to delete this course kit?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.deleteCourseKit(item._id).subscribe(
+          () => {
+            Swal.fire({
+              title: "Deleted",
+              text: "Course Kit deleted successfully",
+              icon: "success",
+            });
+            this.fetchCourseKits();
+          },
+          (error: { message: any; error: any; }) => {
+            Swal.fire(
+              "Failed to delete course kit",
+              error.message || error.error,
+              "error"
+            );
+          }
+        );
+      }
+    });
+  }
+
   pageSizeChange($event: any) {
     this.coursePaginationModel.page = $event?.pageIndex + 1;
     this.coursePaginationModel.limit = $event?.pageSize;
