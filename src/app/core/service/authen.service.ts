@@ -42,6 +42,7 @@ export class AuthenService {
     return this.http.post<ApiResponse>(loginUrl, body, { headers }).pipe(
       map((response) => {
         localStorage.setItem('currentUser', JSON.stringify(response.data));
+        localStorage.setItem('id', response.data.user.id);
         this.currentUserSubject.next(response.data);
       return response.data;
       },

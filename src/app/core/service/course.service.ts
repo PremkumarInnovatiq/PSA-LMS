@@ -51,8 +51,11 @@ export class CourseService {
     }
     return params;
   }
-
-
+  saveRegisterClass(studentId: any, classId: string) {
+    const apiUrl = `${this.prefix}admin/studentClasses`;
+    return this._Http.post<any>(apiUrl, { studentId: studentId, classId: classId }).pipe(map((response) => response));
+  }
+ 
   getAllCourses(
     filter?: Partial<CoursePaginationModel>
   ): Observable<ApiResponse> {
@@ -194,7 +197,7 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/video/`;
     return this._Http.post(apiUrl, formData);
   }
-  getCourseKitById(id: string) {
+  getCourseKitById(id?: string) {
     const apiUrl = `${this.prefix}admin/course-kit/${id}`;
     return this._Http.get<CourseKit>(apiUrl).pipe(map((response) => response));
   }
@@ -208,6 +211,10 @@ export class CourseService {
   deleteCourseKit(courseKitId: string): Observable<ApiResponse> {
     const apiUrl = `${this.prefix}admin/course-kit/${courseKitId}`;
     return this._Http.delete<ApiResponse>(apiUrl);
+  }
+  getClassList(courseId: string): Observable<any> {
+    const apiUrl = `${this.prefix}admin/class?courseId=${courseId}`;
+    return this._Http.get<any>(apiUrl);
   }
 }
 

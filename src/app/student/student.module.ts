@@ -22,6 +22,9 @@ import { HomeworkService } from './homework/homework.service';
 import { LeaveRequestService as stdLeaveReqService } from './leave-request/leave-request.service';
 import { SharedModule } from '@shared';
 import { ComponentsModule } from '@shared/components/components.module';
+import { CourseComponent } from './course/course.component';
+import { ViewCourseComponent } from './view-course/view-course.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,8 @@ import { ComponentsModule } from '@shared/components/components.module';
     FormDialogComponent,
     TimetableComponent,
     SettingsComponent,
+    CourseComponent,
+    ViewCourseComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +53,8 @@ import { ComponentsModule } from '@shared/components/components.module';
     OwlNativeDateTimeModule,
     ComponentsModule,
     SharedModule,
+    ModalModule.forRoot(),
+
   ],
   providers: [HomeworkService, stdLeaveReqService],
 })

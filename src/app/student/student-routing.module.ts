@@ -6,11 +6,21 @@ import { HomeworkComponent } from './homework/homework.component';
 import { LeaveRequestComponent } from './leave-request/leave-request.component';
 import { TimetableComponent } from './timetable/timetable.component';
 import { SettingsComponent } from './settings/settings.component';
+import { CourseComponent } from './course/course.component';
+import { ViewCourseComponent } from './view-course/view-course.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+  },
+  {
+    path: 'course',
+    component: CourseComponent,
+  },
+  {
+    path: 'view-course/:id',
+    component: ViewCourseComponent,
   },
   {
     path: 'homework',
