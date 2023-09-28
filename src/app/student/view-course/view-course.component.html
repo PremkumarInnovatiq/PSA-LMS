@@ -101,10 +101,17 @@
                           
                             <ng-container matColumnDef="action">
                               <th mat-header-cell *matHeaderCellDef> Action </th>
-                              <td mat-cell *matCellDef="let element">    <button *ngIf="!isRegistered && !isStatus" class="btn btn-primary"
+                              <td mat-cell *matCellDef="let element">  
+                                <button *ngIf="!isRegistered && !isStatus && !isApproved && !isCancelled" class="btn btn-primary"
                                 (click)="registerClass(element._id)">
                                 Register
-                            </button><span *ngIf="isRegistered || isStatus">Registered</span></td>
+                            </button>
+                                
+                            <span  class="badge badge-solid-orange mx-2"*ngIf="isRegistered || isStatus">Registered</span>
+                            <span   class="badge badge-solid-green mx-2"*ngIf="isRegistered || isApproved">Approved</span>
+                            <span    class="badge badge-solid-red mx-2"*ngIf="isRegistered || isCancelled">Cancelled</span>
+
+                          </td>
                             </ng-container>
                           
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -210,7 +217,7 @@
                 </div> -->
               </mat-tab>
   
-              <mat-tab *ngIf="isRegistered || isStatus">
+              <mat-tab *ngIf="isApproved">
                 <ng-template mat-tab-label>
                   <!-- <mat-icon class="example-tab-icon msr-2">settings</mat-icon> -->
                   Coursekit

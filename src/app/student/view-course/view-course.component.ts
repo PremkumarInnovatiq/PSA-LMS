@@ -52,7 +52,10 @@ export class ViewCourseComponent {
   courseId: any;
   courseKitDetails:any;
   studentClassDetails: any;
-  isStatus = false
+  isStatus = false;
+  isApproved = false
+  isCancelled = false
+
   constructor(private classService: ClassService,private activatedRoute:ActivatedRoute,private modalServices:BsModalService, private courseService:CourseService){
     this.subscribeParams = this.activatedRoute.params.subscribe((params) => {
       this.classId = params["id"];
@@ -92,10 +95,17 @@ export class ViewCourseComponent {
     let studentId=localStorage.getItem('id')
     this.courseService.getStudentClass(studentId,this.classId).subscribe((response) => {
       this.studentClassDetails=response.data;
-      if(this.studentClassDetails.status =='registered'){
-        console.log('hi',this.studentClassDetails.status)
+      if(this.studentClassDetails.status =='registered' ){
         this.isRegistered == true;
         this.isStatus=true;
+      }
+      if(this.studentClassDetails.status =='approved' ){
+        this.isRegistered == true;
+        this.isApproved=true;
+      }
+      if(this.studentClassDetails.status =='cancel' ){
+        this.isRegistered == true;
+        this.isCancelled=true;
       }
     });
   }
