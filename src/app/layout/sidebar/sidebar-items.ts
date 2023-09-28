@@ -1329,6 +1329,19 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: '/student/program',
+    title: 'Programs',
+    iconType: 'material-icons-two-tone',
+    icon: 'article',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role: ['Student'],
+    submenu: [],
+  },
+
+  {
     path: '/student/homework',
     title: 'MENUITEMS.STUDENT.LIST.HOMEWORK',
     iconType: 'material-icons-two-tone',

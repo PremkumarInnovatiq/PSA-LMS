@@ -8,6 +8,8 @@ import { TimetableComponent } from './timetable/timetable.component';
 import { SettingsComponent } from './settings/settings.component';
 import { CourseComponent } from './course/course.component';
 import { ViewCourseComponent } from './view-course/view-course.component';
+import { ProgramComponent } from './program/program.component';
+import { ViewProgramComponent } from './view-program/view-program.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,15 @@ const routes: Routes = [
     path: 'view-course/:id',
     component: ViewCourseComponent,
   },
+  {
+    path: 'program',
+    component: ProgramComponent,
+  },
+  {
+    path: 'view-program/:id',
+    component: ViewProgramComponent,
+  },
+
   {
     path: 'homework',
     component: HomeworkComponent,

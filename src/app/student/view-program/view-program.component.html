@@ -1,0 +1,303 @@
+<section  class="content">
+    <div class="content-block">
+      <div class="block-header" *ngFor="let breadscrum of breadscrums">
+        <!-- breadcrumb -->
+        <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+        </app-breadcrumb>
+      </div>
+      <!-- Your content goes here  -->
+      <div class="row clearfix">
+        <div class="col-lg-4 col-md-12">
+          <div  class="card">
+            <div class="m-b-20">
+              <div class="contact-grid">
+                <div class="profile-header bg-dark">
+                  <div class="user-name">{{classDetails?.courseId?.title}}</div>
+                  <div class="name-center">{{classDetails?.courseId?.courseCode}}</div>
+                </div>
+                <img src="{{classDetails?.courseId?.image_link}}" class="user-img" alt="">
+                <p>
+                {{classDetails?.courseId?.course_description}}
+                </p>
+              
+                <div class="row">
+                  <!-- <div class="col-4">
+                    <h5>{{classDetails?.courseId?.course_duration_in_days}}</h5>
+                    <small>Days</small>
+                  </div> -->
+                  <div class="col-6">
+                    <h5>{{classDetails?.courseId?.duration}}</h5>
+                    <small>Training Hours</small>
+                  </div>
+                  <div class="col-6">
+                    <h5>{{classDetails?.courseId?.courseFee}}$</h5>
+                    <small>Fee</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab label="About">
+                <div class="p-4">
+                  <p class="text-default">{{classDetails?.courseId?.course_detailed_description}}</p>
+                
+                  <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                      <b>Delivery </b>
+                      <div class="profile-desc-item float-end">{{classDetails?.classDeliveryType | titlecase}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Program Created </b>
+                      <div class="profile-desc-item float-end">{{classDetails?.createdAt | date}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Program Run </b>
+                      <div class="profile-desc-item float-end">{{classDetails?.isGuaranteedToRun == true?'Yes':'No'}}</div>
+                    </li>
+                    <!-- <li class="list-group-item">
+                      <b>Designation</b>
+                      <div class="profile-desc-item float-end">Sr. Teacher</div>
+                    </li> -->
+                  </ul>
+                </div>
+              </mat-tab>
+            
+            </mat-tab-group>
+          </div>
+        </div>
+  
+        <div class="col-lg-8 col-md-12">
+          <div class="card">
+            <mat-tab-group>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <!-- <mat-icon class="example-tab-icon msr-2">face</mat-icon> -->
+                 Classes
+                </ng-template>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                  
+                    <div class="body">
+                        <table mat-table [dataSource]="dataSource" >
+
+                            <!--- Note that these columns can be defined in any order.
+                                  The actual rendered columns are set as a property on the row definition" -->
+                          
+                            <ng-container matColumnDef="position">
+                              <th mat-header-cell *matHeaderCellDef> Instructor </th>
+                              <td mat-cell *matCellDef="let element"> {{element?.instructorId?.user_id?.name}} </td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef=" Class Start Date ">
+                              <th mat-header-cell *matHeaderCellDef>  Class Start Date  </th>
+                              <td mat-cell *matCellDef="let element"> {{element?.sessionStartDate | date}} </td>
+                            </ng-container>
+                                                      <ng-container matColumnDef=" Class End Date ">
+                              <th mat-header-cell *matHeaderCellDef>  Class End Date  </th>
+                              <td mat-cell *matCellDef="let element"> {{element?.sessionEndDate | date}} </td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="action">
+                              <th mat-header-cell *matHeaderCellDef> Action </th>
+                              <td mat-cell *matCellDef="let element">  
+                                <button *ngIf="!isRegistered && !isStatus && !isApproved && !isCancelled" class="btn btn-primary"
+                                (click)="registerClass(element._id)">
+                                Register
+                            </button>
+                                
+                            <span  class="badge badge-solid-orange mx-2"*ngIf="isRegistered || isStatus">Registered</span>
+                            <span   class="badge badge-solid-green mx-2"*ngIf="isRegistered || isApproved">Approved</span>
+                            <span    class="badge badge-solid-red mx-2"*ngIf="isRegistered || isCancelled">Cancelled</span>
+
+                          </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table>
+                          
+                  
+                      <!-- <p class="m-t-30">{{classDetails?.courseId?.course_detailed_description}}</p> -->
+                      <!-- <br> -->
+                    </div>
+
+                  </div>
+                </div>
+                <div class="p-4">
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                          <b class="badge badge-solid-orange">Compulsory Course </b>
+                        </li>
+                        <li class="list-group-item" *ngFor="let core of classDetails?.courseId?.coreprogramCourse">{{core.coreProgramName}}</li>
+                        <li class="list-group-item">
+                          <b class="badge badge-solid-blue">Elective Course </b>
+                        </li>
+                        <li class="list-group-item" *ngFor="let elective of classDetails?.courseId?.electiveprogramCourse">{{elective.electiveProgramName}}</li>
+
+                    
+                        <!-- <li class="list-group-item">
+                          <b>Designation</b>
+                          <div class="profile-desc-item float-end">Sr. Teacher</div>
+                        </li> -->
+                      </ul>
+                  </div>
+                <div class="p-4">
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                          <b>Skill Connect Code </b>
+                          <div class="profile-desc-item float-end">{{classDetails?.courseId?.skill_connect_code}}</div>
+                        </li>
+                        <li class="list-group-item">
+                          <b>Minimum Enrollment </b>
+                          <div class="profile-desc-item float-end">{{classDetails?.minimumEnrollment}}</div>
+                        </li>
+                        <li class="list-group-item">
+                          <b>Maximum Enrollment </b>
+                          <div class="profile-desc-item float-end">{{classDetails?.maximumEnrollment}}</div>
+                        </li>
+                        <!-- <li class="list-group-item">
+                          <b>Designation</b>
+                          <div class="profile-desc-item float-end">Sr. Teacher</div>
+                        </li> -->
+                      </ul>
+                  </div>
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                    <div class="header">
+                      <h2><strong>Education</strong></h2>
+                    </div>
+                    <div class="body">
+                      <ul>
+                        <li>B.A.,Gujarat University, Ahmedabad,India.</li>
+                        <li>M.A.,Gujarat University, Ahmedabad, India.</li>
+                        <li>P.H.D., Shaurashtra University, Rajkot</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                    <div class="header">
+                      <h2><strong>Experience</strong></h2>
+                    </div>
+                    <div class="body">
+                      <ul>
+                        <li>One year experience as Jr. Teacher from April-2009 to
+                          march-2010 at B. J. Arts College, Ahmedabad.</li>
+                        <li>Three year experience as Jr. Teacher at V.S. Arts &
+                          Commerse Collage from April - 2008 to April -
+                          2011.</li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                    <div class="header">
+                      <h2><strong>Conferences, Cources &amp; Workshop Attended</strong></h2>
+                    </div>
+                    <div class="body">
+                      <ul>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting
+                          industry.
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+              </mat-tab>
+  
+              <mat-tab >
+                <ng-template mat-tab-label>
+                  <!-- <mat-icon class="example-tab-icon msr-2">settings</mat-icon> -->
+                  Programkit
+                </ng-template>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="project_widget">
+                    
+                      <div class="body">
+                          <table mat-table [dataSource]="courseKitDetails" >
+                                    <ng-container matColumnDef="Course Name">
+                                        <th mat-header-cell *matHeaderCellDef>  Program Name  </th>
+                                        <td mat-cell *matCellDef="let row"> {{row?.name}} </td>
+                                      </ng-container>
+                                     
+                                      <!-- Short Description -->
+                                      <ng-container matColumnDef="Short Description">
+                                        <th mat-header-cell *matHeaderCellDef>  Short Description  </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.shortDescription}} </td>
+                                      </ng-container>
+                                       <!-- Long Description -->
+                                       <ng-container matColumnDef="Long Description">
+                                        <th mat-header-cell *matHeaderCellDef>  Long Description  </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.longDescription}} </td>
+                                      </ng-container>
+                                      <!-- Video Link -->
+                                      <ng-container matColumnDef="Video Link" >
+                                        <th mat-header-cell *matHeaderCellDef>Video Link  </th>
+                                        <td mat-cell *matCellDef="let row">   
+                                            <a class="vl-container" *ngFor="let video of row.videoLink; let i = index"
+                                            href="javaScript:void(0)"
+                                            [class.disabled]="parseDate(row.endDate) < currentDate"
+                                            (click)="playVideo(video)">
+                                            {{ video.filename |truncate : 10}}
+                      
+                                            <!-- <img   *ngIf="!(parseDate(row.endDate) < currentDate)"  style="display: inline; float: right;" src="/assets/video-icon.svg"
+                                            alt="">
+                                        <img class="info" [matTooltip]="'This video has ben expired, very soon we will upload latest course video.'"  *ngIf="parseDate(row.endDate) < currentDate"  style="display: inline; float: right;" src="/assets/info.png"
+                                            alt=""> -->
+                                            </a> </td>
+                                        </ng-container>
+                                      <!-- Document Link -->
+                                      <ng-container matColumnDef="Document Link">
+                                        <th mat-header-cell *matHeaderCellDef>Document Link  </th>
+                                        <td mat-cell *matCellDef="let row"> <a href="{{row.documentLink}}" target="_blank"class="dl-container">{{row.documentLink |truncate : 10}}</a> </td>
+                                      </ng-container>
+                            
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                            </table>
+                            
+                    
+                        <p class="m-t-30">{{classDetails?.courseId?.course_detailed_description}}</p>
+                        <br>
+                      </div>
+  
+                    </div>
+                  </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

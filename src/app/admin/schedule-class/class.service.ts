@@ -173,6 +173,27 @@ getProgramRegisteredClasses(page: number, limit: number, filterText? : string): 
   const apiUrl = `${this.prefix}admin/studentClasses/studentApproveList`;
   return this.http.get<any>(apiUrl, { params: this.buildRegisteredClassesParams(page, limit, filterText) });
 }
+
+getProgramClassListWithPagination(
+  filter?:Partial<CoursePaginationModel>): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}admin/program-class/`;
+  return this.http.get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
+}
+
+getProgramClassList(filter?:any): Observable<ClassListingModel> {
+  const apiUrl = `${this.prefix}admin/program-class/`;
+  return this.http.get<ApiResponse>(apiUrl, { params: this.buildParams(filter) }).pipe(
+    map((response:any) => {
+      return response.data;
+    })
+  );
+}
+
+getProgramClassById(id: string) {
+  const apiUrl = `${this.prefix}admin/program-class/${id}`;
+  return this.http.get<any>(apiUrl).pipe(map((response) => response.data));
+}
+
 }
 
 

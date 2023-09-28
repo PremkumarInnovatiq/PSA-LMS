@@ -25,6 +25,8 @@ import { ComponentsModule } from '@shared/components/components.module';
 import { CourseComponent } from './course/course.component';
 import { ViewCourseComponent } from './view-course/view-course.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ProgramComponent } from './program/program.component';
+import { ViewProgramComponent } from './view-program/view-program.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     SettingsComponent,
     CourseComponent,
     ViewCourseComponent,
+    ProgramComponent,
+    ViewProgramComponent,
   ],
   imports: [
     CommonModule,
