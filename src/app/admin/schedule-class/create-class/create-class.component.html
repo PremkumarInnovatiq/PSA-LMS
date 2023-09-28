@@ -235,10 +235,9 @@
             <mat-step [stepControl]="InstructorForm">
               <form [formGroup]="InstructorForm">
                 <ng-template matStepLabel>Instructor & Lab</ng-template>
-                <div class="body" formArrayName="instructor">
+                <div class="body" >
                   <h3>Assign Instructor & Lab Schedule</h3>
-                  <div class="row mt-5" *ngFor="let rows of instructor?.controls; let i = index"
-                  [formGroupName]="i">
+                  <div class="row mt-5">
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
                       <h6>Start Date</h6>
                       <mat-form-field
@@ -319,13 +318,12 @@
                         <mat-error> Class Type is required </mat-error>
                       </mat-form-field>
                     </div>
-                    <div
+                    <!-- <div
                       class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mt-4 mx-auto"
                     >
                       <button
                         mat-mini-fab
                         color="primary"
-                        (click)="addInstructorLab()"
                       >
                         <mat-icon class="col-white">add</mat-icon>
                       </button>
@@ -335,7 +333,7 @@
                           [class]="'tbl-fav-delete'"
                         ></app-feather-icons>
                       </button>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="row mt-4">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">

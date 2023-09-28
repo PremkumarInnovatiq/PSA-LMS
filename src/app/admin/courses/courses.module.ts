@@ -18,6 +18,7 @@ import { VideoPlayerComponent } from './course-kit/video-player/video-player.com
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CreateCourseKitComponent } from './course-kit/create-course-kit/create-course-kit.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
     MatStepperModule,
     ModalModule.forRoot(),
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    CKEditorModule,
   ],
 })
 export class CoursesModule {}
