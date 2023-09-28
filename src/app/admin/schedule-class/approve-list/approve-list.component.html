@@ -65,7 +65,7 @@
           </div>
           <div class="body overflow-auto">
             <div class="responsive_table">
-              <table [dataSource]="approveData" mat-table matSort class="mat-cell advance-table">
+              <table [dataSource]="dataSource" mat-table matSort class="mat-cell advance-table">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
@@ -108,7 +108,7 @@
                     >Student Name</mat-header-cell
                   >
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Course Name:</span>{{row.studentId.name | titlecase}}
+                    <span class="mobile-label">Course Name:</span>{{row.studentId?.name | titlecase}}
                   </mat-cell>
                 </ng-container>
                 <!-- Class start date -->
@@ -118,7 +118,7 @@
                     >Class Start Date
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Class Start Date:</span>{{row.classStartDate}}
+                    <span class="mobile-label">Class Start Date:</span>{{row?.classStartDate |date}}
                   </mat-cell>
                 </ng-container>
                 <!--Class Enddate -->
@@ -127,7 +127,7 @@
                     >Class End Date
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Class End Date:</span>{{row.classEndDate}}
+                    <span class="mobile-label">Class End Date:</span>{{row?.classEndDate | date}}
                   </mat-cell>
                 </ng-container>
                 <!--Registered date -->
@@ -136,7 +136,7 @@
                     >Registered Date
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Registered Date:</span>{{row.registeredOn}}
+                    <span class="mobile-label">Registered Date:</span>{{row?.registeredOn | date}}
                   </mat-cell>
                 </ng-container>
 

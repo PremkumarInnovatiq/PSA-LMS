@@ -49,6 +49,7 @@ export class ApproveListComponent {
   approveData: any;
   pageSizeArr = [10, 20, 30, 50, 100];
   isLoading = true;
+  dataSource!: any;
   constructor(
     public _classService: ClassService,
     private snackBar: MatSnackBar
@@ -59,54 +60,6 @@ export class ApproveListComponent {
 
   ngOnInit(): void {
     this.getRegisteredClasses();
-  }
-
-  pageSizeChange($event: any) {
-    this.studentPaginationModel.page = $event?.pageIndex + 1;
-    this.studentPaginationModel.limit = $event?.pageSize;
-    this.getRegisteredClasses();
-  }
-
-  getRegisteredClasses() {
-    this._classService
-      .getRegisteredClasses(
-        this.studentPaginationModel.page,
-        this.studentPaginationModel.limit,
-        this.studentPaginationModel.filterText
-      )
-      .subscribe((response: { data: StudentPaginationModel }) => {
-        if (response) {
-          console.log(response.data.docs);
-          this.isLoading = false;
-          this.studentPaginationModel = response.data;
-          this.mapClassList();
-          this.approveData = response.data.docs;
-          this.totalItems = response.data.totalDocs;
-        }
-      });
-  }
-
-  mapClassList() {
-    this.studentPaginationModel.docs.forEach((item: Student) => {
-      const startDateArr: any = [];
-      const endDateArr: any = [];
-      item.classId.sessions.forEach((session) => {
-        startDateArr.push(new Date(session.sessionStartDate.toString()));
-        endDateArr.push(new Date(session.sessionEndDate.toString()));
-      });
-      const minStartDate = new Date(Math.min.apply(null, startDateArr));
-      const maxEndDate = new Date(Math.max.apply(null, endDateArr));
-      item.classStartDate = !isNaN(minStartDate.valueOf())
-        ? moment(minStartDate).format('YYYY-DD-MM')
-        : '';
-      item.classEndDate = !isNaN(maxEndDate.valueOf())
-        ? moment(maxEndDate).format('YYYY-DD-MM')
-        : '';
-      item.registeredOn = item.registeredOn
-        ? moment(item.registeredOn).format('YYYY-DD-MM')
-        : '';
-      item.studentId.name = `${item.studentId.name} ${item.studentId.last_name}`;
-    });
   }
   showNotification(
     colorName: string,
@@ -121,6 +74,46 @@ export class ApproveListComponent {
       panelClass: colorName,
     });
   }
+  pageSizeChange($event: any) {
+    this.studentPaginationModel.page = $event?.pageIndex + 1;
+    this.studentPaginationModel.limit = $event?.pageSize;
+    this.getRegisteredClasses();
+  }
+
+  getRegisteredClasses() {
+    this._classService
+      .getRegisteredClasses(this.studentPaginationModel.page, this.studentPaginationModel.limit, this.studentPaginationModel.filterText)
+      .subscribe((response: { data: StudentPaginationModel; }) => {
+      console.log(response.data.docs)
+      this.isLoading = false;
+        this.studentPaginationModel = response.data;
+        this.dataSource = response.data.docs;
+        this.totalItems = response.data.totalDocs;
+        this.mapClassList();
+
+      })
+  }
+
+  mapClassList() {
+    this.studentPaginationModel.docs.forEach((item: Student) => {
+      console.log("res",item)
+      const startDateArr: any = [];
+      const endDateArr: any = [];
+      item?.classId?.sessions?.forEach((session) => {
+        console.log("session",session)
+        startDateArr.push(new Date(session?.sessionStartDate?.toString()));
+        endDateArr.push(new Date(session?.sessionEndDate?.toString()));
+      });
+      const minStartDate = new Date(Math.min.apply(null, startDateArr));
+      const maxEndDate = new Date(Math.max.apply(null, endDateArr));
+
+      item.classStartDate = !isNaN(minStartDate.valueOf()) ? moment(minStartDate).format("YYYY-DD-MM") : "";
+      item.classEndDate = !isNaN(maxEndDate.valueOf()) ? moment(maxEndDate).format("YYYY-DD-MM") : "";
+      item.registeredOn = item?.registeredOn ? moment(item.registeredOn).format("YYYY-DD-MM") : "";
+      item.studentId.name = `${item?.studentId?.name} ${item?.studentId?.last_name}`;
+    });
+  }
+
 
   getCurrentUserId(): string {
     return JSON.parse(localStorage.getItem('user_data')!).user.id;
@@ -200,7 +193,7 @@ export class ApproveListComponent {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.approveData.length;
+    const numRows = this.dataSource.length;
     return numSelected === numRows;
   }
 
@@ -208,7 +201,7 @@ export class ApproveListComponent {
    masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.approveData.forEach((row: ClassModel) =>
+      : this.dataSource.forEach((row: ClassModel) =>
           this.selection.select(row)
         );
   }

@@ -16,6 +16,7 @@ export class ClassService extends UnsubscribeOnDestroyAdapter {
   private prefix: string = environment["apiUrl"];
   isTblLoading = true;
   dataChange: BehaviorSubject<ClassModel[]> = new BehaviorSubject<ClassModel[]>([]);
+
   constructor(private http: HttpClient) {
     super();
   }
@@ -34,6 +35,22 @@ export class ClassService extends UnsubscribeOnDestroyAdapter {
     return params;
   }
 
+
+  // getClassListWithPaginationF(): void {
+  //   const apiUrl = `${this.prefix}admin/class/`;
+  //   this.subs.sink = this.http
+  //     .get<ClassModel[]>(apiUrl)
+  //     .subscribe({
+  //       next: (data) => {
+  //         this.isTblLoading = false;
+  //         this.dataChange.next(data);
+  //       },
+  //       error: (error: HttpErrorResponse) => {
+  //         this.isTblLoading = false;
+  //         console.log(error.name + ' ' + error.message);
+  //       },
+  //     });
+  // }
 
   getClassListWithPagination(
     filter?:Partial<CoursePaginationModel>): Observable<ApiResponse> {
@@ -140,6 +157,21 @@ saveClass(formData: any): Observable<ApiResponse> {
       return response.data;
     })
   );
+}
+
+
+getSessionCompletedStudent(page: number, limit: number): Observable<any> {
+  const apiUrl = `${this.prefix}admin/studentClasses/students/completed`;
+  return this.http.get<any>(apiUrl, { params: this.buildRegisteredClassesParams(page, limit) });
+}
+getProgramCompletedStudent(page: number, limit: number): Observable<any> {
+  const apiUrl = `${this.prefix}admin/studentClasses/students/Fellowship/completed`;
+  return this.http.get<any>(apiUrl, { params: this.buildRegisteredClassesParams(page, limit) });
+}
+
+getProgramRegisteredClasses(page: number, limit: number, filterText? : string): Observable<any> {
+  const apiUrl = `${this.prefix}admin/studentClasses/studentApproveList`;
+  return this.http.get<any>(apiUrl, { params: this.buildRegisteredClassesParams(page, limit, filterText) });
 }
 }
 
