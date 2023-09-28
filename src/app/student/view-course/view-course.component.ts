@@ -45,29 +45,42 @@ export class ViewCourseComponent {
       active: 'View Details',
     },
   ];
+  isRegistered = false;
   subscribeParams: any;
   classId: any;
   classDetails: any;
   courseId: any;
   courseKitDetails:any;
+  studentClassDetails: any;
+  isStatus = false
   constructor(private classService: ClassService,private activatedRoute:ActivatedRoute,private modalServices:BsModalService, private courseService:CourseService){
     this.subscribeParams = this.activatedRoute.params.subscribe((params) => {
       this.classId = params["id"];
     });
+    this.getRegisteredClassDetails();
+    this.getClassDetails();
+  
+
+  }
+  getClassDetails(){
     this.classService.getClassById(this.classId).subscribe((response)=>{
       this.classDetails =response;
       this.courseId=this.classDetails.courseId.id
       this.dataSource=this.classDetails.sessions;
       this.getCourseKitDetails();
-
     })
-
   }
   registerClass(classId: string) {
     let studentId=localStorage.getItem('id')
-    this.courseService.saveRegisterClass(studentId, classId).subscribe((response) => {
-      let studentId=localStorage.getItem('user_data')
-      // this.getClasses();
+    this.courseService.saveRegisterClass(studentId, this.classId).subscribe((response) => {
+      let studentId=localStorage.getItem('user_data');
+        Swal.fire({
+          title: 'Thank you',
+          text: 'We will approve once verified',
+          icon: 'success',
+        });
+      this.isRegistered = true;
+      this.getClassDetails();
     });
   }
   getCourseKitDetails(){
@@ -75,6 +88,22 @@ export class ViewCourseComponent {
       this.courseKitDetails=response?.course_kit;
     });
   }
+  getRegisteredClassDetails(){
+    let studentId=localStorage.getItem('id')
+    this.courseService.getStudentClass(studentId,this.classId).subscribe((response) => {
+      this.studentClassDetails=response.data;
+      if(this.studentClassDetails.status =='registered'){
+        console.log('hi',this.studentClassDetails.status)
+        this.isRegistered == true;
+        this.isStatus=true;
+      }
+    });
+  }
+  // getCourseKitDetails(){
+  //   this.courseService.getClassList(this.courseId).subscribe((response) => {
+  //     this.courseKitDetails=response?.course_kit;
+  //   });
+  // }
   getJobTemplates() {
     this.courseService.getJobTempletes().subscribe(
       (data: any) => {

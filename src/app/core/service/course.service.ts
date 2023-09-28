@@ -216,6 +216,10 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/class?courseId=${courseId}`;
     return this._Http.get<any>(apiUrl);
   }
+  getStudentClass( studentId: any,classId:any): Observable<any> {
+    const apiUrl = `${this.prefix}admin/studentClasses?classId=${classId}&studentId=${studentId}`;
+    return this._Http.get<any>(apiUrl);
+  }
 }
 
 
