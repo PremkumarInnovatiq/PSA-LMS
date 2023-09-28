@@ -15,8 +15,8 @@ export interface SessionClassModel {
   instructorId: string;
   students: StudentRegisteredClass[];
 }
-export interface ClassModel {
-  name: string | number;
+export class ClassModel {
+  name: string;
   status: String;
   _id: String;
   courseId: any;
@@ -32,7 +32,36 @@ export interface ClassModel {
   classStartDate: String;
   classEndDate: String;
   sessions: SessionClassModel[];
+
+  constructor(classModel: ClassModel) {
+    {
+      this._id = classModel._id || this.getRandomID();
+      this.name = classModel.name || '';
+      this.status = classModel.status || '';
+      this.courseName = classModel.courseName || '';
+      this.classAccessType = classModel.classAccessType || '';
+      this.classDeliveryType = classModel.classDeliveryType || '';
+      this.instructorCost = classModel.instructorCost || '';
+      this.instructorCostCurrency = classModel.instructorCostCurrency || '';
+      this.isGuaranteedToRun = classModel.isGuaranteedToRun || false;
+      this.externalRoom = classModel.externalRoom || false ;
+      this.minimumEnrollment = classModel.minimumEnrollment || '';
+      this.maximumEnrollment = classModel.maximumEnrollment || '';
+      this.classStartDate = classModel.classStartDate || '';
+      this.classEndDate = classModel.classEndDate || '';
+      this.sessions = classModel.sessions || '';
+
+    }
+  }
+  public getRandomID(): number {
+    const S4 = () => {
+      return ((1 + Math.random()) * 0x10000) | 0;
+    };
+    return S4() + S4();
+  }
+
 }
+
 
 export interface StudentId {
 	_id: string;
@@ -149,4 +178,13 @@ export interface LabDetail {
 }
 export interface LabListModel {
   docs: LabDetail[];
+}
+
+export interface StudentApproval {
+  studentId: string;
+  classId: String;
+  status: string;
+  approvedOn: string;
+  approvedBy: string;
+  session: Session[];
 }

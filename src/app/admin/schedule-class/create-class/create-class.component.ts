@@ -35,6 +35,7 @@ import {
   styleUrls: ['./create-class.component.scss'],
 })
 export class CreateClassComponent {
+  item: any;
   @HostListener('document:keypress', ['$event'])
   keyPressNumbers(event: KeyboardEvent) {
     const charCode = event.which ? event.which : event.keyCode;
@@ -82,6 +83,8 @@ export class CreateClassComponent {
   instructorControl!: FormControl;
   mode!: string;
   sessions: any = [];
+  instForm !: FormArray<any>
+  next:boolean = false;
 
   addNewRow() {
     if (this.isInstructorFailed != 1 && this.isLabFailed != 1) {
@@ -111,11 +114,6 @@ export class CreateClassComponent {
         this.title = true;
       }
     });
-
-
-
-
-
     // Set the minimum to January 1st 5 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 5, 0, 1);
@@ -127,32 +125,14 @@ export class CreateClassComponent {
   }
 
 
-
-
   ngOnInit(): void {
-    this.loadClassList(this.classId);
-    this.classForm = this._fb.group({
-      courseId: ['', Validators.required],
-      classType: [''],
-      classDeliveryType: ['', Validators.required],
-      instructorCost: ['', Validators.required],
-      currency: [''],
-      minimumEnrollment: ['', Validators.required],
-      maximumEnrollment: ['', Validators.required],
-      classStartDate: [''],
-      status: ['open'],
-      isGuaranteedToRun: ['false', Validators.required],
-      externalRoom: ['false', Validators.required],
-      sessions:[''] ,
-    });
-    this.InstructorForm = this._fb.group({
-      start_date:[''],
-      end_date:[''],
-      instructor:[''],
-      lab:['']
-    })
-    // this.loadForm();
-    // this.loadClassList(this.classId);
+
+    if(this.classId != undefined){
+      this.loadClassList(this.classId);
+    }
+
+
+    this.loadForm();
     forkJoin({
       courses: this._classService.getAllCoursesTitle('active'),
       instructors: this._classService.getAllInstructor(),
@@ -164,11 +144,26 @@ export class CreateClassComponent {
 
       this.cd.detectChanges();
     });
-
-
-
-    // this.addInst();
   }
+
+loadForm() {
+  this.classForm = this._fb.group({
+    courseId: ["", [Validators.required]],
+    classType: ["public"],
+    classDeliveryType: ["", Validators.required],
+    instructorCost: ["", Validators.required],
+    instructorCostCurrency: ["USD"],
+    currency: [""],
+    isGuaranteedToRun:[false,Validators.required],
+    externalRoom:[false,],
+    minimumEnrollment: ["", Validators.required],
+    maximumEnrollment: ["", Validators.required],
+    status: ["open"],
+    classStartDate: ["2023-05-20"],
+    classEndDate: ["2023-06-10"],
+    sessions: ["", Validators.required],
+  });
+}
 
   loadClassList(id:string) {
     this._classService.getClassById(id).subscribe((response) => {
@@ -180,27 +175,44 @@ export class CreateClassComponent {
         instructorCost: item?.instructorCost,
         currency: item?.currency,
         instructorCostCurrency: item?.instructorCostCurrency,
-        isGuaranteedToRun: item?.isGuaranteedToRun,
+        isGuaranteedToRun:item?.isGuaranteedToRun,
         externalRoom: item?.externalRoom,
         minimumEnrollment: item?.minimumEnrollment,
         maximumEnrollment: item?.maximumEnrollment,
         status: item?.status,
         sessions: item?.sessions,
       });
-      console.log("add",item.sessions)
-        item.sessions.forEach((item: any) => {
-          this.InstructorForm.patchValue({
-            start_date: `${moment(item.sessionStartDate).format(
-              'YYYY-MM-DD'
-            )}`,
-            end_date: `${moment(item.sessionEndDate).format('YYYY-MM-DD')}`,
-            instructor: item.instructorId?.id,
-            lab: item.laboratoryId?.id,
-          });
+      item.sessions.forEach((item:any) => {
+        this.dataSourceArray.push({
+          start: `${moment(item.sessionStartDate).format("YYYY-MM-DD")}`,
+          end: `${moment(item.sessionEndDate).format("YYYY-MM-DD")}`,
+          instructor: item.instructorId?.id,
+          lab: item.laboratoryId?.id,
         });
+
+      });
+      this.dataSource = this.dataSourceArray;
+      this.cd.detectChanges();
     });
   }
+  nextBtn(){
 
+    if(this.classForm.get('classDeliveryType')?.valid
+    && this.classForm.get('courseId')?.valid
+    && this.classForm.get('instructorCost')?.valid
+    && this.classForm.get('minimumEnrollment')?.valid
+    && this.classForm.get('maximumEnrollment')?.valid){
+      this.next = true;
+    }
+  }
+  back(){
+    this.next = false;
+  }
+
+  deleteRecord(index: number) {
+    this.dataSourceArray.splice(index, 1);
+    this.dataSource = this.dataSourceArray;
+  }
   showNotification(
     colorName: string,
     text: string,
@@ -214,44 +226,69 @@ export class CreateClassComponent {
       panelClass: colorName,
     });
   }
-  getSession() {
-    console.log('inst', this.InstructorForm);
+  // getSession() {
+  //   console.log('inst', this.InstructorForm);
 
-    const index = 0;
-    if (
-      this.isInstructorFailed == 0 &&
-      this.InstructorForm.value.instructor != '0' &&
-      this.InstructorForm.value.lab != '0'
-    ) {
-      this.sessions.push({
-        sessionNumber: index + 1,
-        sessionStartDate: moment(this.InstructorForm.value.start_date).format(
-          'YYYY-MM-DD'
-        ),
-        sessionEndDate: moment(this.InstructorForm.value.end_date).format(
-          'YYYY-MM-DD'
-        ),
-        sessionStartTime: moment(this.InstructorForm.value.start_date).format(
-          'HH:mm'
-        ),
-        sessionEndTime: moment(this.InstructorForm.value.end_date).format(
-          'HH:mm'
-        ),
-        instructorId: this.InstructorForm.value.instructor,
-        laboratoryId: this.InstructorForm.value.lab,
-      });
-    } else {
-      this.showNotification(
-        'snackbar-danger',
-        'Please choose Instructor and Lab',
-        'top',
-        'right'
-      );
-      // this.toaster.error("Please choose Instructor and Lab")
-      this.sessions = null;
-    }
-    return this.sessions;
+  //   const index = 0;
+  //   if (
+  //     this.isInstructorFailed == 0 &&
+  //     this.InstructorForm.value.instructor != '0' &&
+  //     this.InstructorForm.value.lab != '0'
+  //   ) {
+  //     this.sessions.push({
+  //       sessionNumber: index + 1,
+  //       sessionStartDate: moment(this.InstructorForm.value.start_date).format(
+  //         'YYYY-MM-DD'
+  //       ),
+  //       sessionEndDate: moment(this.InstructorForm.value.end_date).format(
+  //         'YYYY-MM-DD'
+  //       ),
+  //       sessionStartTime: moment(this.InstructorForm.value.start_date).format(
+  //         'HH:mm'
+  //       ),
+  //       sessionEndTime: moment(this.InstructorForm.value.end_date).format(
+  //         'HH:mm'
+  //       ),
+  //       instructorId: this.InstructorForm.value.instructor,
+  //       laboratoryId: this.InstructorForm.value.lab,
+  //     });
+  //   } else {
+  //     this.showNotification(
+  //       'snackbar-danger',
+  //       'Please choose Instructor and Lab',
+  //       'top',
+  //       'right'
+  //     );
+  //     // this.toaster.error("Please choose Instructor and Lab")
+  //     this.sessions = null;
+  //   }
+  //   return this.sessions;
+  // }
+  getSession() {
+    let sessions: any=[];
+    this.dataSource.forEach((item: any, index: any) => {
+      if (this.isInstructorFailed == 0 && item.instructor != "0" && item.lab != "0") {
+        sessions.push({
+          sessionNumber: index + 1,
+          sessionStartDate: moment(item.start).format("YYYY-MM-DD"),
+          sessionEndDate: moment(item.end).format("YYYY-MM-DD"),
+          sessionStartTime: moment(item.start).format("HH:mm"),
+          sessionEndTime: moment(item.end).format("HH:mm"),
+          instructorId: item.instructor,
+          laboratoryId: item.lab,
+        });
+      } else {
+        // this.toaster.error("Please choose Instructor and Lab")
+        sessions = null;
+      }
+    });
+    return sessions;
   }
+
+data(){
+  console.log(this.classForm.value)
+}
+
   submit() {
     // if(!this.viewUrl&&!this.editUrl){
     const sessions = this.getSession();

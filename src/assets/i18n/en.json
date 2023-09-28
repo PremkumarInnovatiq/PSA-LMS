@@ -65,7 +65,18 @@
         "COMPLETION-LIST": "Completion List"
       }
     },
-
+    "PROGRAM": {
+      "TEXT": "Program",
+      "LIST": {
+        "ALL-PROGRAM": "All Program",
+        "SCHEDULE-CLASS": "Schedule Class",
+        "CREATE-COURSE":"Create Course",
+        "APPROVE-LIST": "Program Approve List",
+        "PROGRAM-KIT":"Program Kit",
+        "STUDENT-APPROVAL":"Student Approval List",
+        "COMPLETION-LIST": "Completion List"
+      }
+    },
 
 
     "LIBRARY": {

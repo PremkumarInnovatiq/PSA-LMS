@@ -14,6 +14,7 @@ export class StudentsService extends UnsubscribeOnDestroyAdapter {
     super();
   }
   get data(): Students[] {
+    console.log("merge",this.dataChange.value)
     return this.dataChange.value;
   }
   getDialogData() {
