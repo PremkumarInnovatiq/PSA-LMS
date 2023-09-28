@@ -221,6 +221,7 @@ export class AllStudentsComponent
       this.paginator,
       this.sort
     );
+    console.log("datataewe",this.exampleDatabase)
     this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
       () => {
         if (!this.dataSource) {
@@ -305,6 +306,7 @@ export class ExampleDataSource extends DataSource<Students> {
     return merge(...displayDataChanges).pipe(
       map(() => {
         // Filter data
+        console.log(this.exampleDatabase.data)
         this.filteredData = this.exampleDatabase.data
           .slice()
           .filter((students: Students) => {
@@ -316,6 +318,7 @@ export class ExampleDataSource extends DataSource<Students> {
             ).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
+          console.log("filted",this.filteredData)
         // Sort filtered data
         const sortedData = this.sortData(this.filteredData.slice());
         // Grab the page's slice of the filtered sorted data.
