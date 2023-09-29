@@ -1250,7 +1250,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Teacher'],
+    role: ['Instructor'],
     submenu: [],
   },
   {
@@ -1262,7 +1262,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Teacher'],
+    role: ['Instructor'],
     submenu: [],
   },
   {
