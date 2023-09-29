@@ -75,15 +75,19 @@ export class CreateCategoriesComponent implements OnInit{
     return this.subCategoryForm.get('subcategories') as FormArray;
   }
   ngOnInit(): void {
-    // this.fetchSubCategories();
     if(this.editUrl){
-    this.getData();
-    }
+          this.getData();
+          }
+    // this.fetchSubCategories();
     this.initMainCategoryForm();
     this.initSubCategoryForm();
     this.addSubCategoryField();
   }
- 
+  pageSizeChange($event: any) {
+    this.coursePaginationModel.page= $event?.pageIndex + 1;
+    this.coursePaginationModel.limit= $event?.pageSize;
+    // this.fetchSubCategories();
+   }
 
   addSubCategoryField(): void {
     this.subcategories.push(
@@ -94,7 +98,7 @@ export class CreateCategoriesComponent implements OnInit{
   }
   initSubCategoryForm(): void {
     this.subCategoryForm = this.formBuilder.group({
-      category_name: new FormControl('', [Validators.required,...this.utils.validators.category_name,...this.utils.validators.noLeadingSpace]),
+      category_name: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]/)]),
       main_category_id: [''],
       subcategories: this.formBuilder.array([])
     });
@@ -106,11 +110,12 @@ export class CreateCategoriesComponent implements OnInit{
     if (this.mainCategoryForm.invalid) {
       return;
     }
+
     const mainCategoryData = this.mainCategoryForm.value;
-    this.courseService.updateMainCategory(this.mainCategoryId,mainCategoryData).subscribe(
+    this.courseService.createMainCategory(mainCategoryData).subscribe(
       (response) => {
         Swal.fire('Success', 'Main category created successfully!', 'success');
-        //this.mainCategoryId = response.data._id;
+        this.mainCategoryId = response.data._id;
       },
       (error) => {
         Swal.fire('Error', 'Failed to create main category!', 'error');
@@ -119,18 +124,58 @@ export class CreateCategoriesComponent implements OnInit{
     this.isSubmitted=false
   }
   
+  createSubCategory(): void {
+    this.isSubmitted=true
+    if (this.subCategoryForm.invalid) {
+      this.validations=true
+      return;
+    }
+
+    this.subCategoryData = this.subcategories.value;
+    this.subCategoryData.forEach(subcategory => {
+      subcategory.main_category_id = this.mainCategoryId;
+    });
+
+    this.courseService.createSubCategory(this.subCategoryData).subscribe(
+      (response) => {
+        Swal.fire('Success', 'Subcategories created successfully!', 'success');
+        this.mainCategoryForm.reset();
+        this.subCategoryForm.reset();
+        this.initSubCategoryForm();
+        this.addSubCategoryField();
+        // this.fetchSubCategories();
+      },
+      (error) => {
+        Swal.fire('Error', 'Failed to create subcategories!', 'error');
+      }
+    );
+    this.isSubmitted=false
+  }
+
+  initMainCategoryForm(): void {
+    this.mainCategoryForm = this.formBuilder.group({
+      category_name: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]/)]),
+      
+    });
+  }
+
   getData(){
+    console.log("=======test")
+    
+    
     this.courseService.getcategoryById(this.categoryId).subscribe((response: any) => {
       if(response){
         this.mainCategoryId=response?._id
         this.mainCategoryForm.patchValue({
           category_name: response?.category_name,
               });
-     
+      console.log("sssssssssssssss",response?.subCategories[0]._id)
         
         const itemControls = response?.subCategories.map((item: {
           _id: any; main_category_id: any; category_name: any; 
   } ) => {
+    console.log("=====item====",item)
+    
           this.subcategoryId =item._id
           return this.formBuilder.group({
            sub_id:[item._id],
@@ -138,57 +183,22 @@ export class CreateCategoriesComponent implements OnInit{
             category_name: [item.category_name],
           });
         });
+       // console.log("itemControls",itemControls)
         this.subCategoryForm = this.formBuilder.group({
           subcategories: this.formBuilder.array(itemControls),
         });
         
   
       }
-    });
-  }
-
-  createSubCategory(): void {
-    console.log("=====ts===")
-    this.isSubmitted=true
-    if (this.subCategoryForm.invalid) {
-      this.validations=true
-      return;
-    }
-  
-    this.subCategoryData = this.subcategories.value;
-    let data ={
-      main_category_id:this.subCategoryData[0].main_category_id,
-      category_name: this.subCategoryData[0].category_name
-  
-    }
-    this.subCategoryData.forEach(subcategory => {
-      subcategory.main_category_id = this.mainCategoryId;
-  
-  
-    });
- 
-    this.courseService.updateSubCategory(this.subcategoryId,this.subCategoryData).subscribe(
-      (response) => {
-        Swal.fire('Success', 'Subcategories created successfully!', 'success');
-        this.mainCategoryForm.reset();
-        this.subCategoryForm.reset();
-        this.initSubCategoryForm();
-        this.addSubCategoryField();
-        this.router.navigateByUrl("/Course/Categories")  
-        
-      },
-      (error) => {
-        Swal.fire('Error', 'Failed to create subcategories!', 'error');
-      }
-    );
-    this.isSubmitted=false
-  
-  }
-  initMainCategoryForm(): void {
-    this.mainCategoryForm = this.formBuilder.group({
-      category_name: new FormControl('', [Validators.required,...this.utils.validators.category_name,...this.utils.validators.noLeadingSpace]),
+     
+      
+      
       
     });
+  
+  
   }
+
+
  
 }

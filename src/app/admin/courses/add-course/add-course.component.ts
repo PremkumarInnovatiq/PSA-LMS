@@ -104,9 +104,9 @@ export class AddCourseComponent implements OnInit {
         sub_category: ['', [Validators.required]],
         fee: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
         currency_code: new FormControl('',[]),
-        course_duration_in_days: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),
+        course_duration_in_days: new FormControl('',[Validators.min(1),Validators.pattern(/^\d+(\.\d+)?$/)]),
         training_hours: new FormControl('',[Validators.pattern(/^\d+(\.\d+)?$/)]),        
-        skill_connect_code: new FormControl('',[Validators.maxLength(20)]),
+        skill_connect_code: new FormControl('',[Validators.pattern(/^[a-zA-Z0-9]/)]),
         course_description: new FormControl('',[ Validators.maxLength(100)]),
         course_detailed_description: new FormControl('',[]),
       });

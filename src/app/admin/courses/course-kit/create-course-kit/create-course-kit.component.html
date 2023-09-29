@@ -71,7 +71,14 @@
                             <div class="row" *ngIf=!viewUrl>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
                                   <label>Upload Video</label>
-                                  <app-file-upload formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)"></app-file-upload>
+                                  <div class="file-drop-area">
+                                    <div class="file">
+                                    <button mat-raised-button color="primary">Choose file</button>
+                                    <span class="file-msg"><h5>{{fileName ? fileName : 'Drag and Drop File Here' }}</h5></span>
+                                    <input formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)" [readonly]="isInputReadonly()" class="file-input" type="file">
+                                    </div>
+                                  </div>
+                                  <!-- <app-file-upload formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)"></app-file-upload> -->
                                 </div>
                               </div>
 
@@ -85,6 +92,7 @@
                                         [owlDateTimeTrigger]="date"
                                         [owlDateTime]="date"
                                         formControlName="startDate"
+                                        [readonly]="isInputReadonly()"
                                       />
                                       <mat-icon
                                         matSuffix
@@ -108,6 +116,7 @@
                                         [owlDateTimeTrigger]="date"
                                         [owlDateTime]="date"
                                         formControlName="endDate"
+                                        [readonly]="isInputReadonly()"
                                       />
                                       <mat-icon
                                         matSuffix
@@ -132,7 +141,7 @@
                         </div>
                         <div class="col-md-4">
                           <div class="d-grid gap-4 d-md-flex">
-                          <button *ngIf="editUrl  || viewUrl" type="button"  id="cancel" [routerLink]="['/admin/courses/course-kit']">Cancel</button>
+                          <button mat-raised-button *ngIf="editUrl  || viewUrl" type="button" color="warn" id="cancel" [routerLink]="['/admin/courses/course-kit']">Cancel</button>
                           <button mat-button *ngIf="!editUrl  && !viewUrl" id="submit" (click)="submitCourseKit()" >Submit</button>
                           <button mat-button *ngIf="editUrl  && !viewUrl" id="save" (click)="submitCourseKit()"> Save </button>
                           </div>

@@ -91,8 +91,8 @@
                           <!-- <mat-error *ngIf="firstFormGroup.get('course_duration_in_days')?.hasError('required')">
                            Enter Days
                           </mat-error> -->
-                          <mat-error  *ngIf="firstFormGroup.get('course_duration_in_days')?.hasError('pattern') && firstFormGroup.get('course_duration_in_days')?.touched">
-                            Enter Digits
+                          <mat-error  *ngIf="firstFormGroup.get('course_duration_in_days')?.hasError('min') && firstFormGroup.get('course_duration_in_days')?.touched">
+                            Enter Minimum 1 day
                            </mat-error>
                         </mat-form-field>
                       </div>
@@ -104,7 +104,7 @@
                             Enter Training Hours
                            </mat-error> -->
                            <mat-error  *ngIf="firstFormGroup.get('training_hours')?.hasError('pattern') && firstFormGroup.get('training_hours')?.touched">
-                             Enter Digits
+                             Enter Valid Digits
                             </mat-error>
                         </mat-form-field>
                         
@@ -117,7 +117,7 @@
                             Enter Days
                            </mat-error> -->
                            <mat-error  *ngIf="firstFormGroup.get('fee')?.hasError('pattern') && firstFormGroup.get('fee')?.touched">
-                             Enter Digits
+                             Enter Valid Digits
                             </mat-error>
                         </mat-form-field>
                        
@@ -154,8 +154,8 @@
                           <!-- <mat-error *ngIf="firstFormGroup.get('skill_connect_code')?.hasError('maxLength')">
                             Enter Days
                            </mat-error> -->
-                           <mat-error  *ngIf="firstFormGroup.get('skill_connect_code')?.hasError('maxLength') && firstFormGroup.get('skill_connect_code')?.touched">
-                             Enter Skill Connect Code
+                           <mat-error  *ngIf="firstFormGroup.get('skill_connect_code')?.hasError('pattern') && firstFormGroup.get('skill_connect_code')?.touched">
+                             Enter Valid Skill Connect Code
                             </mat-error>
                         </mat-form-field>
                         
@@ -173,7 +173,7 @@
                     <div class="row">
                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                         <label>Course Detailed Description</label>
-                        <ckeditor [editor]="Editor" formControlName="course_detailed_description" ></ckeditor>
+                        <ckeditor [editor]="Editor" id="editor" formControlName="course_detailed_description" ></ckeditor>
                         <!-- <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <ckeditor [editor]="Editor" ></ckeditor>
                           <input matInput formControlName="course_detailed_description" [readonly]="isInputReadonly()">
@@ -363,7 +363,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="d-grid gap-4 d-md-flex">
-                    <button *ngIf="!viewUrl" type="button"  id="cancel" [routerLink]="['/admin/courses/all-courses']">Cancel</button>
+                    <button mat-raised-button *ngIf="editUrl || viewUrl" type="button" color="warn" id="cancel" [routerLink]="['/admin/courses/all-courses']">Cancel</button>
                     <button mat-button (click)="submit()" *ngIf="!editUrl  && !viewUrl" id="submit" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null">Submit</button>
                     <button mat-button *ngIf="editUrl  && !viewUrl" id="save" [attr.data-bs-toggle]="secondFormGroup.valid ? 'modal' : null" (click)="save()"> Save </button>
                     </div>
