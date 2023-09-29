@@ -127,7 +127,10 @@ export class CreateCourseKitComponent implements OnInit{
     element.end = element.start;
   }
 ngOnInit(): void {
-  this.getData();
+  if(this.editUrl){
+    this.getData();
+  }
+ 
 
   if(this.viewUrl){
     this.mode = 'viewUrl';
