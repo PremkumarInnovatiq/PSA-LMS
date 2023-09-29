@@ -23,10 +23,14 @@ export interface DialogData {
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class FormDialogComponent {
+  statusOptions: string[] = ['Confirm', 'Cancelled', 'Pending'];
   action: string;
   dialogTitle: string;
   lecturesForm: UntypedFormGroup;
   lectures: Lectures;
+  classId:any
+  _id:any
+  
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -38,6 +42,8 @@ export class FormDialogComponent {
     if (this.action === "edit") {
       this.dialogTitle = data.lectures.sName;
       this.lectures = data.lectures;
+      this.classId=data.lectures.classId
+      this._id=data.lectures._id
     } else {
       this.dialogTitle = "New Lectures";
       const blankObject = {} as Lectures;
@@ -58,21 +64,28 @@ export class FormDialogComponent {
   }
   createContactForm(): UntypedFormGroup {
     return this.fb.group({
-      id: [this.lectures.id],
-      sName: [this.lectures.sName, [Validators.required]],
-      class: [this.lectures.class, [Validators.required]],
-      date: [this.lectures.date, [Validators.required]],
-      time: [this.lectures.time, [Validators.required]],
+      //id: [this.lectures.id],
+      courseName: [this.lectures.courseName, [Validators.required]],
+      courseCode: [this.lectures.courseCode, [Validators.required]],
+      sessionStartDate: [this.lectures.sessionStartDate, [Validators.required]],
+      sessionStartTime: [this.lectures.sessionStartTime, [Validators.required]],
       status: [this.lectures.status, [Validators.required]],
     });
   }
   submit() {
+    console.log("====gopal====")
     // emppty stuff
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.lecturesService.addLectures(this.lecturesForm.getRawValue());
+    console.log("====fopa====")
+    let data=this.lecturesForm.value
+    data['classId']=this.classId
+    data['_id']=this._id
+    this.lecturesService.updateLectures(data);
+    //console.log("==data1=",data1)
+    //this.lecturesService.addLectures(this.lecturesForm.getRawValue());
   }
 }

@@ -22,6 +22,8 @@ import { forkJoin } from 'rxjs';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CourseService } from '@core/service/course.service';
+
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -54,6 +56,9 @@ export class CreateClassComponent {
   isEndDateFailed: number = 0;
   dataSourceArray: DataSourceModel[] = [];
   dataSource: any;
+  courseTitle: any;
+  user_id:any
+  courseCode:any
   classId!: string;
   title: boolean = false;
 
@@ -106,7 +111,8 @@ export class CreateClassComponent {
     private router: Router,
     private _activeRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private courseService:CourseService,
   ) {
     this._activeRoute.queryParams.subscribe((params) => {
       this.classId = params['id'];
@@ -276,6 +282,10 @@ loadForm() {
           sessionEndTime: moment(item.end).format("HH:mm"),
           instructorId: item.instructor,
           laboratoryId: item.lab,
+          courseName:this.courseTitle,
+          courseCode:this.courseCode,
+          status:"Pending",
+          user_id:this.user_id
         });
       } else {
         // this.toaster.error("Please choose Instructor and Lab")
@@ -283,6 +293,29 @@ loadForm() {
       }
     });
     return sessions;
+  }
+  onSelectChange1(event :any) {
+   // console.log("this.classForm.controls['instructor'].value",this.classForm.controls['courseId'].value)
+    
+    this.courseService.getCourseById(this.classForm.controls['courseId'].value).subscribe((response) => {
+      console.log("-==========",response)
+     // this.router.navigateByUrl(`Schedule Class/List`);
+     this.courseTitle=response.title
+     this.courseCode=response.courseCode
+
+
+     console.log(response)
+    });
+    
+  }
+  onSelectChange(event :any) {
+    
+   // console.log("==element=======",event.target.value)
+    console.log("==element=======",this.instructorList)
+    //this.instructorList.filter(item)
+    const filteredData = this.instructorList.filter((item: { instructor_id: string; }) => item.instructor_id===this.InstructorForm.controls['instructor'].value);
+   console.log("========",filteredData)
+   this.user_id=filteredData[0].user_id.user_id
   }
 
 data(){

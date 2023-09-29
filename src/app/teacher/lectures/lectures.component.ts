@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LecturesService } from './lectures.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,18 +12,24 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
+import { DataSourceModel, SessionModel} from'@core/models/class.model'
 import { map } from 'rxjs/operators';
 import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete/delete.component';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Direction } from '@angular/cdk/bidi';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import {
   TableExportUtil,
   TableElement,
   UnsubscribeOnDestroyAdapter,
 } from '@shared';
 import { formatDate } from '@angular/common';
+import { CoursePaginationModel } from '@core/models/course.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-lectures',
@@ -44,10 +50,19 @@ export class LecturesComponent
     'actions',
   ];
   exampleDatabase?: LecturesService;
-  dataSource!: ExampleDataSource;
+  dataSource: any[] = [];
+  myArray = new MatTableDataSource<SessionModel>([]);
+  //dataSource!: ExampleDataSource;
   selection = new SelectionModel<Lectures>(true, []);
+  coursePaginationModel!: Partial<CoursePaginationModel>;
+  
   id?: number;
   lectures?: Lectures;
+  dataSource1:any;
+  
+  //dataSource: SessionModel[] = [];
+  //dataSource = new MatTableDataSource<SessionModel>(dataSourceArray);
+ // this.dataSource = new MatTableDataSource<DataSourceModel>(this.dataSourceArray);
 
   breadscrums = [
     {
@@ -56,14 +71,20 @@ export class LecturesComponent
       active: 'Lecture',
     },
   ];
+  totalItems: any;
+  //dataSource: any=[];
+  //dataSource:any[] = [];
+  //dataSource: any;
 
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public lecturesService: LecturesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {
     super();
+    this.coursePaginationModel = {};
   }
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -74,6 +95,74 @@ export class LecturesComponent
 
   ngOnInit() {
     this.loadData();
+    this.getClassList()
+  }
+  getClassList() {
+    this.lecturesService.getClassListWithPagination({ ...this.coursePaginationModel }).subscribe(
+      (response) => {
+        console.log("this",response.data.docs)
+   
+        //this.dataSource1 = response.data.docs;
+        this.dataSource1 = response.data.sessions;
+        this.totalItems = response.data.totalDocs
+        this.coursePaginationModel.docs = response.data.docs;
+        this.coursePaginationModel.page = response.data.page;
+        this.coursePaginationModel.limit = response.data.limit;
+        //this.mapClassList()
+        this.dataSource = [];
+       this.getSession()
+        
+      },
+      (error) => {
+      }
+    );
+   
+    
+  }
+  getSession() {
+    //console.log("=====goap====",this.dataSource)
+    //let sessions: any=[];
+    console.log("ssssssssssss",this.dataSource1)
+    if(this.dataSource1){
+      console.log("========")
+    this.dataSource1&&this.dataSource1?.forEach((item: any, index: any) => {
+      console.log(index)
+      console.log("====seession====",item.sessions[0].instructorId)
+     
+      if (item.sessions[0]&& item.sessions[0]?.courseName&&item.sessions[0]?.courseCode) {
+        console.log("=======gopal=")
+        let starttimeObject = moment(item.sessions[0].sessionStartTime, "HH:mm");
+        this.dataSource.push({
+          //sessionNumber: index + 1,
+          classId:item._id,
+          sessionStartDate: moment(item.sessions[0].sessionStartDate).format("YYYY-MM-DD"),
+          sessionEndDate: moment(item.sessions[0].end).format("YYYY-MM-DD"),
+          sessionStartTime: starttimeObject.format("hh:mm A"),
+          sessionEndTime: moment(item.sessions[0].end).format("hh:mm A"),
+          //instructorId: item.instructor,
+          laboratoryId: item.sessions[0].laboratoryId,
+          courseName: item.sessions[0].courseName,
+          courseCode: item.sessions[0].courseCode,
+          status: item.sessions[0].status,
+          _id:item.sessions[0]._id,
+
+          sessionNumber: 0,
+          instructorId: ''
+        });
+      } else {
+        //this.toaster.error("Please choose Instructor and Lab")
+        //sessions = null;
+      }
+      console.log("=m",this.dataSource)
+      //this.dataSource = this.dataSource;
+    });
+    this.cdr.detectChanges();
+    //console.log("ssssssssssss",this.dataSource)
+    //this.myArray.push(newItem);
+    this.myArray.data = this.dataSource; 
+  }
+    //return sessions;
+    
   }
   refresh() {
     this.loadData();
@@ -110,6 +199,7 @@ export class LecturesComponent
     });
   }
   editCall(row: Lectures) {
+    console.log("==========",row)
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -125,7 +215,9 @@ export class LecturesComponent
       direction: tempDirection,
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      console.log("========",result)
       if (result === 1) {
+        this.getClassList()
         // When using an edit things are little different, firstly we find record inside DataService by id
         const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
           (x) => x.id === this.id
@@ -136,6 +228,7 @@ export class LecturesComponent
             this.lecturesService.getDialogData();
           // And lastly refresh table
           this.refreshTable();
+          this.getClassList()
           this.showNotification(
             'black',
             'Edit Record Successfully...!!!',
@@ -178,12 +271,12 @@ export class LecturesComponent
     });
   }
   private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
+   // this.paginator._changePageSize(this.paginator.pageSize);
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.renderedData.length;
+    const numRows = this.dataSource.length;
     return numSelected === numRows;
   }
 
@@ -191,21 +284,22 @@ export class LecturesComponent
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+      : ""
+      // this.dataSource.renderedData.forEach((row) =>
+      //     this.selection.select(row)
+      //   );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
-    this.selection.selected.forEach((item) => {
-      const index: number = this.dataSource.renderedData.findIndex(
-        (d) => d === item
-      );
-      // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
-      this.exampleDatabase?.dataChange.value.splice(index, 1);
-      this.refreshTable();
-      this.selection = new SelectionModel<Lectures>(true, []);
-    });
+    // this.selection.selected.forEach((item) => {
+    //   const index: number = this.dataSource.renderedData.findIndex(
+    //     (d) => d === item
+    //   );
+    //   // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
+    //   this.exampleDatabase?.dataChange.value.splice(index, 1);
+    //   this.refreshTable();
+    //   this.selection = new SelectionModel<Lectures>(true, []);
+    // });
     this.showNotification(
       'snackbar-danger',
       totalSelect + ' Record Delete Successfully...!!!',
@@ -214,12 +308,12 @@ export class LecturesComponent
     );
   }
   public loadData() {
-    this.exampleDatabase = new LecturesService(this.httpClient);
-    this.dataSource = new ExampleDataSource(
-      this.exampleDatabase,
-      this.paginator,
-      this.sort
-    );
+    //this.exampleDatabase = new LecturesService(this.httpClient);
+    // this.dataSource = new ExampleDataSource(
+    //   this.exampleDatabase,
+    //   this.paginator,
+    //   this.sort
+    // );
     this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
       () => {
         if (!this.dataSource) {
@@ -233,16 +327,16 @@ export class LecturesComponent
   // export table data in excel file
   exportExcel() {
     // key name with space add in brackets
-    const exportData: Partial<TableElement>[] =
-      this.dataSource.filteredData.map((x) => ({
-        'Subject Name': x.sName,
-        Class: x.class,
-        Date: formatDate(new Date(x.date), 'yyyy-MM-dd', 'en') || '',
-        Time: x.time,
-        Status: x.status,
-      }));
+    // const exportData: Partial<TableElement>[] =
+    //   // this.dataSource.filteredData.map((x) => ({
+    //   //   'Subject Name': x.sName,
+    //   //   Class: x.class,
+    //   //   Date: formatDate(new Date(x.date), 'yyyy-MM-dd', 'en') || '',
+    //   //   Time: x.time,
+    //   //   Status: x.status,
+    //   // }));
 
-    TableExportUtil.exportToExcel(exportData, 'excel');
+    // TableExportUtil.exportToExcel(exportData, 'excel');
   }
 
   showNotification(
@@ -270,94 +364,97 @@ export class LecturesComponent
     }
   }
 }
-export class ExampleDataSource extends DataSource<Lectures> {
-  filterChange = new BehaviorSubject('');
-  get filter(): string {
-    return this.filterChange.value;
-  }
-  set filter(filter: string) {
-    this.filterChange.next(filter);
-  }
-  filteredData: Lectures[] = [];
-  renderedData: Lectures[] = [];
-  constructor(
-    public exampleDatabase: LecturesService,
-    public paginator: MatPaginator,
-    public _sort: MatSort
-  ) {
-    super();
-    // Reset to the first page when the user changes the filter.
-    this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
-  }
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<Lectures[]> {
-    // Listen for any changes in the base data, sorting, filtering, or pagination
-    const displayDataChanges = [
-      this.exampleDatabase.dataChange,
-      this._sort.sortChange,
-      this.filterChange,
-      this.paginator.page,
-    ];
-    this.exampleDatabase.getAllLecturess();
-    return merge(...displayDataChanges).pipe(
-      map(() => {
-        // Filter data
-        this.filteredData = this.exampleDatabase.data
-          .slice()
-          .filter((lectures: Lectures) => {
-            const searchStr = (
-              lectures.sName +
-              lectures.class +
-              lectures.date +
-              lectures.time
-            ).toLowerCase();
-            return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-          });
-        // Sort filtered data
-        const sortedData = this.sortData(this.filteredData.slice());
-        // Grab the page's slice of the filtered sorted data.
-        const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-        this.renderedData = sortedData.splice(
-          startIndex,
-          this.paginator.pageSize
-        );
-        return this.renderedData;
-      })
-    );
-  }
-  disconnect() {
-    //disconnect
-  }
-  /** Returns a sorted copy of the database data. */
-  sortData(data: Lectures[]): Lectures[] {
-    if (!this._sort.active || this._sort.direction === '') {
-      return data;
-    }
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-      switch (this._sort.active) {
-        case 'id':
-          [propertyA, propertyB] = [a.id, b.id];
-          break;
-        case 'sName':
-          [propertyA, propertyB] = [a.sName, b.sName];
-          break;
-        case 'class':
-          [propertyA, propertyB] = [a.class, b.class];
-          break;
-        case 'date':
-          [propertyA, propertyB] = [a.date, b.date];
-          break;
-        case 'time':
-          [propertyA, propertyB] = [a.time, b.time];
-          break;
-      }
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-      return (
-        (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
-      );
-    });
-  }
-}
+// export class ExampleDataSource extends DataSource<Lectures> {
+//   forEach(arg0: (item: any, index: any) => void) {
+//     throw new Error('Method not implemented.');
+//   }
+//   filterChange = new BehaviorSubject('');
+//   get filter(): string {
+//     return this.filterChange.value;
+//   }
+//   set filter(filter: string) {
+//     this.filterChange.next(filter);
+//   }
+//   filteredData: Lectures[] = [];
+//   renderedData: Lectures[] = [];
+//   constructor(
+//     public exampleDatabase: LecturesService,
+//     public paginator: MatPaginator,
+//     public _sort: MatSort
+//   ) {
+//     super();
+//     // Reset to the first page when the user changes the filter.
+//     this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
+//   }
+//   /** Connect function called by the table to retrieve one stream containing the data to render. */
+//   connect(): Observable<Lectures[]> {
+//     // Listen for any changes in the base data, sorting, filtering, or pagination
+//     const displayDataChanges = [
+//       this.exampleDatabase.dataChange,
+//       this._sort.sortChange,
+//       this.filterChange,
+//       this.paginator.page,
+//     ];
+//     this.exampleDatabase.getAllLecturess();
+//     return merge(...displayDataChanges).pipe(
+//       map(() => {
+//         // Filter data
+//         this.filteredData = this.exampleDatabase.data
+//           .slice()
+//           .filter((lectures: Lectures) => {
+//             const searchStr = (
+//               lectures.sName +
+//               lectures.class +
+//               lectures.date +
+//               lectures.time
+//             ).toLowerCase();
+//             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+//           });
+//         // Sort filtered data
+//         const sortedData = this.sortData(this.filteredData.slice());
+//         // Grab the page's slice of the filtered sorted data.
+//         const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+//         this.renderedData = sortedData.splice(
+//           startIndex,
+//           this.paginator.pageSize
+//         );
+//         return this.renderedData;
+//       })
+//     );
+//   }
+//   disconnect() {
+//     //disconnect
+//   }
+//   /** Returns a sorted copy of the database data. */
+//   sortData(data: Lectures[]): Lectures[] {
+//     if (!this._sort.active || this._sort.direction === '') {
+//       return data;
+//     }
+//     return data.sort((a, b) => {
+//       let propertyA: number | string = '';
+//       let propertyB: number | string = '';
+//       switch (this._sort.active) {
+//         case 'id':
+//           [propertyA, propertyB] = [a.id, b.id];
+//           break;
+//         case 'sName':
+//           [propertyA, propertyB] = [a.sName, b.sName];
+//           break;
+//         case 'class':
+//           [propertyA, propertyB] = [a.class, b.class];
+//           break;
+//         case 'date':
+//           [propertyA, propertyB] = [a.date, b.date];
+//           break;
+//         case 'time':
+//           [propertyA, propertyB] = [a.time, b.time];
+//           break;
+//       }
+//       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+//       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+//       return (
+//         (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
+//       );
+//     });
+//   }
+// }

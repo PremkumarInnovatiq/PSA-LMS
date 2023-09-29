@@ -5,6 +5,13 @@ export class Lectures {
   date: string;
   time: string;
   status: string;
+  courseName:string;
+  courseCode:string;
+  sessionStartTime:string;
+  sessionStartDate:string;
+  classId:string;
+  _id: string;
+  
   constructor(lectures: Lectures) {
     {
       this.id = lectures.id || this.getRandomID();
@@ -13,6 +20,12 @@ export class Lectures {
       this.date = lectures.date || '';
       this.time = lectures.time || '';
       this.status = lectures.status || '';
+      this.courseName=lectures.courseName || '';
+      this.courseCode=lectures.courseCode || '';
+      this.sessionStartTime=lectures.sessionStartTime || '';
+      this.sessionStartDate=lectures.sessionStartDate || '';
+      this.classId=lectures.classId || '';
+      this._id=lectures._id || '';
     }
   }
   public getRandomID(): number {

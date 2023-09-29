@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Lectures } from './lectures.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
+import { CoursePaginationModel } from '@core/models/course.model';
+import { ApiResponse } from '@core/models/response';
+import { environment } from 'environments/environment';
+import { Router } from '@angular/router';
 @Injectable()
 export class LecturesService extends UnsubscribeOnDestroyAdapter {
   private readonly API_URL = 'assets/data/lectures.json';
+  private prefix: string = environment.apiUrl;
   isTblLoading = true;
   dataChange: BehaviorSubject<Lectures[]> = new BehaviorSubject<Lectures[]>([]);
   // Temporarily stores data from dialogs
   dialogData!: Lectures;
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+    private route :Router) {
     super();
   }
   get data(): Lectures[] {
@@ -18,6 +24,38 @@ export class LecturesService extends UnsubscribeOnDestroyAdapter {
   }
   getDialogData() {
     return this.dialogData;
+  }
+  getClassListWithPagination(
+    filter?:Partial<CoursePaginationModel>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/class/`;
+    return this.httpClient.get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
+  }
+  private buildParams(filter?: Partial<CoursePaginationModel>): HttpParams {
+    let params = new HttpParams();
+    if (filter) {
+      if (filter.sortBy) {
+        params = params.set(
+          "sortBy",
+          `${filter.sortByDirection === "asc" ? "+" : "-"}${filter.sortBy}`
+        );
+      }
+      if (filter.limit) {
+        params = params.set("limit", filter.limit?.toString());
+      }
+      if (filter.page) {
+        params = params.set("page", filter.page?.toString());
+      }
+      
+      if (filter.filterText) {
+        params = params.set("title", filter.filterText?.toString());
+      }
+      if (filter.status && filter.status === "active") {
+        params = params.set("status", "active");
+      } else if (filter.status && filter.status === "inactive") {
+        params = params.set("status", "inactive");
+      }
+    }
+    return params;
   }
   /** CRUD METHODS */
   getAllLecturess(): void {
@@ -47,16 +85,21 @@ export class LecturesService extends UnsubscribeOnDestroyAdapter {
   }
   updateLectures(lectures: Lectures): void {
     this.dialogData = lectures;
+    console.log("data",lectures)
+    let apiUrl = `${this.prefix}admin/class/updateSession`;
 
-    // this.httpClient.put(this.API_URL + lectures.id, lectures)
-    //     .subscribe({
-    //       next: (data) => {
-    //         this.dialogData = lectures;
-    //       },
-    //       error: (error: HttpErrorResponse) => {
-    //          // error code here
-    //       },
-    //     });
+    this.httpClient.post(apiUrl, lectures)
+        .subscribe({
+          next: (data) => {
+            this.dialogData = lectures;
+            this.getClassListWithPagination()
+            //this.route.navigateByUrl("/teacher/lectures")
+
+          },
+          error: (error: HttpErrorResponse) => {
+             // error code here
+          },
+        });
   }
   deleteLectures(id: number): void {
     console.log(id);
