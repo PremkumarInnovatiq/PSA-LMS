@@ -108,8 +108,8 @@
                             </button>
                                 
                             <span  class="badge badge-solid-orange mx-2"*ngIf="isRegistered || isStatus">Registered</span>
-                            <span   class="badge badge-solid-green mx-2"*ngIf="isRegistered || isApproved">Approved</span>
-                            <span    class="badge badge-solid-red mx-2"*ngIf="isRegistered || isCancelled">Cancelled</span>
+                            <!-- <span   class="badge badge-solid-green mx-2"*ngIf="isRegistered || isApproved">Approved</span>
+                            <span    class="badge badge-solid-red mx-2"*ngIf="isRegistered || isCancelled">Cancelled</span> -->
 
                           </td>
                             </ng-container>
@@ -235,7 +235,7 @@
                 </div> -->
               </mat-tab>
   
-              <mat-tab >
+              <mat-tab *ngIf="isApproved" >
                 <ng-template mat-tab-label>
                   <!-- <mat-icon class="example-tab-icon msr-2">settings</mat-icon> -->
                   Programkit

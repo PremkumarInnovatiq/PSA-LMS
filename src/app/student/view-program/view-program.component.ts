@@ -74,18 +74,37 @@ export class ViewProgramComponent {
     })
   }
   registerClass(classId: string) {
-    let studentId=localStorage.getItem('id')
-    this.courseService.saveRegisterClass(studentId, this.classId).subscribe((response) => {
-      let studentId=localStorage.getItem('user_data');
-        Swal.fire({
-          title: 'Thank you',
-          text: 'We will approve once verified',
-          icon: 'success',
-        });
-      this.isRegistered = true;
-      this.getClassDetails();
+    Swal.fire({
+      title: 'Thank you',
+      text: 'We will approve once verified',
+      icon: 'success',
     });
+  this.isRegistered = true;
+    // let studentId=localStorage.getItem('id')
+    // this.courseService.saveRegisterClass(studentId, this.classId).subscribe((response) => {
+    //   let studentId=localStorage.getItem('user_data');
+    //     Swal.fire({
+    //       title: 'Thank you',
+    //       text: 'We will approve once verified',
+    //       icon: 'success',
+    //     });
+    //   this.isRegistered = true;
+    //   this.getClassDetails();
+    // });
   }
+  // registerClass(classId: string) {
+  //   let studentId=localStorage.getItem('id')
+  //   this.courseService.saveRegisterClass(studentId, this.classId).subscribe((response) => {
+  //     let studentId=localStorage.getItem('user_data');
+  //       Swal.fire({
+  //         title: 'Thank you',
+  //         text: 'We will approve once verified',
+  //         icon: 'success',
+  //       });
+  //     this.isRegistered = true;
+  //     this.getClassDetails();
+  //   });
+  // }
   getCourseKitDetails(){
     this.courseService.getProgramById(this.courseId).subscribe((response) => {
       this.courseKitDetails=response?.data?.programKit;
