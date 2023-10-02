@@ -39,8 +39,8 @@ import { Location } from '@angular/common';
 })
 export class AllTeachersComponent
   extends UnsubscribeOnDestroyAdapter
-  
-  
+
+
   implements OnInit
 {
   displayedColumns = [
@@ -103,7 +103,7 @@ export class AllTeachersComponent
   addNew() {
     this.route.navigateByUrl("/admin/teachers/add-teacher")
 
-    
+
   }
   performSearch() {
     console.log(this.dataSource)
@@ -114,7 +114,7 @@ export class AllTeachersComponent
     );
     } else {
       this.instructorData()
-      
+
     }
   }
   editCall(row: Teachers) {
@@ -187,7 +187,7 @@ export class AllTeachersComponent
         );
       }
     });
-    
+
   }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
@@ -245,12 +245,12 @@ export class AllTeachersComponent
     this.teachersService.getInstructor({ ...this.UsersModel })
       .subscribe((response: {
         docs: any;
-        totalDocs: any; data: any; page: any; limit: any; 
+        totalDocs: any; data: any; page: any; limit: any;
 }) => {
   this.isTblLoading=false;
         console.log("===response==",response)
         this.totalItems = response.totalDocs
-        
+
         this.dataSource = response?.docs
         this.UsersModel.docs = response?.docs;
         this.UsersModel.page = response?.page;
@@ -262,7 +262,7 @@ export class AllTeachersComponent
       }, (error) => {
 
       });
-    
+
   }
   // export table data in excel file
   exportExcel() {
@@ -285,14 +285,14 @@ export class AllTeachersComponent
     const headers = [['Name', 'Department', 'Gender','Degree','Mobile','Email','Joining Date']];
     const data = this.dataSource.map((user: {
       //formatDate(arg0: Date, arg1: string, arg2: string): unknown;
-      
+
       name: any; department: any; gender: any; qualification: any; mobile: any; email: any; joiningDate: string | number | Date;
     }, index: any) => [user.name, user.department, user.gender,user.qualification,
       user.mobile,
       user.email,
       formatDate(new Date(user.joiningDate), 'yyyy-MM-dd', 'en') || '',
-      
-     
+
+
     ]);
     //const columnWidths = [60, 80, 40];
     const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
@@ -305,9 +305,9 @@ export class AllTeachersComponent
       head: headers,
       body: data,
       startY: 20,
-      
-      
-      
+
+
+
     });
 
     // Save or open the PDF

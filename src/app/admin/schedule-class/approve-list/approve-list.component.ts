@@ -17,6 +17,13 @@ import {
 import * as moment from 'moment';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
+import { TableElement, TableExportUtil } from '@shared';
+import { formatDate } from '@angular/common';
+import jsPDF from 'jspdf';
+//import 'jspdf-autotable';
+import 'jspdf-autotable';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-approve-list',
@@ -27,11 +34,11 @@ export class ApproveListComponent {
   displayedColumns = [
     'select',
     'img',
-    'course name',
-    'student name',
-    'class start Date',
-    'class end Date',
-    'registered Date',
+    'coursename',
+    'studentname',
+    'classstartDate',
+    'classendDate',
+    'registeredDate',
     'actions',
   ];
 
@@ -45,6 +52,7 @@ export class ApproveListComponent {
   studentPaginationModel: StudentPaginationModel;
   selection = new SelectionModel<ClassModel>(true, []);
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) matSort! : MatSort;
   totalItems: any;
   approveData: any;
   pageSizeArr = [10, 20, 30, 50, 100];
@@ -88,19 +96,23 @@ export class ApproveListComponent {
       this.isLoading = false;
         this.studentPaginationModel = response.data;
         this.dataSource = response.data.docs;
+        this.dataSource.sort = this.matSort;
+        console.log(this.dataSource)
         this.totalItems = response.data.totalDocs;
         this.mapClassList();
 
       })
   }
+  filterData($event:any){
+    console.log($event.target.value)
+    this.dataSource.filter = $event.target.value;
 
+  }
   mapClassList() {
     this.studentPaginationModel.docs.forEach((item: Student) => {
-      console.log("res",item)
       const startDateArr: any = [];
       const endDateArr: any = [];
       item?.classId?.sessions?.forEach((session) => {
-        console.log("session",session)
         startDateArr.push(new Date(session?.sessionStartDate?.toString()));
         endDateArr.push(new Date(session?.sessionEndDate?.toString()));
       });
@@ -109,8 +121,8 @@ export class ApproveListComponent {
 
       item.classStartDate = !isNaN(minStartDate.valueOf()) ? moment(minStartDate).format("YYYY-DD-MM") : "";
       item.classEndDate = !isNaN(maxEndDate.valueOf()) ? moment(maxEndDate).format("YYYY-DD-MM") : "";
-      item.registeredOn = item?.registeredOn ? moment(item.registeredOn).format("YYYY-DD-MM") : "";
-      item.studentId.name = `${item?.studentId?.name} ${item?.studentId?.last_name}`;
+      // item.registeredOn = item?.registeredOn ? moment(item.registeredOn).format("YYYY-DD-MM") : "";
+      item.studentId.name = `${item?.studentId?.name}`;
     });
   }
 
@@ -190,7 +202,6 @@ export class ApproveListComponent {
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.length;
@@ -201,7 +212,7 @@ export class ApproveListComponent {
    masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.forEach((row: ClassModel) =>
+      : this.dataSource.forEach((row: any) =>
           this.selection.select(row)
         );
   }
@@ -214,4 +225,51 @@ export class ApproveListComponent {
     });
     return sessions;
   }
+
+  exportExcel() {
+    //k//ey name with space add in brackets
+   const exportData: Partial<TableElement>[] =
+      this.dataSource.map((user:any) => ({
+        CourseName:user.classId?.courseId?.title,
+        StudentName:  user.studentId?.name,
+        StartDate: user.classStartDate,
+        EndDate: user.classEndDate,
+        RegisteredOn: user.registeredOn,
+      }));
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  // pdf
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Course Name', 'Student Name', 'Start Date','End date', 'Registered Date']];
+    const data = this.dataSource.map((user:any) =>
+      [user.classId?.courseId?.title,
+        user.studentId?.name,
+        user.classStartDate,
+       user.classEndDate,
+     user.registeredOn,
+
+    ] );
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+
+
+
+    });
+
+    // Save or open the PDF
+    doc.save('approve-list.pdf');
+  }
+
+
+
 }

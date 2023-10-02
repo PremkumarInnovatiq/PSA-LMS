@@ -111,6 +111,8 @@ export class AllstaffComponent
     });
   }
   editCall(row: Staff) {
+
+    console.log("rowEdit",row)
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {

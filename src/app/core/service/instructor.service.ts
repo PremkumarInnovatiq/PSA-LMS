@@ -23,14 +23,14 @@ export class InstructorService {
         JSON.parse(localStorage.getItem('currentUser') || '{}')
       );
       this.currentUser = this.currentUserSubject.asObservable();
-  
+
   }
   public get currentUserValue(): any {
     return this.currentUserSubject.value;
   }
 
- 
-  
+
+
   CreateUser(user: Users): Observable<ApiResponse> {
     //const apiUrl = `${this.prefix}admin/course-kit/`;
     const loginUrl =this.defaultUrl + 'auth/instructorCreate';
@@ -46,7 +46,7 @@ export class InstructorService {
   }
 
 
- 
+
 
   getAccessToken() {
     //let user =JSON.parse();

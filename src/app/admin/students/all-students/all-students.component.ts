@@ -24,6 +24,7 @@ import {
   UnsubscribeOnDestroyAdapter,
 } from '@shared';
 import { formatDate } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-students',
@@ -62,7 +63,8 @@ export class AllStudentsComponent
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public studentsService: StudentsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router : Router
   ) {
     super();
   }
@@ -111,41 +113,42 @@ export class AllStudentsComponent
     });
   }
   editCall(row: Students) {
-    this.id = row.id;
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        students: row,
-        action: 'edit',
-      },
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // Then you update that record using data from dialogData (values you enetered)
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value[foundIndex] =
-            this.studentsService.getDialogData();
-          // And lastly refresh table
-          this.refreshTable();
-          this.showNotification(
-            'black',
-            'Edit Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
-      }
-    });
+    console.log("edit",row)
+    this.router.navigate(['/admin/students/edit-student'],{queryParams:{id:row.id}})
+    // let tempDirection: Direction;
+    // if (localStorage.getItem('isRtl') === 'true') {
+    //   tempDirection = 'rtl';
+    // } else {
+    //   tempDirection = 'ltr';
+    // }
+    // const dialogRef = this.dialog.open(FormDialogComponent, {
+    //   data: {
+    //     students: row,
+    //     action: 'edit',
+    //   },
+    //   direction: tempDirection,
+    // });
+    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    //   if (result === 1) {
+    //     // When using an edit things are little different, firstly we find record inside DataService by id
+    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+    //       (x) => x.id === this.id
+    //     );
+    //     // Then you update that record using data from dialogData (values you enetered)
+    //     if (foundIndex != null && this.exampleDatabase) {
+    //       this.exampleDatabase.dataChange.value[foundIndex] =
+    //         this.studentsService.getDialogData();
+    //       // And lastly refresh table
+    //       this.refreshTable();
+    //       this.showNotification(
+    //         'black',
+    //         'Edit Record Successfully...!!!',
+    //         'bottom',
+    //         'center'
+    //       );
+    //     }
+    //   }
+    // });
   }
   deleteItem(row: Students) {
     this.id = row.id;
@@ -243,7 +246,7 @@ export class AllStudentsComponent
         Mobile: x.mobile,
         Email: x.email,
         'Admission Date':
-          formatDate(new Date(x.date), 'yyyy-MM-dd', 'en') || '',
+          formatDate(new Date(x.joiningDate), 'yyyy-MM-dd', 'en') || '',
       }));
 
     TableExportUtil.exportToExcel(exportData, 'excel');
@@ -302,11 +305,16 @@ export class ExampleDataSource extends DataSource<Students> {
       this.filterChange,
       this.paginator.page,
     ];
-    this.exampleDatabase.getAllStudentss();
+    let payload = {
+      type: "Student"
+    }
+    this.exampleDatabase.getAllStudentss(payload);
+    console.log("studentData",this.exampleDatabase);
     return merge(...displayDataChanges).pipe(
-      map(() => {
+      map((x) => {
+        console.log("x")
         // Filter data
-        console.log(this.exampleDatabase.data)
+        console.log("hgcgh",this.exampleDatabase.data)
         this.filteredData = this.exampleDatabase.data
           .slice()
           .filter((students: Students) => {
@@ -353,7 +361,7 @@ export class ExampleDataSource extends DataSource<Students> {
           [propertyA, propertyB] = [a.email, b.email];
           break;
         case 'date':
-          [propertyA, propertyB] = [a.date, b.date];
+          [propertyA, propertyB] = [a.joiningDate, b.joiningDate];
           break;
         case 'time':
           [propertyA, propertyB] = [a.department, b.department];

@@ -13,11 +13,11 @@
             <div class="left">
               <ul class="header-buttons-left ms-0">
                 <li class="tbl-title">
-                  <h2>Staffs</h2>
+                  <h2>Schedule Class List</h2>
                 </li>
                 <li class="tbl-search-box">
                   <label for="search-input"><i class="material-icons search-icon">search</i></label>
-                  <input placeholder="Search" type="text" #filter class="browser-default search-field"
+                  <input placeholder="Search" type="text" #filter class="browser-default search-field" [(ngModel)]="searchTerm" (input)="performSearch()"
                     aria-label="Search box">
                 </li>
               </ul>
@@ -47,7 +47,12 @@
                   </div>
                 </li>
                 <li>
-                  <div class="export-button m-l-10" matTooltip="XLSX">
+                  <div class="export-button m-l-10" matTooltip="PDF">
+                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
+                  </div>
+                </li>
+                <li>
+                  <div class="export-button m-l-10" matTooltip="XLSX"  (click)="exportExcel()">
                     <img src="assets/images/icons/xlsx.png" alt="" />
                   </div>
                 </li>

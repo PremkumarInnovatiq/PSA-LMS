@@ -12,6 +12,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { UnsubscribeOnDestroyAdapter } from '@shared/UnsubscribeOnDestroyAdapter';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { TableElement, TableExportUtil } from '@shared';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-class-list',
@@ -40,7 +43,8 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
   dataSource: any;
   totalItems: any;
   isLoading = true;
-  pageSizeArr = [10, 20, 50, 100]
+  pageSizeArr = [10, 20, 50, 100];
+  searchTerm: string = '';
 
   constructor(public _classService: ClassService, private snackBar: MatSnackBar,private _router: Router) {
 
@@ -97,7 +101,7 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
    masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.dataSource.forEach((row: ClassModel) =>
+      : this.dataSource.forEach((row: any) =>
           this.selection.select(row)
         );
   }
@@ -196,5 +200,58 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
       });
     });
   }
+  performSearch() {
+    console.log(this.dataSource)
+    console.log(this.searchTerm)
+    if(this.searchTerm){
+    this.dataSource = this.dataSource?.filter((item: { name: string; }) =>
+      item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    } else {
+      // this.instructorData()
+
+    }
+  }
+  exportExcel() {
+    //k//ey name with space add in brackets
+   const exportData: Partial<TableElement>[] =
+      this.dataSource.map((user:any) => ({
+        CourseName:user.classId?.courseId?.title,
+        StartDate: user.classStartDate,
+        EndDate: user.classEndDate,
+      }));
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  // pdf
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Course Name','Start Date','End date']];
+    console.log(this.dataSource)
+    const data = this.dataSource.map((user:any) =>
+      [user.courseId?.title,
+        user.classStartDate,
+       user.classEndDate,
+
+    ] );
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+
+
+
+    });
+
+    // Save or open the PDF
+    doc.save('Class-list.pdf');
+  }
+
 
 }
