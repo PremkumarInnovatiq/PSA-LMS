@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { Students } from '../../students.model';
 import { formatDate } from '@angular/common';
+import { Student } from '@core/models/user.model';
+import Swal from 'sweetalert2';
 
 export interface DialogData {
   id: number;
@@ -26,6 +28,8 @@ export class FormDialogComponent {
   dialogTitle: string;
   stdForm: UntypedFormGroup;
   students: Students;
+  userId:any ;
+  fileName:any;
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -37,6 +41,7 @@ export class FormDialogComponent {
     if (this.action === 'edit') {
       this.dialogTitle = data.students.name;
       this.students = data.students;
+      this.userId = data.id
     } else {
       this.dialogTitle = 'New Students';
       const blankObject = {} as Students;
@@ -65,7 +70,7 @@ export class FormDialogComponent {
         [Validators.required, Validators.email, Validators.minLength(5)],
       ],
       date: [
-        formatDate(this.students.date, 'yyyy-MM-dd', 'en'),
+        formatDate(this.students?.joiningDate || '2023-09-30', 'yyyy-MM-dd', 'en'),
         [Validators.required],
       ],
       gender: [this.students.gender],
@@ -75,8 +80,58 @@ export class FormDialogComponent {
     });
   }
   submit() {
-    // emppty stuff
+
+    console.log('Form Value', this.createContactForm().value);
+    if(this.createContactForm().valid){
+      // this.instructor.uploadVideo(this.files).subscribe(
+      //   (response: any) => {
+      //     const inputUrl = response.inputUrl;
+
+          const userData: Student = this.createContactForm().value;
+          //this.commonService.setVideoId(videoId)
+
+          //userData.avatar = inputUrl;
+          userData.filename= this.fileName
+          userData.type = "Student";
+          userData.role = "Student";
+
+          //this.currentVideoIds = [...this.currentVideoIds, ...videoId]
+          // this.currentVideoIds.push(videoId);
+          this.updateInstructor(userData);
+
+          Swal.close();
+       // },
+
+    }
+
   }
+  private updateInstructor(userData: Student): void {
+    this.studentsService.updateStudent(this.userId,userData).subscribe(
+      () => {
+        Swal.fire({
+          title: "Successful",
+          text: "Instructor update successfully",
+          icon: "success",
+        });
+        //this.fileDropEl.nativeElement.value = "";
+      this.createContactForm().reset();
+      //this.toggleList()
+      // this.router.navigateByUrl('/admin/teachers/all-teachers');
+      },
+      (error: { message: any; error: any; }) => {
+        Swal.fire(
+          "Failed to create course kit",
+          error.message || error.error,
+          "error"
+        );
+      }
+    );
+  }
+
+
+
+
+
   onNoClick(): void {
     this.dialogRef.close();
   }

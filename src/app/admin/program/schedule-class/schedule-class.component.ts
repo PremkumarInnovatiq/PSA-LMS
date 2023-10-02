@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-schedule-class',
   templateUrl: './schedule-class.component.html',
-  styleUrls: ['./schedule-class.component.scss']
+  styleUrls: ['./schedule-class.component.scss'],
 })
 export class ScheduleClassComponent {
   status: boolean = false;
@@ -28,9 +28,9 @@ export class ScheduleClassComponent {
     }
     return true;
   }
-  isLoading:boolean = false;
-  edit:boolean = false;
-  next:boolean = false;
+  isLoading: boolean = false;
+  edit: boolean = false;
+  next: boolean = false;
   classForm!: FormGroup;
   courseNameControl!: FormControl;
   classTypeControl!: FormControl;
@@ -47,18 +47,11 @@ export class ScheduleClassComponent {
   isStartDateFailed: number = 0;
   isEndDateFailed: number = 0;
   selectedPosition: number = 0;
-  selectedLabPosition:number = 0;
+  selectedLabPosition: number = 0;
   dataSourceArray: DataSourceModel[] = [];
   coursePaginationModel!: Partial<CoursePaginationModel>;
 
-  displayedColumns = [
-
-    'img',
-    'courseName',
-    'startDate',
-    'endDate',
-    'Options',
-  ];
+  displayedColumns = ['img', 'courseName', 'startDate', 'endDate', 'Options'];
 
   breadscrums = [
     {
@@ -69,35 +62,44 @@ export class ScheduleClassComponent {
   ];
   dataSource: any;
   totalItems: any;
-constructor(public courseService:ProgramService,private classService: ClassService,private cd: ChangeDetectorRef,public router: Router){
-  this.coursePaginationModel = {};
-}
+  constructor(
+    public courseService: ProgramService,
+    private classService: ClassService,
+    private cd: ChangeDetectorRef,
+    public router: Router
+  ) {
+    this.coursePaginationModel = {};
+  }
 
+  ngOnInit(): void {
+    this.getClassList();
+    this.courseNameControl = this.classForm.get('courseId') as FormControl;
+    this.classTypeControl = this.classForm.get(
+      'classAccessType'
+    ) as FormControl;
+    this.classDeliveryControl = this.classForm.get(
+      'classDeliveryType'
+    ) as FormControl;
+    this.guaranteeControl = this.classForm.get(
+      'isGuaranteedToRun'
+    ) as FormControl;
+    this.roomTypeControl = this.classForm.get('externalRoom') as FormControl;
 
-
-ngOnInit(): void {
-  this.getClassList();
-  this.courseNameControl = this.classForm.get('courseId') as FormControl;
-  this.classTypeControl = this.classForm.get('classAccessType') as FormControl;
-  this.classDeliveryControl = this.classForm.get('classDeliveryType') as FormControl;
-  this.guaranteeControl = this.classForm.get('isGuaranteedToRun') as FormControl;
-  this.roomTypeControl = this.classForm.get('externalRoom') as FormControl;
-
-
-  forkJoin({
-    courses: this.courseService.getCourseProgram({...this.coursePaginationModel,status:'active'}),
-    instructors: this.classService.getAllInstructor(),
-    labs: this.classService.getAllLaboratory(),
-  }).subscribe((response) => {
-    this.programList = response.courses.docs;
-    this.instructorList = response.instructors;
-    this.labList = response.labs;
-    this.cd.detectChanges();
-  });
-  this.dataSource = this.dataSourceArray;
-
-}
-
+    forkJoin({
+      courses: this.courseService.getCourseProgram({
+        ...this.coursePaginationModel,
+        status: 'active',
+      }),
+      instructors: this.classService.getAllInstructor(),
+      labs: this.classService.getAllLaboratory(),
+    }).subscribe((response) => {
+      this.programList = response.courses.docs;
+      this.instructorList = response.instructors;
+      this.labList = response.labs;
+      this.cd.detectChanges();
+    });
+    this.dataSource = this.dataSourceArray;
+  }
 
   pageSizeChange($event: any) {
     this.coursePaginationModel.page = $event?.pageIndex + 1;
@@ -106,36 +108,37 @@ ngOnInit(): void {
   }
 
   getClassList() {
-    this.courseService.getProgramClassListWithPagination({ ...this.coursePaginationModel }).subscribe(
-      (response) => {
-        this.dataSource = response.data.docs;
-        console.log("data", this.dataSource)
-        this.totalItems = response.data.totalDocs
-        this.coursePaginationModel.docs = response.data.docs;
-        this.coursePaginationModel.page = response.data.page;
-        this.coursePaginationModel.limit = response.data.limit;
-      },
-      () => {
-      }
-    );
-
+    this.courseService
+      .getProgramClassListWithPagination({ ...this.coursePaginationModel })
+      .subscribe(
+        (response) => {
+          this.dataSource = response.data.docs;
+          console.log('data', this.dataSource);
+          this.totalItems = response.data.totalDocs;
+          this.coursePaginationModel.docs = response.data.docs;
+          this.coursePaginationModel.page = response.data.page;
+          this.coursePaginationModel.limit = response.data.limit;
+        },
+        () => {}
+      );
   }
 
   toggleStatus() {
     this.status = !this.status;
   }
 
-  nextBtn(){
-
-    if(this.classForm.get('classDeliveryType')?.valid
-    && this.classForm.get('courseId')?.valid
-    && this.classForm.get('instructorCost')?.valid
-    && this.classForm.get('minimumEnrollment')?.valid
-    && this.classForm.get('maximumEnrollment')?.valid){
+  nextBtn() {
+    if (
+      this.classForm.get('classDeliveryType')?.valid &&
+      this.classForm.get('courseId')?.valid &&
+      this.classForm.get('instructorCost')?.valid &&
+      this.classForm.get('minimumEnrollment')?.valid &&
+      this.classForm.get('maximumEnrollment')?.valid
+    ) {
       this.next = true;
     }
   }
-  back(){
+  back() {
     this.next = false;
   }
 
@@ -143,8 +146,6 @@ ngOnInit(): void {
     this.dataSourceArray.splice(index, 1);
     this.dataSource = this.dataSourceArray;
   }
-
-
 
   addNewRow() {
     if (this.isInstructorFailed != 1 && this.isLabFailed != 1) {
@@ -159,30 +160,33 @@ ngOnInit(): void {
       this.dataSource = this.dataSourceArray;
     }
   }
-
-
+  editRow(_id:string){
+     console.log("id",_id)
+  }
   delete(id: string) {
-    this.courseService.getProgramClassList({ courseId: id }).subscribe((classList: any) => {
-      const matchingClasses = classList.docs.filter((classItem: any) => {
-        return classItem.courseId && classItem.courseId.id === id;
-      });
-      if (matchingClasses.length > 0) {
-        Swal.fire({
-          title: 'Error',
-          text: 'Classes have been registered with program`. Cannot delete.',
-          icon: 'error',
+    this.courseService
+      .getProgramClassList({ courseId: id })
+      .subscribe((classList: any) => {
+        const matchingClasses = classList.docs.filter((classItem: any) => {
+          return classItem.courseId && classItem.courseId.id === id;
         });
-        return;
-      }
-      this.courseService.deleteProgramClass(id).subscribe(() => {
-        Swal.fire({
-          title: 'Success',
-          text: 'Class deleted successfully.',
-          icon: 'success',
+        if (matchingClasses.length > 0) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Classes have been registered with program`. Cannot delete.',
+            icon: 'error',
+          });
+          return;
+        }
+        this.courseService.deleteProgramClass(id).subscribe(() => {
+          Swal.fire({
+            title: 'Success',
+            text: 'Class deleted successfully.',
+            icon: 'success',
+          });
+          this.getClassList();
         });
-        this.getClassList();
       });
-    });
   }
 
   startDateChange(element: { end: any; start: any }) {
@@ -242,15 +246,19 @@ ngOnInit(): void {
       });
   }
   getSession() {
-    let sessions: any=[];
+    let sessions: any = [];
     this.dataSource.forEach((item: any, index: any) => {
-      if (this.isInstructorFailed == 0 && item.instructor != "0" && item.lab != "0") {
+      if (
+        this.isInstructorFailed == 0 &&
+        item.instructor != '0' &&
+        item.lab != '0'
+      ) {
         sessions.push({
           sessionNumber: index + 1,
-          sessionStartDate: moment(item.start).format("YYYY-MM-DD"),
-          sessionEndDate: moment(item.end).format("YYYY-MM-DD"),
-          sessionStartTime: moment(item.start).format("HH:mm"),
-          sessionEndTime: moment(item.end).format("HH:mm"),
+          sessionStartDate: moment(item.start).format('YYYY-MM-DD'),
+          sessionEndDate: moment(item.end).format('YYYY-MM-DD'),
+          sessionStartTime: moment(item.start).format('HH:mm'),
+          sessionEndTime: moment(item.end).format('HH:mm'),
           instructorId: item.instructor,
           laboratoryId: item.lab,
         });
@@ -286,7 +294,7 @@ ngOnInit(): void {
             // this.router.navigateByUrl(`Schedule Class/List`);
           });
       }
-    }else{
+    } else {
       if (sessions) {
         this.classForm.value.sessions = sessions;
         // this.inProgress = false;
@@ -308,9 +316,4 @@ ngOnInit(): void {
       }
     }
   }
-
-
-
-
-
 }

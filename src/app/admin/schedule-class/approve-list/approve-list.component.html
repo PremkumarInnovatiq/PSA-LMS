@@ -28,6 +28,7 @@
                     #filter
                     class="browser-default search-field"
                     aria-label="Search box"
+                    (keyup)="filterData($event)"
                   />
                 </li>
               </ul>
@@ -56,7 +57,12 @@
                   </div>
                 </li>
                 <li>
-                  <div class="export-button m-l-10" matTooltip="XLSX">
+                  <div class="export-button m-l-10" matTooltip="PDF">
+                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
+                  </div>
+                </li>
+                <li (click)="exportExcel()">
+                  <div class="export-button m-l-10" matTooltip="XLSX"  >
                     <img src="assets/images/icons/xlsx.png" alt="" />
                   </div>
                 </li>
@@ -65,7 +71,7 @@
           </div>
           <div class="body overflow-auto">
             <div class="responsive_table">
-              <table [dataSource]="dataSource" mat-table matSort class="mat-cell advance-table">
+              <table mat-table [dataSource]="dataSource" mat-table matSort class="mat-cell advance-table">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
@@ -82,7 +88,7 @@
                 </ng-container>
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                  <mat-header-cell *matHeaderCellDef
                     >Id</mat-header-cell
                   >
                   <mat-cell *matCellDef="let row"></mat-cell>
@@ -94,7 +100,7 @@
                       class="mobile-label">Image:</span> <img [src]="row.classId.courseId.image_link" />
                   </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="course name">
+                <ng-container matColumnDef="coursename">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Course Name</mat-header-cell
                   >
@@ -103,17 +109,17 @@
                   </mat-cell>
                 </ng-container>
                 <!-- student name  -->
-                <ng-container matColumnDef="student name">
+                <ng-container matColumnDef="studentname">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Student Name</mat-header-cell
                   >
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Course Name:</span>{{row.studentId?.name | titlecase}}
+                    <span class="mobile-label">Student Name:</span>{{row.studentId?.name | titlecase}}
                   </mat-cell>
                 </ng-container>
                 <!-- Class start date -->
 
-                <ng-container matColumnDef="class start Date">
+                <ng-container matColumnDef="classstartDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Class Start Date
                   </mat-header-cell>
@@ -122,7 +128,7 @@
                   </mat-cell>
                 </ng-container>
                 <!--Class Enddate -->
-                <ng-container matColumnDef="class end Date">
+                <ng-container matColumnDef="classendDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Class End Date
                   </mat-header-cell>
@@ -131,7 +137,7 @@
                   </mat-cell>
                 </ng-container>
                 <!--Registered date -->
-                <ng-container matColumnDef="registered Date">
+                <ng-container matColumnDef="registeredDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Registered Date
                   </mat-header-cell>
@@ -146,16 +152,24 @@
                     >Actions</mat-header-cell
                   >
                   <mat-cell *matCellDef="let row; let i = index" >
-                    <button
+                    <!-- <button
                       (click)="changeStatus(row,'approved')"
                       class="badge badge-solid-green mx-2"
-                    >Approved
+                    >Approve
 
                     </button>
                     <button
                       (click)="Status(row,'cancel')"
                       class="badge badge-solid-red"
                     >Withdraw
+                    </button> -->
+                    <button mat-icon-button matTooltip="approve" (click)="changeStatus(row,'approved')"
+                      class="tbl-action-btn">
+                     <img src="/assets/approve.svg" alt="approve">
+                    </button>
+                    <button mat-icon-button matTooltip="Withdraw" (click)="changeStatus(row,'approved')"
+                      class="tbl-action-btn">
+                     <img src="/assets/archive.svg" alt="approve">
                     </button>
                   </mat-cell>
                 </ng-container>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pagination } from "./pagination.model";
 
 export interface Student {
@@ -6,7 +7,7 @@ export interface Student {
   }
   export interface Instructor {
     data: Users[];
-    
+
   }
   export interface UsersModel extends Pagination {
     status: string;
@@ -17,7 +18,7 @@ export interface Student {
     sortBy: string;
     sortByDirection: string
   }
-  
+
   export interface UsersPaginationModel extends Pagination {
     docs: UsersModel[];
     filterText: string;
@@ -25,7 +26,7 @@ export interface Student {
     sortByDirection: string;
     status: string;
   }
-  
+
   export interface Users {
     role: string;
     designation: any;
@@ -50,15 +51,41 @@ export interface Student {
     education:string;
 
   }
-  
+  export interface Student {
+    role: string;
+    designation: any;
+    _id: string;
+    id:string;
+    slug: string;
+    name: string;
+    rollNo:string;
+    phone_number: [];
+    qualification: string;
+    email: string;
+    status: number;
+    source: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+    type?: string;
+    password: string;
+    joiningDate:Date,
+    parentsName:string,
+    parentsPhnoe:string,
+    Active: any;
+    menuItems: [];
+    avatar:string;
+    filename:string
+    education:string;
+
+  }
   export interface StudentDetail extends Users {
     profile: string;
   }
-  
+
   export interface ImpactPartner {
     docs: ImpactPartnerUser[];
   }
-  
+
   export interface ImpactPartnerUser {
     slug: string;
     status: number;
@@ -69,7 +96,7 @@ export interface Student {
     phone_number: PhoneNumber[];
     user_type: number;
   }
-  
+
   export interface ImpactPartnerDetail extends ImpactPartnerUser {
     city: string;
     state: string;
@@ -88,29 +115,29 @@ export interface Student {
     }
     impact_partner: ImpactPartnerObj;
   }
-  
+
   interface ImpactPartnerObj {
     contact_person_for_collegey: ContactPerson[];
     organization_name: string;
     website: string;
   }
-  
+
   export interface ContactPerson {
     phone_number: PhoneNumber[];
     name: string;
   }
-  
+
   export interface PhoneNumber {
     _id: string;
     extension: string;
     number: number;
     tag: string;
   }
-  
+
   export interface UniversityPartner {
     docs: UniversityPartnerUser[];
   }
-  
+
   export interface UniversityPartnerUser {
     slug: string;
     status: number;
@@ -121,24 +148,24 @@ export interface Student {
     phone_number: PhoneNumber[];
     user_type: number;
   }
-  
+
   export interface UniversityPartnerDetail extends UniversityPartnerUser {
     city: string;
     state: string;
     country: string;
     university_partner: UniversityPartnerObj;
   }
-  
+
   export interface UniversityPartnerObj {
     contact_person_for_collegey: ContactPerson[];
     university_name: string;
     address: string;
   }
-  
+
   export interface SchoolPartner {
     docs: SchoolPartnerUser[];
   }
-  
+
   export interface SchoolPartnerUser {
     slug: string;
     status: number;
@@ -157,14 +184,14 @@ export interface Student {
     country: string;
     school_partner: SchoolPartnerObj;
   }
-  
+
   export interface SchoolPartnerObj {
     principal_name: string;
     counselor_name: string;
     curriculum: string;
     other_text: string;
   }
-  
+
   export interface UserType {
     _id: string;
     typeName?: string;
@@ -173,7 +200,7 @@ export interface Student {
     createdAt?: Date;
     updatedAt?: Date;
   }
-  
+
     export interface UserType {
       _id: string;
       typeName?: string;
@@ -190,4 +217,3 @@ export interface Student {
     checked:boolean;
     indeterminate:boolean;
   }
-  

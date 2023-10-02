@@ -1,10 +1,12 @@
+import { MatTableDataSource } from '@angular/material/table';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Session, Student, StudentApproval, StudentPaginationModel } from '../class.model';
 import { ClassService } from '../class.service';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-completion-list',
@@ -36,7 +38,8 @@ export class CompletionListComponent {
   totalItems: any;
   studentPaginationModel: StudentPaginationModel;
   isLoading: boolean = true;
-
+  // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) matSort! : MatSort;
   upload() {
     document.getElementById('input')?.click();
   }
@@ -56,6 +59,11 @@ export class CompletionListComponent {
       this.getCompletedClasses();
      }
 
+     filterData($event:any){
+      console.log($event.target.value)
+      this.dataSource.filter = $event.target.value;
+
+    }
     getCompletedClasses() {
       this.classService
         .getSessionCompletedStudent(this.studentPaginationModel.page, this.studentPaginationModel.limit)
@@ -66,8 +74,8 @@ export class CompletionListComponent {
         this.studentPaginationModel.page = response.page;
         this.studentPaginationModel.limit = response.limit;
         this.totalItems=response.totalDocs;
-
-        this.dataSource = response.docs;
+        this.dataSource = new MatTableDataSource(response.docs);
+        this.dataSource.sort = this.matSort;
         console.log("data",this.dataSource)
         this.mapClassList();
         })
