@@ -1,63 +1,179 @@
 <section class="content">
-    <div class="content-block">
-      <div class="block-header" *ngFor="let breadscrum of breadscrums">
-        <!-- breadcrumb -->
-        <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
-        </app-breadcrumb>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="header">
-              <h2>All Courses</h2>
-            </div>
-            <div class="body">
-              <div class="row" >
-                <div class="col-md-3" *ngFor="let data of classesData">
-                  <div class="course-card course-card-blog">
-                    <div class="course-card-image">
-                      <img class="img" src="{{data?.courseId?.image_link}}">
-                    </div>
-                    <div class="blog-table">
-                      <div class="post-user mt-3">
-                        <!-- <span class="float-start msr-3">
+  <div class="content-block">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+      </app-breadcrumb>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <!-- <div class="header"> -->
+          <mat-tab-group>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <!-- <mat-icon class="example-tab-icon msr-2">face</mat-icon> -->
+                All Courses
+              </ng-template>
+
+              <!-- <h2>All Courses</h2> -->
+              <!-- </div> -->
+              <div class="body">
+                <div class="row">
+                  <div class="col-md-3" *ngFor="let data of classesData">
+                    <div class="course-card course-card-blog">
+                      <div class="course-card-image">
+                        <img class="img" src="{{data?.courseId?.image_link}}">
+                      </div>
+                      <div class="blog-table">
+                        <div class="post-user mt-3">
+                          <!-- <span class="float-start msr-3">
                           <img class="img-circle" src="{{data.image_link}}" alt="...">
                         </span> -->
-                        <h6 class="mb-xs mt-xs title"> {{data?.courseId?.title |truncate : 45}}</h6>
-                        <p class="text-muted"><time>{{data?.courseId?.training_hours}} hours</time></p>
-                      </div>
-                      <h6>{{data?.classDeliveryType | titlecase}}</h6>
-                      <p class="course-card-description">{{data?.courseId?.course_detailed_description |truncate : 40}}</p>
-                      <div class="text-center mb-3">
-                        <button mat-icon-button class="tbl-action-btn" [routerLink]="['/student/view-course/',data.id]">
-                          <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
-                        </button>
-                        <!-- <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/edit-course/',data.id]">
+                          <h6 class="mb-xs mt-xs title"> {{data?.courseId?.title |truncate : 45}}</h6>
+                          <p class="text-muted"><time>{{data?.courseId?.training_hours}} hours</time></p>
+                        </div>
+                        <h6>{{data?.classDeliveryType | titlecase}}</h6>
+                        <p class="course-card-description">{{data?.courseId?.course_detailed_description |truncate :
+                          40}}</p>
+                        <div class="text-center mb-3">
+                          <button mat-icon-button class="tbl-action-btn"
+                            [routerLink]="['/student/view-course/',data.id]">
+                            <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                          </button>
+                          <!-- <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/edit-course/',data.id]">
                           <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                         </button> -->
-                        <!-- <button mat-icon-button class="tbl-action-btn" (click)="delete(data.id)">
+                          <!-- <button mat-icon-button class="tbl-action-btn" (click)="delete(data.id)">
                           <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                         </button> -->
-                       
-                      </div>
-                      <!-- <div class="ftr">
+
+                        </div>
+                        <!-- <div class="ftr">
                         <div class="author">
                           <a href="#"><span class="text-danger"><i class="fa fa-heart"></i>
                               368</span></a>
                         </div>
                         <div class="stats"> <a href="#"><i class="far fa-comment-dots"></i>48</a> </div>
                       </div> -->
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <mat-paginator class="paginator rounded-5" #paginator [length]="totalItems"
+                (page)="pageSizeChange($event)" [pageSizeOptions]="pageSizeArr" aria-label="select pagination option">
+              </mat-paginator>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <!-- <mat-icon class="example-tab-icon msr-2">face</mat-icon> -->
+                Registered Courses
+              </ng-template>
+              <div class="body">
+                <div class="row">
+                  <div class="col-md-3" *ngFor="let data of studentRegisteredClasses">
+                    <div class="course-card course-card-blog">
+                      <div class="course-card-image">
+                        <img class="img" src="{{data?.classId?.courseId?.image_link}}">
+                      </div>
+                      <div class="blog-table">
+                        <div class="post-user mt-3">
+                          <!-- <span class="float-start msr-3">
+                          <img class="img-circle" src="{{data.image_link}}" alt="...">
+                        </span> -->
+                          <h6 class="mb-xs mt-xs title"> {{data?.classId?.courseId?.title |truncate : 45}}</h6>
+                          <p class="text-muted"><time>{{data?.classId?.courseId?.training_hours}} hours</time></p>
+                        </div>
+                        <h6>{{data?.classId?.classDeliveryType | titlecase}}</h6>
+                        <p class="course-card-description">{{data?.classId?.courseId?.course_detailed_description |truncate :
+                          40}}</p>
+                        <div class="text-center mb-3">
+                          <button mat-icon-button class="tbl-action-btn"
+                            [routerLink]="['/student/view-course/',data.classId?.id]">
+                            <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                          </button>
+                          <!-- <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/edit-course/',data.id]">
+                          <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                        </button> -->
+                          <!-- <button mat-icon-button class="tbl-action-btn" (click)="delete(data.id)">
+                          <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                        </button> -->
+
+                        </div>
+                        <!-- <div class="ftr">
+                        <div class="author">
+                          <a href="#"><span class="text-danger"><i class="fa fa-heart"></i>
+                              368</span></a>
+                        </div>
+                        <div class="stats"> <a href="#"><i class="far fa-comment-dots"></i>48</a> </div>
+                      </div> -->
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
-            <mat-paginator class="paginator rounded-5" #paginator [length]="totalItems" (page)="pageSizeChange($event)" [pageSizeOptions]="pageSizeArr"
-          aria-label="select pagination option">
-        </mat-paginator>
-          </div>
+              </div>
+              <mat-paginator class="paginator rounded-5" #paginator [length]="totalRegisteredItems"
+                (page)="pageStudentRegisteredSizeChange($event)" [pageSizeOptions]="pageSizeArr" aria-label="select pagination option">
+              </mat-paginator>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <!-- <mat-icon class="example-tab-icon msr-2">face</mat-icon> -->
+                Approved Courses
+              </ng-template>
+              <div class="body">
+                <div class="row">
+                  <div class="col-md-3" *ngFor="let data of studentApprovedClasses">
+                    <div class="course-card course-card-blog">
+                      <div class="course-card-image">
+                        <img class="img" src="{{data?.classId?.courseId?.image_link}}">
+                      </div>
+                      <div class="blog-table">
+                        <div class="post-user mt-3">
+                          <!-- <span class="float-start msr-3">
+                          <img class="img-circle" src="{{data.image_link}}" alt="...">
+                        </span> -->
+                          <h6 class="mb-xs mt-xs title"> {{data?.classId?.courseId?.title |truncate : 45}}</h6>
+                          <p class="text-muted"><time>{{data?.classId?.courseId?.training_hours}} hours</time></p>
+                        </div>
+                        <h6>{{data?.classId?.classDeliveryType | titlecase}}</h6>
+                        <p class="course-card-description">{{data?.classId?.courseId?.course_detailed_description |truncate :
+                          40}}</p>
+                        <div class="text-center mb-3">
+                          <button mat-icon-button class="tbl-action-btn"
+                            [routerLink]="['/student/view-course/',data.classId?.id]">
+                            <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                          </button>
+                          <!-- <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/edit-course/',data.id]">
+                          <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                        </button> -->
+                          <!-- <button mat-icon-button class="tbl-action-btn" (click)="delete(data.id)">
+                          <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                        </button> -->
+
+                        </div>
+                        <!-- <div class="ftr">
+                        <div class="author">
+                          <a href="#"><span class="text-danger"><i class="fa fa-heart"></i>
+                              368</span></a>
+                        </div>
+                        <div class="stats"> <a href="#"><i class="far fa-comment-dots"></i>48</a> </div>
+                      </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-paginator class="paginator rounded-5" #paginator [length]="totalApprovedItems"
+                (page)="pageStudentApprovedSizeChange($event)" [pageSizeOptions]="pageSizeArr" aria-label="select pagination option">
+              </mat-paginator>
+
+            </mat-tab>
+
+          </mat-tab-group>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>
