@@ -1,0 +1,30 @@
+svg {
+    position: absolute;
+    fill: #000;
+    background-color: #d3cdcd;
+    margin-top: -15px;
+    margin-left: -15px;
+    border-radius: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+::ng-deep .mat-mdc-menu-content {
+        margin: 0;
+        padding: 8px 20px;
+        border-radius: 10px;
+        list-style-type: none;
+       
+}
+::ng-deep .mat-mdc-menu-panel{
+    --mat-menu-container-shape: 12px;
+}
+.menu-text{
+    padding-left: 20px;
+}
+.call{
+   
+    margin-left: 70px;
+}
+.mail{
+    margin-left: 40px;
+}
