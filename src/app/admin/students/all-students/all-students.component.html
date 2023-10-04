@@ -89,7 +89,7 @@
                           <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image
                           </mat-header-cell>
                           <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"> <span
-                              class="mobile-label">Image:</span><img [src]="row.avatar"/>
+                              class="mobile-label">Image:</span><img [src]="row.avatar || 'assets/noimage.jpg'"/>
                           </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="rollNo">
@@ -251,7 +251,7 @@
                   <div class="m-b-20">
                     <div class="contact-grid">
                       <div class="profile-header l-bg-purple-dark">
-                        <div class="user-name">Pooja Patel</div>
+                        <div class="user-name"></div>
                         <div class="name-center">Mathematics</div>
                       </div>
                       <img src="assets/images/user/usrbig1.jpg" class="user-img" alt="">

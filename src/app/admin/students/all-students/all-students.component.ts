@@ -52,6 +52,7 @@ export class AllStudentsComponent
   selection = new SelectionModel<Students>(true, []);
   id?: number;
   students?: Students;
+  rowData:any;
   breadscrums = [
     {
       title: 'All Student',
@@ -114,7 +115,7 @@ export class AllStudentsComponent
   }
   editCall(row: Students) {
     console.log("edit",row)
-    this.router.navigate(['/admin/students/edit-student'],{queryParams:{id:row.id}})
+    this.router.navigate(['/admin/students/add-student'],{queryParams:{id:row.id}})
     // let tempDirection: Direction;
     // if (localStorage.getItem('isRtl') === 'true') {
     //   tempDirection = 'rtl';
@@ -224,7 +225,7 @@ export class AllStudentsComponent
       this.paginator,
       this.sort
     );
-    console.log("datataewe",this.exampleDatabase)
+
     this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
       () => {
         if (!this.dataSource) {
@@ -233,6 +234,13 @@ export class AllStudentsComponent
         this.dataSource.filter = this.filter.nativeElement.value;
       }
     );
+
+    // this.dataSource.filteredData.map((x) => {
+    //   console.log("xData",x)
+    // })
+
+    //girdView
+
   }
   // export table data in excel file
   exportExcel() {
@@ -287,6 +295,7 @@ export class ExampleDataSource extends DataSource<Students> {
   }
   filteredData: Students[] = [];
   renderedData: Students[] = [];
+  rowData:any
   constructor(
     public exampleDatabase: StudentsService,
     public paginator: MatPaginator,
@@ -309,12 +318,11 @@ export class ExampleDataSource extends DataSource<Students> {
       type: "Student"
     }
     this.exampleDatabase.getAllStudentss(payload);
-    console.log("studentData",this.exampleDatabase);
+
+    this.rowData = this.exampleDatabase.data;
     return merge(...displayDataChanges).pipe(
       map((x) => {
-        console.log("x")
         // Filter data
-        console.log("hgcgh",this.exampleDatabase.data)
         this.filteredData = this.exampleDatabase.data
           .slice()
           .filter((students: Students) => {
@@ -326,7 +334,7 @@ export class ExampleDataSource extends DataSource<Students> {
             ).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
-          console.log("filted",this.filteredData)
+
         // Sort filtered data
         const sortedData = this.sortData(this.filteredData.slice());
         // Grab the page's slice of the filtered sorted data.
@@ -335,6 +343,7 @@ export class ExampleDataSource extends DataSource<Students> {
           startIndex,
           this.paginator.pageSize
         );
+        console.log("filted",this.renderedData)
         return this.renderedData;
       })
     );

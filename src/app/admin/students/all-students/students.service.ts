@@ -138,7 +138,19 @@ export class StudentsService extends UnsubscribeOnDestroyAdapter {
     //     });
   }
 
-
+  CreateStudent(user: Student): Observable<ApiResponse> {
+    //const apiUrl = `${this.prefix}admin/course-kit/`;
+    const loginUrl =this.defaultUrl + 'auth/instructorCreate';
+    return this.httpClient.post<ApiResponse>(loginUrl, user);
+  }
+  uploadVideo(files: File): Observable<any> {
+    const formData = new FormData();
+    //for (let file of files) {
+      formData.append('Files', files, files.name);
+    //}
+    const apiUrl = `${this.defaultUrl}admin/video/upload`;
+    return this.httpClient.post(apiUrl, formData);
+  }
   updateStudent(
       id: string,
       users: Student
