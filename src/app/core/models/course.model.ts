@@ -241,6 +241,26 @@ export interface DepartmentModel {
 	  __v: number;
 	  id: string;
   }
+  export interface LeaveModel {
+	category_name: string ;
+	  status: string;
+	  slug: string;
+	  _id: string;
+	  instructorId: string;
+	  studentId: string;
+	  classId: number;
+	  className: string;
+	  applyDate: Date;
+	  fromDate: Date;
+	  //   main_category_id: string;
+	  toDate: Date;
+	  reason:string;
+	  createdAt: string;
+	  updatedAt: string;
+	  __v: number;
+	  id: string;
+  }
+
   export interface CourseKitModel extends Pagination {
 	status: string;
 	  data: CourseKit[];

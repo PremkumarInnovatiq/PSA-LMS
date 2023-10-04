@@ -24,6 +24,7 @@ import {
   UnsubscribeOnDestroyAdapter,
 } from '@shared';
 import { formatDate } from '@angular/common';
+import { LeaveService } from '@core/service/leave.service';
 
 @Component({
   selector: 'app-leave-request',
@@ -32,8 +33,7 @@ import { formatDate } from '@angular/common';
 })
 export class LeaveRequestComponent
   extends UnsubscribeOnDestroyAdapter
-  implements OnInit
-{
+  implements OnInit {
   displayedColumns = [
     'select',
     'class',
@@ -64,9 +64,11 @@ export class LeaveRequestComponent
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public leaveRequestService: LeaveRequestService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private leaveService: LeaveService
   ) {
     super();
+    this.getLeavesByStudentId();
   }
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -111,6 +113,12 @@ export class LeaveRequestComponent
         );
       }
     });
+  }
+  getLeavesByStudentId() {
+    let studentId = localStorage.getItem('id')
+    this.leaveService.getAllLeavesByStudentId('651bdef02191b64db4db0e06',studentId ).subscribe((response) => {
+    }
+    )
   }
   editCall(row: LeaveRequest) {
     this.id = row.id;
@@ -195,8 +203,8 @@ export class LeaveRequestComponent
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
