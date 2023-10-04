@@ -59,8 +59,7 @@ export class FormDialogComponent {
   createContactForm(): UntypedFormGroup {
     return this.fb.group({
       id: [this.leaveRequest.id],
-      class: [this.leaveRequest.class, [Validators.required]],
-      section: [this.leaveRequest.section, [Validators.required]],
+      class: [this.leaveRequest.className, [Validators.required]],
       applyDate: [this.leaveRequest.applyDate, [Validators.required]],
       fromDate: [this.leaveRequest.fromDate, [Validators.required]],
       toDate: [this.leaveRequest.toDate, [Validators.required]],

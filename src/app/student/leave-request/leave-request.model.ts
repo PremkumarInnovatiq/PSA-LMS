@@ -1,22 +1,23 @@
 export class LeaveRequest {
   id: number;
-  class: string;
-  section: string;
+  className: string;
   applyDate: string;
   fromDate: string;
   toDate: string;
   reason: string;
   status: string;
+  docs:any;
   constructor(leaveRequest: LeaveRequest) {
     {
       this.id = leaveRequest.id || this.getRandomID();
-      this.class = leaveRequest.class || '';
-      this.section = leaveRequest.section || '';
+      this.className = leaveRequest.className || '';
       this.applyDate = leaveRequest.applyDate || '';
       this.fromDate = leaveRequest.fromDate || '';
       this.toDate = leaveRequest.toDate || '';
       this.reason = leaveRequest.reason || '';
       this.status = leaveRequest.status || '';
+      this.docs = leaveRequest.docs || [];
+
     }
   }
   public getRandomID(): number {

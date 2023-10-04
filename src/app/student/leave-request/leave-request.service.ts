@@ -3,9 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 import { LeaveRequest } from './leave-request.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
+import { environment } from 'environments/environment.development';
 @Injectable()
 export class LeaveRequestService extends UnsubscribeOnDestroyAdapter {
   private readonly API_URL = 'assets/data/stdLeaveReq.json';
+  defaultUrl = environment['apiUrl'];
+
   isTblLoading = true;
   dataChange: BehaviorSubject<LeaveRequest[]> = new BehaviorSubject<
     LeaveRequest[]
@@ -22,13 +25,14 @@ export class LeaveRequestService extends UnsubscribeOnDestroyAdapter {
     return this.dialogData;
   }
   /** CRUD METHODS */
-  getAllLeaveRequests(): void {
+  getAllLeavesByStudentId(id:any,studentId:any): void {
+    const apiUrl = `${this.defaultUrl}admin/leave/${id}/${studentId}`;
     this.subs.sink = this.httpClient
-      .get<LeaveRequest[]>(this.API_URL)
+      .get<any>(apiUrl)
       .subscribe({
-        next: (data) => {
+        next: (response) => {
           this.isTblLoading = false;
-          this.dataChange.next(data);
+          this.dataChange.next(response.data.docs);
         },
         error: (error: HttpErrorResponse) => {
           this.isTblLoading = false;
@@ -36,6 +40,7 @@ export class LeaveRequestService extends UnsubscribeOnDestroyAdapter {
         },
       });
   }
+
   addLeaveRequest(leaveRequest: LeaveRequest): void {
     this.dialogData = leaveRequest;
     // this.httpClient.post(this.API_URL, leaveRequest)

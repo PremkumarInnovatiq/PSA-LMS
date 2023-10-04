@@ -37,7 +37,6 @@ export class LeaveRequestComponent
   displayedColumns = [
     'select',
     'class',
-    'section',
     'applyDate',
     'fromDate',
     'toDate',
@@ -68,7 +67,6 @@ export class LeaveRequestComponent
     private leaveService: LeaveService
   ) {
     super();
-    this.getLeavesByStudentId();
   }
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -113,12 +111,6 @@ export class LeaveRequestComponent
         );
       }
     });
-  }
-  getLeavesByStudentId() {
-    let studentId = localStorage.getItem('id')
-    this.leaveService.getAllLeavesByStudentId('651bdef02191b64db4db0e06',studentId ).subscribe((response) => {
-    }
-    )
   }
   editCall(row: LeaveRequest) {
     this.id = row.id;
@@ -246,8 +238,7 @@ export class LeaveRequestComponent
     // key name with space add in brackets
     const exportData: Partial<TableElement>[] =
       this.dataSource.filteredData.map((x) => ({
-        Class: x.class,
-        Section: x.section,
+        Class: x.className,
         'Apply Date':
           formatDate(new Date(x.applyDate), 'yyyy-MM-dd', 'en') || '',
         'From Date': formatDate(new Date(x.fromDate), 'yyyy-MM-dd', 'en') || '',
@@ -312,7 +303,9 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
       this.filterChange,
       this.paginator.page,
     ];
-    this.exampleDatabase.getAllLeaveRequests();
+      let studentId = localStorage.getItem('id')
+  
+    this.exampleDatabase.getAllLeavesByStudentId('651bdef02191b64db4db0e06',studentId);
     return merge(...displayDataChanges).pipe(
       map(() => {
         // Filter data
@@ -320,8 +313,7 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
           .slice()
           .filter((leaveRequest: LeaveRequest) => {
             const searchStr = (
-              leaveRequest.class +
-              leaveRequest.section +
+              leaveRequest.className +
               leaveRequest.applyDate +
               leaveRequest.reason
             ).toLowerCase();
@@ -355,10 +347,7 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
           [propertyA, propertyB] = [a.id, b.id];
           break;
         case 'class':
-          [propertyA, propertyB] = [a.class, b.class];
-          break;
-        case 'section':
-          [propertyA, propertyB] = [a.section, b.section];
+          [propertyA, propertyB] = [a.className, b.className];
           break;
         case 'applyDate':
           [propertyA, propertyB] = [a.applyDate, b.applyDate];
