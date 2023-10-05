@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { LeaveRequest } from './leave-request.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
@@ -68,17 +68,25 @@ export class LeaveRequestService extends UnsubscribeOnDestroyAdapter {
     //       },
     //     });
   }
-  deleteLeaveRequest(id: number): void {
-    console.log(id);
-
-    // this.httpClient.delete(this.API_URL + id)
-    //     .subscribe({
-    //       next: (data) => {
-    //         console.log(id);
-    //       },
-    //       error: (error: HttpErrorResponse) => {
-    //          // error code here
-    //       },
-    //     });
+  deleteLeaveRequest(id: number) {
+    const apiUrl = `${this.defaultUrl}admin/leave/${id}`;
+    return this.httpClient
+      .delete<any>(apiUrl)
+      .pipe(map((response: any) => response));
   }
+
+//   deleteLeaveRequest(id: number): void {
+//     console.log(id);
+
+//     // this.httpClient.delete(this.API_URL + id)
+//     //     .subscribe({
+//     //       next: (data) => {
+//     //         console.log(id);
+//     //       },
+//     //       error: (error: HttpErrorResponse) => {
+//     //          // error code here
+//     //       },
+//     //     });
+//   }
+// }
 }

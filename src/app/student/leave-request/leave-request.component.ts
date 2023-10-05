@@ -25,6 +25,7 @@ import {
 } from '@shared';
 import { formatDate } from '@angular/common';
 import { LeaveService } from '@core/service/leave.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-leave-request',
@@ -150,35 +151,44 @@ export class LeaveRequestComponent
     });
   }
   deleteItem(row: LeaveRequest) {
-    this.id = row.id;
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: row,
-      direction: tempDirection,
+    let id = row.id;
+    this.leaveRequestService.deleteLeaveRequest(id).subscribe(() => {
+      // this.getAllDepartments();
+      Swal.fire({
+        title: 'Success',
+        text: 'Leave deleted successfully.',
+        icon: 'success',
+      });
     });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // for delete we use splice in order to remove single object from DataService
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-          this.refreshTable();
-          this.showNotification(
-            'snackbar-danger',
-            'Delete Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
-      }
-    });
+
+    // let tempDirection: Direction;
+    // if (localStorage.getItem('isRtl') === 'true') {
+    //   tempDirection = 'rtl';
+    // } else {
+    //   tempDirection = 'ltr';
+    // }
+    // const dialogRef = this.dialog.open(DeleteDialogComponent, {
+    //   data: row,
+    //   direction: tempDirection,
+    // });
+    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    //   if (result === 1) {
+    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+    //       (x) => x.id === this.id
+    //     );
+    //     // for delete we use splice in order to remove single object from DataService
+    //     if (foundIndex != null && this.exampleDatabase) {
+    //       this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+    //       this.refreshTable();
+    //       this.showNotification(
+    //         'snackbar-danger',
+    //         'Delete Record Successfully...!!!',
+    //         'bottom',
+    //         'center'
+    //       );
+    //     }
+    //   }
+    // });
   }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
