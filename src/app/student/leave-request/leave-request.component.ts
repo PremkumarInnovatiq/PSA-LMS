@@ -313,7 +313,7 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
           .slice()
           .filter((leaveRequest: LeaveRequest) => {
             const searchStr = (
-              leaveRequest.className +
+              leaveRequest?.className +
               leaveRequest.applyDate +
               leaveRequest.reason
             ).toLowerCase();

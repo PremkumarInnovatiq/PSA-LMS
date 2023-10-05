@@ -41,17 +41,18 @@ export class LeaveRequestService extends UnsubscribeOnDestroyAdapter {
       });
   }
 
-  addLeaveRequest(leaveRequest: LeaveRequest): void {
-    this.dialogData = leaveRequest;
-    // this.httpClient.post(this.API_URL, leaveRequest)
-    //   .subscribe({
-    //     next: (data) => {
-    //       this.dialogData = leaveRequest;
-    //     },
-    //     error: (error: HttpErrorResponse) => {
-    //        // error code here
-    //     },
-    //   });
+  addLeaveRequest(leaveRequest: any): void {
+    // this.dialogData = leaveRequest;
+    const apiUrl = `${this.defaultUrl}admin/leave`;
+    this.httpClient.post(apiUrl, leaveRequest)
+      .subscribe({
+        next: (data) => {
+          // this.dialogData = leaveRequest;
+        },
+        error: (error: HttpErrorResponse) => {
+           // error code here
+        },
+      });
   }
   updateLeaveRequest(leaveRequest: LeaveRequest): void {
     this.dialogData = leaveRequest;

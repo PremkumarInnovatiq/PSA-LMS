@@ -1,5 +1,6 @@
 export class LeaveRequest {
   id: number;
+  instructorId!:string;
   className: string;
   applyDate: string;
   fromDate: string;
@@ -17,6 +18,8 @@ export class LeaveRequest {
       this.reason = leaveRequest.reason || '';
       this.status = leaveRequest.status || '';
       this.docs = leaveRequest.docs || [];
+      this.instructorId = leaveRequest.instructorId || '';
+
 
     }
   }
