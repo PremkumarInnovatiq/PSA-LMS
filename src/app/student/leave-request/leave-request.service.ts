@@ -42,12 +42,13 @@ export class LeaveRequestService extends UnsubscribeOnDestroyAdapter {
   }
 
   addLeaveRequest(leaveRequest: any): void {
-    // this.dialogData = leaveRequest;
+    this.dialogData = leaveRequest;
     const apiUrl = `${this.defaultUrl}admin/leave`;
     this.httpClient.post(apiUrl, leaveRequest)
       .subscribe({
         next: (data) => {
-          // this.dialogData = leaveRequest;
+          this.dialogData = leaveRequest;
+          console.log('daa',this.dialogData)
         },
         error: (error: HttpErrorResponse) => {
            // error code here

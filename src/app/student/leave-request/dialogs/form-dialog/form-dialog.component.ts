@@ -1,5 +1,5 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ViewChild } from "@angular/core";
 import { LeaveRequestService } from "../../leave-request.service";
 import {
   UntypedFormControl,
@@ -24,6 +24,7 @@ export interface DialogData {
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class FormDialogComponent {
+
   action: string;
   dialogTitle: string;
   leaveRequestForm: UntypedFormGroup;
@@ -86,14 +87,15 @@ export class FormDialogComponent {
   }
   public confirmAdd(): void {
     let payload={
-      className:this.leaveRequestForm.value.className.classId.courseId.title,
-      applyDate:this.leaveRequestForm.value.applyDate,
-      fromDate:this.leaveRequestForm.value.fromDate,
-      toDate:this.leaveRequestForm.value.toDate,
-      reason:this.leaveRequestForm.value.reason,
-      instructorId:this.leaveRequestForm.value.class.classId.sessions[0].instructorId,
-      classId:this.leaveRequestForm.value.class.classId.id,
-      studentId:this.leaveRequestForm.value.class.studentId.id
+      className:this.leaveRequestForm.value?.className?.classId?.courseId?.title,
+      applyDate:this.leaveRequestForm.value?.applyDate,
+      fromDate:this.leaveRequestForm.value?.fromDate,
+      toDate:this.leaveRequestForm.value?.toDate,
+      reason:this.leaveRequestForm.value?.reason,
+      instructorId:this.leaveRequestForm.value?.className?.classId?.sessions[0]?.instructorId,
+      classId:this.leaveRequestForm.value?.className?.classId?.id,
+      studentId:this.leaveRequestForm.value?.className?.studentId?.id,
+      status:'applied'
 
     }
     this.leaveRequestService.addLeaveRequest(payload);
