@@ -97,6 +97,20 @@ export interface CourseModel {
 	__v: number;
 	id: string;
 }
+
+export interface ProgramKit {
+	_id: string;
+	name: string;
+	docs: ProgramKit[];
+	shortDescription: string;
+	longDescription: string;
+	videoLink:string[];
+	documentLink: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	id: string;
+}
 export interface FundingGrant {
 	_id: string;
 	grant_type: string;
