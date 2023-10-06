@@ -294,7 +294,7 @@ loadForm() {
     });
     return sessions;
   }
-  onSelectChange1(event :any) {
+  onSelectChange(event :any) {
    // console.log("this.classForm.controls['instructor'].value",this.classForm.controls['courseId'].value)
     
     this.courseService.getCourseById(this.classForm.controls['courseId'].value).subscribe((response) => {
@@ -308,13 +308,13 @@ loadForm() {
     });
     
   }
-  onSelectChange(event :any) {
+  onSelectChange1(event :any,element:any) {
     
-   // console.log("==element=======",event.target.value)
+   console.log("==element=======",element)
     console.log("==element=======",this.instructorList)
     //this.instructorList.filter(item)
-    const filteredData = this.instructorList.filter((item: { instructor_id: string; }) => item.instructor_id===this.InstructorForm.controls['instructor'].value);
-   console.log("========",filteredData)
+    const filteredData = this.instructorList.filter((item: { instructor_id: string; }) => item.instructor_id===element.instructor);
+   console.log("=====filterData===",filteredData)
    this.user_id=filteredData[0].user_id.user_id
   }
 
