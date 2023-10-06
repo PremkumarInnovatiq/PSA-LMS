@@ -381,7 +381,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/users/user-type',
         title: 'User Type',
         iconType: '',
         icon: '',
@@ -393,7 +393,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/users/all-users',
         title: 'All User',
         iconType: '',
         icon: '',
