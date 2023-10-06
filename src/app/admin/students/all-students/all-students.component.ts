@@ -1,3 +1,4 @@
+import { Department } from './../../departments/all-departments/department.model';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StudentsService } from './students.service';
 import { HttpClient } from '@angular/common/http';
@@ -25,7 +26,9 @@ import {
 } from '@shared';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-all-students',
   templateUrl: './all-students.component.html',
@@ -116,72 +119,73 @@ export class AllStudentsComponent
   editCall(row: Students) {
     console.log("edit",row)
     this.router.navigate(['/admin/students/add-student'],{queryParams:{id:row.id}})
-    // let tempDirection: Direction;
-    // if (localStorage.getItem('isRtl') === 'true') {
-    //   tempDirection = 'rtl';
-    // } else {
-    //   tempDirection = 'ltr';
-    // }
-    // const dialogRef = this.dialog.open(FormDialogComponent, {
-    //   data: {
-    //     students: row,
-    //     action: 'edit',
-    //   },
-    //   direction: tempDirection,
-    // });
-    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    //   if (result === 1) {
-    //     // When using an edit things are little different, firstly we find record inside DataService by id
-    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-    //       (x) => x.id === this.id
-    //     );
-    //     // Then you update that record using data from dialogData (values you enetered)
-    //     if (foundIndex != null && this.exampleDatabase) {
-    //       this.exampleDatabase.dataChange.value[foundIndex] =
-    //         this.studentsService.getDialogData();
-    //       // And lastly refresh table
-    //       this.refreshTable();
-    //       this.showNotification(
-    //         'black',
-    //         'Edit Record Successfully...!!!',
-    //         'bottom',
-    //         'center'
-    //       );
-    //     }
-    //   }
-    // });
   }
-  deleteItem(row: Students) {
-    this.id = row.id;
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: row,
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // for delete we use splice in order to remove single object from DataService
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-          this.refreshTable();
-          this.showNotification(
-            'snackbar-danger',
-            'Delete Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
-      }
-    });
-  }
+  // deleteItem(row: Students) {
+  //   this.id = row.id;
+  //   let tempDirection: Direction;
+  //   if (localStorage.getItem('isRtl') === 'true') {
+  //     tempDirection = 'rtl';
+  //   } else {
+  //     tempDirection = 'ltr';
+  //   }
+  //   const dialogRef = this.dialog.open(DeleteDialogComponent, {
+  //     data: row,
+  //     direction: tempDirection,
+  //   });
+  //   this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+  //     if (result === 1) {
+  //       const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+  //         (x) => x.id === this.id
+  //       );
+  //       // for delete we use splice in order to remove single object from DataService
+  //       if (foundIndex != null && this.exampleDatabase) {
+  //         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+  //         this.refreshTable();
+  //         this.showNotification(
+  //           'snackbar-danger',
+  //           'Delete Record Successfully...!!!',
+  //           'bottom',
+  //           'center'
+  //         );
+  //       }
+  //     }
+  //   });
+  // }
+  deleteItem(row: any) {
+    // this.id = row.id;
+     Swal.fire({
+       title: "Confirm Deletion",
+       text: "Are you sure you want to delete this Student?",
+       icon: "warning",
+       showCancelButton: true,
+       confirmButtonColor: "#d33",
+       cancelButtonColor: "#3085d6",
+       confirmButtonText: "Delete",
+       cancelButtonText: "Cancel",
+     }).then((result) => {
+       if (result.isConfirmed) {
+         this.studentsService.deleteUser(row.id).subscribe(
+           () => {
+             Swal.fire({
+               title: "Deleted",
+               text: "Student deleted successfully",
+               icon: "success",
+             });
+             //this.fetchCourseKits();
+             this.loadData()
+           },
+           (error: { message: any; error: any; }) => {
+             Swal.fire(
+               "Failed to delete Student",
+               error.message || error.error,
+               "error"
+             );
+           }
+         );
+       }
+     });
+
+   }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
@@ -254,10 +258,51 @@ export class AllStudentsComponent
         Mobile: x.mobile,
         Email: x.email,
         'Admission Date':
-          formatDate(new Date(x.joiningDate), 'yyyy-MM-dd', 'en') || '',
+          x.joiningDate || '',
       }));
 
     TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+
+
+
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Roll No','Name','Department','Gender', 'Mobile', 'Email','Admission Date']];
+    console.log(this.dataSource)
+    const data = this.dataSource.filteredData.map((user:any) =>
+      [user.rollNo,
+        user.name,
+       user.department,
+       user.gender,
+       user.mobile,
+       user.email,
+       user.joiningDate
+
+    ] );
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+
+
+
+    });
+
+    // Save or open the PDF
+    doc.save('StudentList.pdf');
+  }
+
+  aboutStudent(id:any){
+    this.router.navigate(['/admin/students/about-student'],{queryParams:{data:id}})
+
   }
 
   showNotification(
@@ -327,9 +372,9 @@ export class ExampleDataSource extends DataSource<Students> {
           .slice()
           .filter((students: Students) => {
             const searchStr = (
-              students.id +
+              students.rollNo +
               students.name +
-              students.email +
+              students.department +
               students.mobile
             ).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;

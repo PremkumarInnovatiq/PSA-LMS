@@ -16,7 +16,7 @@
             <div class="left">
               <ul class="header-buttons-left ms-0">
                 <li class="tbl-title">
-                  <h2>Staffs</h2>
+                  <h2>Approve List</h2>
                 </li>
                 <li class="tbl-search-box">
                   <label for="search-input"
@@ -28,7 +28,7 @@
                     #filter
                     class="browser-default search-field"
                     aria-label="Search box"
-                    (keyup)="filterData($event)"
+
                   />
                 </li>
               </ul>
@@ -56,14 +56,14 @@
                     </button>
                   </div>
                 </li>
-                <li>
-                  <div class="export-button m-l-10" matTooltip="PDF">
-                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
-                  </div>
-                </li>
                 <li (click)="exportExcel()">
                   <div class="export-button m-l-10" matTooltip="XLSX"  >
                     <img src="assets/images/icons/xlsx.png" alt="" />
+                  </div>
+                </li>
+                <li>
+                  <div class="export-button m-l-10" matTooltip="PDF">
+                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
                   </div>
                 </li>
               </ul>
@@ -97,7 +97,7 @@
                   <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image
                   </mat-header-cell>
                   <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"><span
-                      class="mobile-label">Image:</span> <img [src]="row.classId.courseId.image_link" />
+                      class="mobile-label">Image:</span> <img [src]="row.classId.courseId.image_link || 'assets/noimage.jpg'" />
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="coursename">
@@ -151,18 +151,7 @@
                   <mat-header-cell *matHeaderCellDef
                     >Actions</mat-header-cell
                   >
-                  <mat-cell *matCellDef="let row; let i = index" >
-                    <!-- <button
-                      (click)="changeStatus(row,'approved')"
-                      class="badge badge-solid-green mx-2"
-                    >Approve
-
-                    </button>
-                    <button
-                      (click)="Status(row,'cancel')"
-                      class="badge badge-solid-red"
-                    >Withdraw
-                    </button> -->
+                  <!-- <mat-cell *matCellDef="let row; let i = index" >
                     <button mat-icon-button matTooltip="approve" (click)="changeStatus(row,'approved')"
                       class="tbl-action-btn">
                      <img src="/assets/approve.svg" alt="approve">
@@ -171,6 +160,34 @@
                       class="tbl-action-btn">
                      <img src="/assets/archive.svg" alt="approve">
                     </button>
+                  </mat-cell> -->
+                  <mat-cell *matCellDef="let row" class="pr-0">
+                    <button mat-button [matMenuTriggerFor]="menu" >
+                      <svg class="dropdown-toggle border rounded-circle" data-bs-toggle="dropdown" aria-expanded="false"
+                      xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                      class="bi bi-three-dots border rounded-circle bg" viewBox="0 0 16 16">
+                      <path
+                        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                    </svg>
+
+                    </button>
+
+
+
+                            <mat-menu #menu="matMenu" xPosition="before">
+                              <!-- <button mat-menu-item [routerLink]="['/admin/courses/view-course-kit/',row.id]">
+                                <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                                <span class="menu-text">View</span>
+                              </button> -->
+                              <button mat-menu-item (click)="changeStatus(row,'approved')" >
+                                <img class="img-w" src="/assets/approve.svg" alt="approve">
+                                <span class="menu-text px-3 color">Approve</span>
+                              </button>
+                              <button mat-menu-item  (click)="changeStatus(row,'approved')" >
+                                <img class="img-w" src="/assets/archive.svg" alt="approve">
+                                <span class="menu-text px-3 text-danger">Withdraw</span>
+                              </button>
+                            </mat-menu>
                   </mat-cell>
                 </ng-container>
                 <mat-header-row

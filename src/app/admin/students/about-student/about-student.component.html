@@ -12,29 +12,29 @@
           <div class="m-b-20">
             <div class="contact-grid">
               <div class="profile-header bg-dark">
-                <div class="user-name">Sarah Smith</div>
-                <div class="name-center">Computer Department</div>
+                <div class="user-name">{{aboutData?.name}}</div>
+                <div class="name-center">{{aboutData?.department}} Department</div>
               </div>
-              <img src="assets/images/user/usrbig4.jpg" class="user-img" alt="">
+              <img src="{{aboutData?.avatar}}" class="user-img" alt="">
               <p>
-                456, Estern evenue, Courtage area,
+               {{aboutData?.address}}
                 <br />New York
               </p>
               <div>
                 <span class="phone">
-                  <i class="material-icons">phone</i>264-625-2583</span>
+                  <i class="material-icons">phone</i>{{aboutData?.mobile}}</span>
               </div>
               <div class="row">
                 <div class="col-4">
-                  <h5>564</h5>
+                  <h5>0</h5>
                   <small>Following</small>
                 </div>
                 <div class="col-4">
-                  <h5>18k</h5>
+                  <h5>0</h5>
                   <small>Followers</small>
                 </div>
                 <div class="col-4">
-                  <h5>565</h5>
+                  <h5>0</h5>
                   <small>Post</small>
                 </div>
               </div>
@@ -50,11 +50,11 @@
                 <ul class="list-group list-group-unbordered">
                   <li class="list-group-item">
                     <b>Gender </b>
-                    <div class="profile-desc-item float-end">Female</div>
+                    <div class="profile-desc-item float-end">{{aboutData?.gender}}</div>
                   </li>
                   <li class="list-group-item">
                     <b>Lectures Taken </b>
-                    <div class="profile-desc-item float-end">11k+</div>
+                    <div class="profile-desc-item float-end">0</div>
                   </li>
                   <li class="list-group-item">
                     <b>Department </b>
@@ -96,6 +96,7 @@
               </ul>
             </mat-tab>
           </mat-tab-group>
+          <button type="button" mat-raised-button color="warn" [routerLink]="['/admin/students/all-students']">Back to all students</button>
         </div>
       </div>
 
@@ -117,17 +118,17 @@
                       <div class="col-md-3 col-6 b-r">
                         <strong>Full Name</strong>
                         <br>
-                        <p class="text-muted">Emily Smith</p>
+                        <p class="text-muted">{{aboutData?.name + aboutData?.last_name}}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Mobile</strong>
                         <br>
-                        <p class="text-muted">(123) 456 7890</p>
+                        <p class="text-muted">{{aboutData?.mobile}}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Email</strong>
                         <br>
-                        <p class="text-muted">johndeo@example.com</p>
+                        <p class="text-muted">{{aboutData?.email}}</p>
                       </div>
                       <div class="col-md-3 col-6">
                         <strong>Location</strong>
