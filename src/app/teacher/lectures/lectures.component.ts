@@ -45,6 +45,8 @@ export class LecturesComponent
     'sName',
     'class',
     'date',
+    'endDate',
+    'duration',
     'time',
     'status',
     'actions',
@@ -132,11 +134,18 @@ export class LecturesComponent
       if (item.sessions[0]&& item.sessions[0]?.courseName&&item.sessions[0]?.courseCode) {
         console.log("=======gopal=")
         let starttimeObject = moment(item.sessions[0].sessionStartTime, "HH:mm");
+        // let StartDate=  moment(item.sessions[0].sessionStartDate).format("YYYY-MM-DD")
+        // let endDate =  moment(item.sessions[0].sessionEndDate).format("YYYY-MM-DD")
+        const duration = moment.duration(moment(item.sessions[0].sessionEndDate).diff(moment(item.sessions[0].sessionStartDate)));
+        let daysDifference = duration.asDays()+1
+        //daysDifference=
+
+        
         this.dataSource.push({
           //sessionNumber: index + 1,
           classId:item._id,
           sessionStartDate: moment(item.sessions[0].sessionStartDate).format("YYYY-MM-DD"),
-          sessionEndDate: moment(item.sessions[0].end).format("YYYY-MM-DD"),
+          sessionEndDate: moment(item.sessions[0].sessionEndDate).format("YYYY-MM-DD"),
           sessionStartTime: starttimeObject.format("hh:mm A"),
           sessionEndTime: moment(item.sessions[0].end).format("hh:mm A"),
           //instructorId: item.instructor,
@@ -145,6 +154,7 @@ export class LecturesComponent
           courseCode: item.sessions[0].courseCode,
           status: item.sessions[0].status,
           _id:item.sessions[0]._id,
+          duration:daysDifference,
 
           sessionNumber: 0,
           instructorId: ''
