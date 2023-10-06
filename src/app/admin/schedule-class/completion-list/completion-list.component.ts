@@ -7,6 +7,9 @@ import { ClassService } from '../class.service';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 import { MatSort } from '@angular/material/sort';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { TableElement, TableExportUtil } from '@shared';
 
 @Component({
   selector: 'app-completion-list',
@@ -74,9 +77,8 @@ export class CompletionListComponent {
         this.studentPaginationModel.page = response.page;
         this.studentPaginationModel.limit = response.limit;
         this.totalItems=response.totalDocs;
-        this.dataSource = new MatTableDataSource(response.docs);
+        this.dataSource = response.docs;
         this.dataSource.sort = this.matSort;
-        console.log("data",this.dataSource)
         this.mapClassList();
         })
     }
@@ -140,5 +142,45 @@ export class CompletionListComponent {
       });
       return sessions;
     }
+    generatePdf() {
+      const doc = new jsPDF();
+      const headers = [['Course Name', 'Student Name', 'Start Date','End date']];
+      const data = this.dataSource.map((user:any) =>
+        [user.courseId?.title,
+          user.studentId?.name,
+          user.classStartDate,
+         user.classEndDate,
 
+      ] );
+      //const columnWidths = [60, 80, 40];
+      const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+      // Add a page to the document (optional)
+      //doc.addPage();
+
+      // Generate the table using jspdf-autotable
+      (doc as any).autoTable({
+        head: headers,
+        body: data,
+        startY: 20,
+
+
+
+      });
+
+      // Save or open the PDF
+      doc.save('completion-list.pdf');
+    }
+
+    exportExcel() {
+      //k//ey name with space add in brackets
+     const exportData: Partial<TableElement>[] =
+        this.dataSource.map((user:any) => ({
+          CourseName:user.courseId?.title,
+          StudentName:  user.studentId?.name,
+          StartDate: user.classStartDate,
+          EndDate: user.classEndDate,
+        }));
+      TableExportUtil.exportToExcel(exportData, 'excel');
+    }
 }

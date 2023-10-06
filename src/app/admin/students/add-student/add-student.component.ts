@@ -160,8 +160,7 @@ this.activatedRoute.queryParams.subscribe((params:any) => {
       this.edit = true;
       this.StudentService.getStudentById(id).subscribe(res => {
         this.editData = res;
-        console.log(this.editData)
-
+        console.log("edit",this.editData)
 
         this.stdForm.patchValue({
           name: this.editData.name,
@@ -180,6 +179,7 @@ this.activatedRoute.queryParams.subscribe((params:any) => {
           education:this.editData.education,
           blood_group: this.editData.blood_group,
           address: this.editData.address,
+          avatar:this.editData.avatar
         })
        })
     }
@@ -191,14 +191,14 @@ this.activatedRoute.queryParams.subscribe((params:any) => {
   update() {
     console.log('Form Value', this.stdForm.value);
     if(this.stdForm.valid){
-      // this.instructor.uploadVideo(this.files).subscribe(
-      //   (response: any) => {
-      //     const inputUrl = response.inputUrl;
+      this.StudentService.uploadVideo(this.files).subscribe(
+        (response: any) => {
+          const inputUrl = response.inputUrl;
 
           const userData: Student = this.stdForm.value;
           //this.commonService.setVideoId(videoId)
 
-          //userData.avatar = inputUrl;
+          userData.avatar = inputUrl;
           userData.filename= this.fileName
           userData.type = "Student";
           userData.role = "Student";
@@ -208,8 +208,8 @@ this.activatedRoute.queryParams.subscribe((params:any) => {
           this.updateInstructor(userData);
 
           Swal.close();
-       // },
-
+       },
+      );
     }
   }
   private updateInstructor(userData: Student): void {

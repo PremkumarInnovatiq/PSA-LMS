@@ -12,7 +12,7 @@
             <div class="left">
               <ul class="header-buttons-left ms-0">
                 <li class="tbl-title">
-                  <h2>Staffs</h2>
+                  <h2>Completion List</h2>
                 </li>
                 <li class="tbl-search-box">
                   <label for="search-input"><i class="material-icons search-icon">search</i></label>
@@ -37,17 +37,14 @@
                     </button>
                   </div>
                 </li>
-                <li class="tbl-header-btn">
-                  <!-- <div class="m-l-10"  matTooltip="DELETE">
-                    <button mat-mini-fab color="warn" >
-                      <mat-icon class="col-white">delete
-                      </mat-icon>
-                    </button>
-                  </div> -->
-                </li>
                 <li>
                   <div class="export-button m-l-10" matTooltip="XLSX">
-                    <img src="assets/images/icons/xlsx.png" alt="" />
+                    <img src="assets/images/icons/xlsx.png" alt=""  (click)=" exportExcel()">
+                  </div>
+                </li>
+                <li>
+                  <div class="export-button m-l-10" matTooltip="PDF">
+                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
                   </div>
                 </li>
               </ul>
@@ -107,10 +104,8 @@
                     >Approved
 
                     </button> -->
-                    <button mat-icon-button matTooltip="approve" matTooltip="approve" (click)="complete(row)"
-                    class="tbl-action-btn">
-                   <img src="/assets/approve.svg" alt="approve">
-                  </button>
+
+                    <span class="label l-bg-red shadow-style" (click)="complete(row)">Approve</span>
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

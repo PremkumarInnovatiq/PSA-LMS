@@ -11,6 +11,8 @@ export class Students {
   rollNo: string;
   parentsPhone:string;
   parentsNmae:string;
+  avatar:string;
+  address:string;
   data:any;
 
   constructor(students: Students) {
@@ -26,6 +28,8 @@ export class Students {
       this.rollNo = students.rollNo || '';
       this.parentsPhone = students.parentsPhone || '',
       this.parentsNmae = students.parentsNmae || '',
+      this.avatar = students.avatar || '',
+      this.address = students.address || '',
       this.data = students.data || [];
     }
   }

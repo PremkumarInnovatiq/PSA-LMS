@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ClassService } from '../class.service';
 import {
   MatSnackBar,
@@ -15,22 +15,27 @@ import {
   StudentPaginationModel,
 } from '../class.model';
 import * as moment from 'moment';
-import { SelectionModel } from '@angular/cdk/collections';
+import { DataSource, SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
-import { TableElement, TableExportUtil } from '@shared';
+import { TableElement, TableExportUtil, UnsubscribeOnDestroyAdapter } from '@shared';
 import { formatDate } from '@angular/common';
 import jsPDF from 'jspdf';
 //import 'jspdf-autotable';
 import 'jspdf-autotable';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { Direction } from '@angular/cdk/bidi';
+import { BehaviorSubject, Observable, fromEvent, map, merge } from 'rxjs';
 
 @Component({
   selector: 'app-approve-list',
   templateUrl: './approve-list.component.html',
   styleUrls: ['./approve-list.component.scss'],
 })
-export class ApproveListComponent {
+export class ApproveListComponent  {
   displayedColumns = [
     'select',
     'img',
