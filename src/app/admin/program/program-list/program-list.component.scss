@@ -1,0 +1,32 @@
+@media (min-width: 768px) {
+    .col-md-3 {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+.ccount {
+    background: rgba(45, 67, 86, 0.90);
+    color: white;
+    border-radius: 0 15px 15px 0;
+    padding: 1px 13px;
+    font-size: 14px;
+}
+
+.ecount {
+    background: #D64E49;
+    color: white;
+    border-radius: 0 15px 15px 0;
+    padding: 1px 13px;
+    font-size: 14px;
+}
+
+.count {
+    border-right: 1px solid #7A7A7A;
+    height: 240px;
+}
+
+.title {
+    text-align: right;
+    margin-top: -120px;
+}

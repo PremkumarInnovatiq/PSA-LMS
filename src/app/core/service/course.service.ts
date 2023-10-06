@@ -11,6 +11,7 @@ import { FundingGrant, Instructor, MainCategory, SubCategory, Survey } from "@co
   providedIn: 'root'
 })
 export class CourseService {
+  
   private apiUrl = 'http://localhost:3000/api/';
   private prefix: string = environment.apiUrl;
   defaultUrl = environment['apiUrl'];
@@ -223,6 +224,36 @@ export class CourseService {
   getProgramById(id: any) {
     const apiUrl = `${this.prefix}admin/courseprogram/${id}`;
     return this._Http.get<any>(apiUrl).pipe(map((response) => response));
+  }
+
+  deleteProgram(id: string) {
+    const apiUrl = `${this.prefix}admin/courseprogram/${id}`;
+    return this._Http
+      .delete(apiUrl)
+      .pipe(map((response) => response));
+  }
+
+  createCourseProgram(formData?:any): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/courseprogram`;
+    return this._Http.post<ApiResponse>(apiUrl, formData);
+  }
+  updateCourseProgram(
+    programId: string,
+    program: any
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/courseprogram/${programId}`;
+    return this._Http.put<ApiResponse>(apiUrl, program);
+  }
+
+  getProgramCourseKit(filter?: Partial<CoursePaginationModel>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/ListProgramCourseKit`;
+    return this._Http
+      .get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
+      .pipe(
+        map((response:any) => {
+          return response.data;
+        })
+      );
   }
 
 }

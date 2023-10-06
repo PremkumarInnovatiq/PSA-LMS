@@ -1,1 +1,160 @@
-<p>program-list works!</p>
+<section class="content">
+  <div class="content-block">
+      <div class="block-header" *ngFor="let breadscrum of breadscrums">
+          <!-- breadcrumb -->
+          <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+          </app-breadcrumb>
+      </div>
+
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="materialTableHeader">
+                      <div class="left">
+                          <ul class="header-buttons-left ms-0">
+                              <li class="tbl-title">
+                                  <h2>All Program</h2>
+                              </li>
+
+                          </ul>
+                      </div>
+                      <div class="right">
+                          <ul class="tbl-export-btn">
+                              <li class="tbl-header-btn">
+                                  <div class="m-l-10" matTooltip="ADD"
+                                      [routerLink]="['/admin/program/create-course']">
+                                      <button mat-mini-fab color="primary">
+                                          <mat-icon class="col-white">add</mat-icon>
+                                      </button>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="body" *ngFor="let program of programData">
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="program-card">
+                                  <div class="course-card-image">
+                                      <img class="image" src="{{program?.image_link}}">
+                                  </div>
+                              <div class="title">
+                                  <div class="row mt-2">
+                                      <div class="col">
+                                          <p class="fw-bold fs-4" style="width: 100%;margin-top: -113px;">{{program?.title}}</p>
+                                      </div>
+                                  </div>
+                                 
+                                  <div class="row mt-2">
+                                      <div class="col">
+                                          <p class="fw-semibold" style="color: #979595;width: 135%;margin-top: -67px;">Program Period</p>
+                                      </div>
+                                      <div class="col">
+                                          <p style="width: 90%;margin-top: -68px;">{{program?.sessionStartDate |date }} -
+                                              {{program?.sessionEndDate |date }} </p>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col">
+                                      <p class="fw-semibold" style="color: #979595;width: 125%;margin-top: -29px;">Duration</p>
+                                    </div>
+                                    <div class="col">
+                                      <p style="width: 67%;margin-top: -25px;">{{program?.duration}} Hours</p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col">
+                                          <p class="fw-semibold" style="color: #979595;width: 125%;margin-top: 1px;">Payment</p>
+                                      </div>
+                                      <div class="col">
+                                          <p style="width: 63%;margin-top: 4px;">{{program?.courseFee}}$</p>
+                                      </div>
+                                  </div>
+                              </div>
+                                  
+                                  
+                                  <div class="row">
+                                      <div class="col count">
+                                        <div class="m-4">
+                                          <div class="d-flex justify-content-between mt-3">
+                                            <p class="fw-semibold" style="color: #979595">
+                                              Compulsory Count
+                                              <span class="ccount">{{program?.coreCourseCount}}</span>
+                                            </p>
+                                          </div>
+                                          <div *ngFor="let core of program?.coreprogramCourse">
+                                            <div class="row">
+                                              <div class="col-3">
+                                                <p class="fw-semibold" style="color: #979595;">
+                                                  Compulsory Course
+                                                </p>
+                                              </div>
+                                              <div class="col">
+                                                <p style="margin-left: 0px;"> {{core?.coreProgramName}}</p>
+                                              </div>
+                                            </div>
+                  
+                                            <div class="row">
+                                              <div class="col-3">
+                                                <p class="fw-semibold fs-6" style="color: #979595">Description</p>
+                                              </div>
+                                              <div class="col">
+                                                <p [innerHTML]="core?.coreProgramDescription | bulletPoints | truncate:150">
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="m-4">
+                                          <div class="d-flex justify-content-between mt-4">
+                                            <p class="fw-semibold" style="color: #979595">
+                                              Elective Count
+                                              <span class="ecount">
+                                                {{program?.electiveCourseCount}}</span>
+                                            </p>
+                                          </div>
+                                          <div *ngFor="let elective of program?.electiveprogramCourse">
+                                            <div class="row">
+                                              <div class="col-3">
+                                                <p class="fw-semibold" style="color: #979595">Elective Course</p>
+                                              </div>
+                                              <div class="col">
+                                                <p style="margin-left: 0px;">{{elective?.electiveProgramName}}</p>
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-3">
+                                                <p class="fw-semibold fs-6" style="color: #979595">Description</p>
+                                              </div>
+                                              <div class="col">
+                                                <p [innerHTML]="elective?.electiveProgramDescription | bulletPoints | truncate:150">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                              </div> 
+                          </div>
+                      </div>
+                     
+                  <div class="text-center mb-3">
+                    <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/program/edit-program/',program.id]">
+                      <app-feather-icons [icon]="'edit'"  [class]="'tbl-fav-edit'"></app-feather-icons>
+                    </button>
+                    <button mat-icon-button class="tbl-action-btn">
+                      <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                    </button>
+                  </div>
+                  </div>
+                  <mat-paginator class="paginator rounded-5" #paginator [length]="totalItems"
+                      (page)="pageSizeChange($event)" [pageSizeOptions]="pageSizeArr"
+                      aria-label="select pagination option">
+                  </mat-paginator>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
