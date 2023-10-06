@@ -17,7 +17,9 @@ const Logging = new Logger('AuthenticationService');
 export class InstructorService {
     private currentUserSubject!: BehaviorSubject<any>;
     public currentUser!: Observable<any>;
-  defaultUrl = environment['apiUrl'];
+  // defaultUrl = environment['apiUrl'];
+  defaultUrl='http://35.154.206.124:3000/api/'
+
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(
         JSON.parse(localStorage.getItem('currentUser') || '{}')
