@@ -1,0 +1,132 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header" *ngFor="let breadscrum of breadscrums">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+            </app-breadcrumb>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <!-- <h2>Create Course</h2> -->
+
+                    </div>
+                    <form [formGroup]="userForm" >
+                        <div class="body m-4">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Name <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="name"
+                                            class="form-control"  required>
+                                        <mat-error *ngIf="userForm.get('name')?.hasError('required')">
+                                            Enter Name
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>User Type<span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <mat-select required formControlName="type">
+                                            <mat-option> Choose User Type... </mat-option>
+                                            <mat-option
+                                              *ngFor="let userType of userTypes"
+                                              [value]="userType.typeName">{{userType.typeName}}
+                                            </mat-option>
+                                          </mat-select>
+                                        <mat-error *ngIf="userForm.get('type')?.hasError('required')">
+                                            Select User type
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Qualification <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="qualification"
+                                            class="form-control"  required>
+                                        <mat-error *ngIf="userForm.get('qualification')?.hasError('required')">
+                                            Enter Qualification
+                                        </mat-error>
+                                        <!-- <mat-error  *ngIf="userForm.get('qualification')?.hasError('minLength') && userForm.get('qualification')?.touched">
+                                            Enter a valid Qualification
+                                           </mat-error> -->
+                                           <mat-error  *ngIf="userForm.get('qualification')?.hasError('minLength') && userForm.get('qualification')?.touched">
+                                            Enter a valid Qualification
+                                           </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Email Id <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput type="text" id="name" formControlName="email"
+                                            class="form-control" required>
+                                        <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+                                            Enter Email-Id
+                                        </mat-error>
+                                        <mat-error  *ngIf="userForm.get('email')?.hasError('pattern') && userForm.get('email')?.touched">
+                                            Enter a valid Email-Id
+                                           </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Password <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                                        <a href="#" onClick="return false;" matSuffix (click)="hide = !hide"
+                                          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                          <mat-icon class="material-icons-two-tone color-icon m-3" matSuffix>
+                                            {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </a>
+                                        <mat-error *ngIf="userForm.get('password')?.hasError('required')">
+                                            Enter Password
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <label>Confirm Password <span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <!-- <mat-label>Course Name</mat-label> -->
+
+                                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                                        <a href="#" onClick="return false;" matSuffix (click)="hide = !hide"
+                                          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                          <mat-icon class="material-icons-two-tone color-icon m-3" matSuffix>
+                                            {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </a>
+                                        <mat-error *ngIf="userForm.get('password')?.hasError('required')">
+                                            Enter Valid Password
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row body">
+                        <div class="col-md-8">
+                          <button mat-button id="back" [routerLink]="['/admin/users/all-users']">Back</button>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="d-grid gap-4 d-md-flex">
+                          <button mat-button id="submit">Submit</button>
+                   
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
