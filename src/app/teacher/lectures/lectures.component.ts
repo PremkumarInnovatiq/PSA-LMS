@@ -30,6 +30,10 @@ import {
 import { formatDate } from '@angular/common';
 import { CoursePaginationModel } from '@core/models/course.model';
 import * as moment from 'moment';
+import jsPDF from 'jspdf';
+//import 'jspdf-autotable';
+import 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-lectures',
@@ -74,6 +78,7 @@ export class LecturesComponent
     },
   ];
   totalItems: any;
+  filterName='';
   //dataSource: any=[];
   //dataSource:any[] = [];
   //dataSource: any;
@@ -100,12 +105,13 @@ export class LecturesComponent
     this.getClassList()
   }
   getClassList() {
-    this.lecturesService.getClassListWithPagination({ ...this.coursePaginationModel }).subscribe(
+    let instructorId = localStorage.getItem('id')
+    this.lecturesService.getClassListWithPagination(instructorId, this.filterName,{ ...this.coursePaginationModel }).subscribe(
       (response) => {
-        console.log("this",response.data.docs)
+        //console.log("this",response.data.ssions)
    
-        //this.dataSource1 = response.data.docs;
-        this.dataSource1 = response.data.sessions;
+        this.dataSource1 = response.data.docs;
+        //this.dataSource1 = response.data.sessions;
         this.totalItems = response.data.totalDocs
         this.coursePaginationModel.docs = response.data.docs;
         this.coursePaginationModel.page = response.data.page;
@@ -122,23 +128,21 @@ export class LecturesComponent
     
   }
   getSession() {
-    //console.log("=====goap====",this.dataSource)
-    //let sessions: any=[];
+   
     console.log("ssssssssssss",this.dataSource1)
     if(this.dataSource1){
       console.log("========")
     this.dataSource1&&this.dataSource1?.forEach((item: any, index: any) => {
-      console.log(index)
-      console.log("====seession====",item.sessions[0].instructorId)
+      //console.log(index)
+      //console.log("====seession====",item.sessions[0].instructorId)
      
       if (item.sessions[0]&& item.sessions[0]?.courseName&&item.sessions[0]?.courseCode) {
-        console.log("=======gopal=")
+       // console.log("=======gopal=")
         let starttimeObject = moment(item.sessions[0].sessionStartTime, "HH:mm");
-        // let StartDate=  moment(item.sessions[0].sessionStartDate).format("YYYY-MM-DD")
-        // let endDate =  moment(item.sessions[0].sessionEndDate).format("YYYY-MM-DD")
+        
         const duration = moment.duration(moment(item.sessions[0].sessionEndDate).diff(moment(item.sessions[0].sessionStartDate)));
         let daysDifference = duration.asDays()+1
-        //daysDifference=
+        
 
         
         this.dataSource.push({
@@ -160,11 +164,9 @@ export class LecturesComponent
           instructorId: ''
         });
       } else {
-        //this.toaster.error("Please choose Instructor and Lab")
-        //sessions = null;
+        
       }
-      console.log("=m",this.dataSource)
-      //this.dataSource = this.dataSource;
+      
     });
     this.cdr.detectChanges();
     //console.log("ssssssssssss",this.dataSource)
@@ -174,6 +176,7 @@ export class LecturesComponent
     //return sessions;
     
   }
+  
   refresh() {
     this.loadData();
   }
@@ -207,6 +210,23 @@ export class LecturesComponent
         );
       }
     });
+  }
+  performSearch() {
+    //console.log(this.dataSource)
+    console.log(this.filterName)
+    if(this.filterName){
+      this.getClassList()
+    } else {
+      this.getClassList()
+
+    }
+    // this.dataSource = this.dataSource?.filter((item: { name: string; }) =>
+    //   item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    // );
+    // } else {
+    //   this.instructorData()
+
+    // }
   }
   editCall(row: Lectures) {
     console.log("==========",row)
@@ -336,18 +356,56 @@ export class LecturesComponent
 
   // export table data in excel file
   exportExcel() {
-    // key name with space add in brackets
-    // const exportData: Partial<TableElement>[] =
-    //   // this.dataSource.filteredData.map((x) => ({
-    //   //   'Subject Name': x.sName,
-    //   //   Class: x.class,
-    //   //   Date: formatDate(new Date(x.date), 'yyyy-MM-dd', 'en') || '',
-    //   //   Time: x.time,
-    //   //   Status: x.status,
-    //   // }));
+    //key name with space add in brackets
+    const exportData: Partial<TableElement>[] =
+      this.myArray.data.map((x) => ({
+      'Course Name': x.courseName,
+      "Class": x.courseCode,
+      "Start Date": formatDate(new Date(x.sessionStartDate), 'yyyy-MM-dd', 'en') || '',
+      "End Date":formatDate(new Date(x.sessionEndDate), 'yyyy-MM-dd', 'en') || '',
+      "Duration":x.duration+ 'days',
+      Time: x.sessionStartTime,
+      Status: x.status,
+      }));
 
-    // TableExportUtil.exportToExcel(exportData, 'excel');
+    TableExportUtil.exportToExcel(exportData, 'excel');
   }
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Course Name', 'Class', 'Start Date','End Date','Duration','Time','Status']];
+    const data = this.myArray.data.map((user: {
+      //formatDate(arg0: Date, arg1: string, arg2: string): unknown;
+
+      courseName: any; courseCode: any; sessionStartDate: any; sessionEndDate: any; duration: any; sessionStartTime: any; status: string | number | Date;
+    }, index: any) => [user.courseName, user.courseCode, 
+      formatDate(new Date(user.sessionStartDate), 'yyyy-MM-dd', 'en') || '',
+      formatDate(new Date(user.sessionEndDate), 'yyyy-MM-dd', 'en') || '',
+      user.duration,
+      user.sessionStartTime,
+      user.status
+
+
+    ]);
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+
+
+
+    });
+
+    // Save or open the PDF
+    doc.save('lecture-list.pdf');
+  }
+
 
   showNotification(
     colorName: string,
