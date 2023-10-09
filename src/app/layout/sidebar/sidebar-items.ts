@@ -418,7 +418,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/certificate/certificates',
         title: 'Certificates',
         iconType: '',
         icon: '',
