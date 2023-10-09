@@ -25,10 +25,12 @@ export class LecturesService extends UnsubscribeOnDestroyAdapter {
   getDialogData() {
     return this.dialogData;
   }
-  getClassListWithPagination(
-    filter?:Partial<CoursePaginationModel>): Observable<ApiResponse> {
-    const apiUrl = `${this.prefix}admin/class/`;
-    return this.httpClient.get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
+  getClassListWithPagination(id: any,filterName:any,filter?:Partial<CoursePaginationModel>) {
+    console.log("sssssssss",id)
+    const apiUrl = `${this.prefix}admin/class/getSession/${id}?filterName=${filterName}`;
+    return this.httpClient.get<ApiResponse>(apiUrl,{ params: this.buildParams(filter) })
+    
+    //return this.httpClient.get<ApiResponse>(apiUrl, { params: this.buildParams(filter) })
   }
   private buildParams(filter?: Partial<CoursePaginationModel>): HttpParams {
     let params = new HttpParams();
@@ -92,7 +94,7 @@ export class LecturesService extends UnsubscribeOnDestroyAdapter {
         .subscribe({
           next: (data) => {
             this.dialogData = lectures;
-            this.getClassListWithPagination()
+            //this.getClassListWithPagination()
             //this.route.navigateByUrl("/teacher/lectures")
 
           },
