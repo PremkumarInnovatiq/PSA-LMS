@@ -23,10 +23,46 @@
 
 .count {
     border-right: 1px solid #7A7A7A;
-    height: 240px;
+    // height: 240px;
 }
 
 .title {
     text-align: right;
     margin-top: -120px;
+}
+.text {
+    padding-left:50px;
+    padding-top: 20px;
+  }
+  .cards img{
+    border-radius: 6px;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+      0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+      pointer-events: none;
+  }
+
+  svg {
+    position: absolute;
+    fill: #000;
+    background-color: #d3cdcd;
+    margin-left: 15px;
+    border-radius: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+// modal-box styling
+::ng-deep .mat-mdc-menu-content {
+        margin: 0;
+        padding: 8px 20px;
+        border-radius: 10px;
+        list-style-type: none;
+       
+}
+// modal-box curving
+::ng-deep .mat-mdc-menu-panel{
+    --mat-menu-container-shape: 12px;
+}
+.menu-text{
+    padding-left: 20px;
 }
