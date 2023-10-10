@@ -1,0 +1,91 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header" *ngFor="let breadscrum of breadscrums">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+            </app-breadcrumb>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card" *ngFor="let types of typesList let j = index">
+                    <div class="materialTableHeader">
+                        <div class="left">
+                            <ul class="header-buttons-left ms-0">
+                                <li class="tbl-title">
+                                    <h2 style="font-weight: 600;">{{types?.typeName | capitalizeFirstLetter}} 
+                                     <!-- <span *ngIf="types.isAdmin == true" class="admin border fw-normal bg-white text-success">Admin</span> -->
+                                     <span  class="ms-2 border border-success fw-normal rounded-4 px-2 text-success">{{types.status == 'active'?'Active':'Inactive' }}</span>
+                                    </h2>
+                                   
+                                
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="right">
+                            <ul class="tbl-export-btn">
+                                <li class="tbl-header-btn">
+                                    <div class="m-l-10" matTooltip="ADD">
+                                        <button mat-mini-fab color="primary" [routerLink]="['/admin/users/create-user-type']">
+                                            <mat-icon class="col-white">add</mat-icon>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="tbl-header-btn">
+                                    <div class="m-l-10" matTooltip="REFRESH">
+                                        <button mat-mini-fab color="primary">
+                                            <mat-icon class="col-white">refresh</mat-icon>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="tbl-header-btn">
+                                    <button mat-button [matMenuTriggerFor]="menu">
+                                        <svg class="dropdown-toggle m-l-10" data-bs-toggle="dropdown" aria-expanded="false"
+                                        xmlns="http://www.w3.org/2000/svg" width="35" height="38" fill="currentColor"
+                                        class="bi bi-three-dots rounded-circle" viewBox="0 0 16 16">
+                                        <path
+                                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                      </svg>
+                  
+                                      </button>
+                                      
+                                              <mat-menu #menu="matMenu" xPosition="before">
+                                                <button mat-menu-item (click)="edit(types.id)">
+                                                  <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                                                  <span class="menu-text">Edit</span>
+                                                </button>
+                                                <button mat-menu-item (click)="changeInActive(types)">
+                                                  <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                                                  <span class="menu-text">Inactive</span>
+                                                </button>
+                                              </mat-menu>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="body overflow-auto">
+                        <div class="responsive_table">
+                            <ng-container>
+                                <h5 class="card-title text-center">Accessibility Menu</h5>
+                                <div class="row mt-4" style="margin-left: 155px;">
+                                    <div class="col-md-4 items" *ngFor="let menu of types.menuItems ">
+                                      <p class="menu"><img src="assets/tick.svg">{{menu?.title | capitalizeFirstLetter}}</p>
+                                    </div>
+                                  </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div  class="tbl-spinner">
+            <mat-progress-spinner *ngIf="isLoading" color="primary" [diameter]="40" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+         
+          <mat-paginator class="bg-transparent" #paginator [length]="totalItems" (page)="pageSizeChange($event)"
+          [pageSizeOptions]="pageSizeArr" aria-label="select pagination option">
+      </mat-paginator>
+    </div>
+</section>

@@ -11,25 +11,40 @@ import { ProgramApprovalListComponent } from './program-approval-list/program-ap
 
 const routes: Routes = [
   {
-    path:'program-list', component:ProgramListComponent
+    path:'program-list', 
+    component:ProgramListComponent
   },
   {
-    path:'schedule-class', component:ScheduleClassComponent
+    path:'schedule-class', 
+    component:ScheduleClassComponent
   },
   {
-    path:'create-course', component:CreateProgramComponent
+    path:'create-course', 
+    component:CreateProgramComponent
   },
   {
-    path:'student-approve-list', component:StudentApprovalListComponent
+    path:'edit-program', 
+    component:CreateProgramComponent
   },
   {
-    path:'program-completion-list', component:ProgaramCompletionListComponent
+    path:'edit-program/:id', 
+    component:CreateProgramComponent
   },
   {
-    path:'program-kit', component:ProgramKitComponent
+    path:'student-approve-list', 
+    component:StudentApprovalListComponent
   },
   {
-    path:'program-approve-list', component:ProgramApprovalListComponent
+    path:'program-completion-list', 
+    component:ProgaramCompletionListComponent
+  },
+  {
+    path:'program-kit', 
+    component:ProgramKitComponent
+  },
+  {
+    path:'program-approve-list', 
+    component:ProgramApprovalListComponent
   },
 ];
 

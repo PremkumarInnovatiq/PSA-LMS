@@ -43,3 +43,7 @@ svg {
     height:20px;
     width:20px;
     }
+    .disabled{
+        pointer-events: none;
+        opacity: 0.6;
+    }

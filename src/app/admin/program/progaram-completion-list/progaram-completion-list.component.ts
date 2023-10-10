@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./progaram-completion-list.component.scss']
 })
 export class ProgaramCompletionListComponent {
-
+  breadscrums = [
+    {
+      title: 'Program Completion List',
+      items: ['Program'],
+      active: 'Program Completion List',
+    },
+  ];
 }

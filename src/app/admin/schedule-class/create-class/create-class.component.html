@@ -327,7 +327,7 @@
                         appearance="outline"
                       >
                         <mat-label>Choose Instructor</mat-label>
-                        <mat-select [(ngModel)]="element.instructor" (selectionChange)="onSelectChange1($event)" (change)="onChangeInstructor(element,index)">
+                        <mat-select [(ngModel)]="element.instructor" (selectionChange)="onSelectChange1($event,element)" (change)="onChangeInstructor(element,index)">
                           <mat-option
                             *ngFor="let instructor of instructorList"
                             [value]="instructor.id"

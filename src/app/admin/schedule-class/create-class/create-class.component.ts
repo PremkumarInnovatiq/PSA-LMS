@@ -314,20 +314,8 @@ export class CreateClassComponent {
     });
     return sessions;
   }
-  onSelectChange1(event: any) {
-    // console.log("this.classForm.controls['instructor'].value",this.classForm.controls['courseId'].value)
+ 
 
-    this.courseService
-      .getCourseById(this.classForm.controls['courseId'].value)
-      .subscribe((response) => {
-        console.log('-==========', response);
-        // this.router.navigateByUrl(`Schedule Class/List`);
-        this.courseTitle = response.title;
-        this.courseCode = response.courseCode;
-
-        console.log(response);
-      });
-  }
   onSelectChange(event: any) {
     // console.log("==element=======",event.target.value)
     console.log('==element=======', this.instructorList);
@@ -338,6 +326,16 @@ export class CreateClassComponent {
     );
     console.log('========', filteredData);
     this.user_id = filteredData[0].user_id.user_id;
+
+  onSelectChange1(event :any,element:any) {
+    
+   console.log("==element=======",element)
+    console.log("==element=======",this.instructorList)
+    //this.instructorList.filter(item)
+    const filteredData = this.instructorList.filter((item: { instructor_id: string; }) => item.instructor_id===element.instructor);
+   console.log("=====filterData===",filteredData)
+   this.user_id=filteredData[0].user_id.user_id
+
   }
 
   data() {

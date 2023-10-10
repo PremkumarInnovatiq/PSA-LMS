@@ -8,8 +8,9 @@ import { MaterialModule } from './material.module';
 import { FeatherIconsModule } from './components/feather-icons/feather-icons.module';
 import { TruncatePipe } from '@core/service/truncate.pipe';
 import { BulletPointsPipe } from '@core/service/content.pipe';
+import { CapitalizeFirstLetterPipe } from '@core/service/capitalizeFirstletter.pipe';
 @NgModule({
-  declarations: [TruncatePipe,BulletPointsPipe],
+  declarations: [TruncatePipe,BulletPointsPipe,CapitalizeFirstLetterPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -27,7 +28,8 @@ import { BulletPointsPipe } from '@core/service/content.pipe';
     FeatherIconsModule,
     TranslateModule,
     TruncatePipe,
-    BulletPointsPipe
+    BulletPointsPipe,
+    CapitalizeFirstLetterPipe
   ],
 })
 export class SharedModule {}

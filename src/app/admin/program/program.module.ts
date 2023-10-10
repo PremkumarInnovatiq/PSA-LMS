@@ -14,6 +14,7 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -31,7 +32,9 @@ import {
         CommonModule,
         SharedModule,
         ProgramRoutingModule,
-        ComponentsModule,OwlDateTimeModule,OwlNativeDateTimeModule
+        ComponentsModule,OwlDateTimeModule,OwlNativeDateTimeModule,
+        CKEditorModule,
+
     ]
 })
 export class ProgramModule { }

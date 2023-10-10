@@ -24,6 +24,8 @@ import {
   UnsubscribeOnDestroyAdapter,
 } from '@shared';
 import { formatDate } from '@angular/common';
+import { LeaveService } from '@core/service/leave.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-leave-request',
@@ -32,12 +34,10 @@ import { formatDate } from '@angular/common';
 })
 export class LeaveRequestComponent
   extends UnsubscribeOnDestroyAdapter
-  implements OnInit
-{
+  implements OnInit {
   displayedColumns = [
     'select',
     'class',
-    'section',
     'applyDate',
     'fromDate',
     'toDate',
@@ -64,7 +64,8 @@ export class LeaveRequestComponent
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public leaveRequestService: LeaveRequestService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private leaveService: LeaveService
   ) {
     super();
   }
@@ -150,35 +151,44 @@ export class LeaveRequestComponent
     });
   }
   deleteItem(row: LeaveRequest) {
-    this.id = row.id;
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: row,
-      direction: tempDirection,
+    let id = row.id;
+    this.leaveRequestService.deleteLeaveRequest(id).subscribe(() => {
+      // this.getAllDepartments();
+      Swal.fire({
+        title: 'Success',
+        text: 'Leave deleted successfully.',
+        icon: 'success',
+      });
     });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // for delete we use splice in order to remove single object from DataService
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-          this.refreshTable();
-          this.showNotification(
-            'snackbar-danger',
-            'Delete Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
-      }
-    });
+
+    // let tempDirection: Direction;
+    // if (localStorage.getItem('isRtl') === 'true') {
+    //   tempDirection = 'rtl';
+    // } else {
+    //   tempDirection = 'ltr';
+    // }
+    // const dialogRef = this.dialog.open(DeleteDialogComponent, {
+    //   data: row,
+    //   direction: tempDirection,
+    // });
+    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    //   if (result === 1) {
+    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+    //       (x) => x.id === this.id
+    //     );
+    //     // for delete we use splice in order to remove single object from DataService
+    //     if (foundIndex != null && this.exampleDatabase) {
+    //       this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+    //       this.refreshTable();
+    //       this.showNotification(
+    //         'snackbar-danger',
+    //         'Delete Record Successfully...!!!',
+    //         'bottom',
+    //         'center'
+    //       );
+    //     }
+    //   }
+    // });
   }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
@@ -195,8 +205,8 @@ export class LeaveRequestComponent
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -238,8 +248,7 @@ export class LeaveRequestComponent
     // key name with space add in brackets
     const exportData: Partial<TableElement>[] =
       this.dataSource.filteredData.map((x) => ({
-        Class: x.class,
-        Section: x.section,
+        Class: x.className,
         'Apply Date':
           formatDate(new Date(x.applyDate), 'yyyy-MM-dd', 'en') || '',
         'From Date': formatDate(new Date(x.fromDate), 'yyyy-MM-dd', 'en') || '',
@@ -304,7 +313,9 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
       this.filterChange,
       this.paginator.page,
     ];
-    this.exampleDatabase.getAllLeaveRequests();
+      let studentId = localStorage.getItem('id')
+  
+    this.exampleDatabase.getAllLeavesByStudentId('651bdef02191b64db4db0e06',studentId);
     return merge(...displayDataChanges).pipe(
       map(() => {
         // Filter data
@@ -312,8 +323,7 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
           .slice()
           .filter((leaveRequest: LeaveRequest) => {
             const searchStr = (
-              leaveRequest.class +
-              leaveRequest.section +
+              leaveRequest?.className +
               leaveRequest.applyDate +
               leaveRequest.reason
             ).toLowerCase();
@@ -347,10 +357,7 @@ export class ExampleDataSource extends DataSource<LeaveRequest> {
           [propertyA, propertyB] = [a.id, b.id];
           break;
         case 'class':
-          [propertyA, propertyB] = [a.class, b.class];
-          break;
-        case 'section':
-          [propertyA, propertyB] = [a.section, b.section];
+          [propertyA, propertyB] = [a.className, b.className];
           break;
         case 'applyDate':
           [propertyA, propertyB] = [a.applyDate, b.applyDate];

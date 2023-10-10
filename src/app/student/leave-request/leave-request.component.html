@@ -78,37 +78,37 @@
                 <ng-container matColumnDef="class">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Class</mat-header-cell>
                   <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    <span class="mobile-label">Class:</span> {{row.class}}</mat-cell>
+                    <span class="mobile-label">Class:</span> {{row.className}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="section">
+                <!-- <ng-container matColumnDef="section">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Section
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
                     <span class="mobile-label">Section:</span> {{row.section}}</mat-cell>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="applyDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Apply Date</mat-header-cell>
                   <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    <span class="mobile-label">Apply Date:</span>{{row.applyDate | date: 'MM/dd/yyyy'}}
+                    <span class="mobile-label">Apply Date:</span>{{row.applyDate | date}}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="fromDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>From Date</mat-header-cell>
                   <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    <span class="mobile-label">From Date:</span> {{row.fromDate | date: 'MM/dd/yyyy'}}
+                    <span class="mobile-label">From Date:</span> {{row.fromDate | date}}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="toDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>To Date</mat-header-cell>
                   <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    <span class="mobile-label">To Date:</span> {{row.toDate | date: 'MM/dd/yyyy'}}
+                    <span class="mobile-label">To Date:</span> {{row.toDate | date}}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="reason">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Reason
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    <span class="truncate-text"><span class="mobile-label">Reason:</span>{{row.reason}}</span>
+                    <span class="truncate-text"><span class="mobile-label">Reason:</span>{{row.reason| titlecase}}</span>
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">
@@ -116,14 +116,19 @@
                   </mat-header-cell>
                   <mat-cell mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
                     <span class="mobile-label">Status:</span>
-                    <div *ngIf="row.status==='Approved'">
-                      <span class="badge badge-solid-green">
-                        {{row.status}}</span>
-                    </div>
-                    <div *ngIf="row.status==='Rejected'">
+                    <div *ngIf="row.status==='applied'">
                       <span class="badge badge-solid-orange">
-                        {{row.status}}</span>
+                        {{row.status |titlecase}}</span>
                     </div>
+                    <div *ngIf="row.status==='rejected'">
+                      <span class="badge badge-solid-red">
+                        {{row.status | titlecase}}</span>
+                    </div>
+                    <div *ngIf="row.status==='approved'">
+                      <span class="badge badge-solid-green">
+                        {{row.status | titlecase}}</span>
+                    </div>
+
                   </mat-cell>
                 </ng-container>
 

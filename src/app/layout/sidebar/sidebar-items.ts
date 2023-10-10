@@ -245,18 +245,18 @@ export const ROUTES: RouteInfo[] = [
         role: [''],
         submenu: [],
       },
-      {
-        path: '/admin/program/create-course',
-        title: 'MENUITEMS.PROGRAM.LIST.CREATE-COURSE',
-        iconType: '',
-        icon: '',
-        class: 'ml-menu',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: [''],
-        submenu: [],
-      },
+      // {
+      //   path: '/admin/program/create-course',
+      //   title: 'MENUITEMS.PROGRAM.LIST.CREATE-COURSE',
+      //   iconType: '',
+      //   icon: '',
+      //   class: 'ml-menu',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: [''],
+      //   submenu: [],
+      // },
       {
         path: '/admin/program/program-approve-list',
         title: 'MENUITEMS.PROGRAM.LIST.APPROVE-LIST',
@@ -381,7 +381,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/users/user-type',
         title: 'User Type',
         iconType: '',
         icon: '',
@@ -393,7 +393,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/users/all-users',
         title: 'All User',
         iconType: '',
         icon: '',
@@ -418,7 +418,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/certificate/certificates',
         title: 'Certificates',
         iconType: '',
         icon: '',

@@ -1,5 +1,5 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ViewChild } from "@angular/core";
 import { LeaveRequestService } from "../../leave-request.service";
 import {
   UntypedFormControl,
@@ -9,6 +9,7 @@ import {
 } from "@angular/forms";
 import { LeaveRequest } from "../../leave-request.model";
 import { MAT_DATE_LOCALE } from "@angular/material/core";
+import { ClassService } from "app/admin/schedule-class/class.service";
 
 export interface DialogData {
   id: number;
@@ -23,16 +24,20 @@ export interface DialogData {
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class FormDialogComponent {
+
   action: string;
   dialogTitle: string;
   leaveRequestForm: UntypedFormGroup;
   leaveRequest: LeaveRequest;
+  studentApprovedClasses: any;
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public leaveRequestService: LeaveRequestService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private classService: ClassService
   ) {
+    this.getApprovedCourse();
     // Set the defaults
     this.action = data.action;
     if (this.action === "edit") {
@@ -56,15 +61,21 @@ export class FormDialogComponent {
       ? "Not a valid email"
       : "";
   }
+  getApprovedCourse(){
+    let studentId=localStorage.getItem('id')
+    const payload = { studentId: studentId, status: 'approved' };
+    this.classService.getStudentRegisteredClasses(payload).subscribe(response =>{
+     this.studentApprovedClasses = response.data.docs;
+    })
+  }
+  
   createContactForm(): UntypedFormGroup {
     return this.fb.group({
       id: [this.leaveRequest.id],
-      class: [this.leaveRequest.class, [Validators.required]],
-      section: [this.leaveRequest.section, [Validators.required]],
+      className: [this.leaveRequest.className, [Validators.required]],
       applyDate: [this.leaveRequest.applyDate, [Validators.required]],
       fromDate: [this.leaveRequest.fromDate, [Validators.required]],
       toDate: [this.leaveRequest.toDate, [Validators.required]],
-      status: [this.leaveRequest.status, [Validators.required]],
       reason: [this.leaveRequest.reason, [Validators.required]],
     });
   }
@@ -75,8 +86,18 @@ export class FormDialogComponent {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.leaveRequestService.addLeaveRequest(
-      this.leaveRequestForm.getRawValue()
-    );
+    let payload={
+      className:this.leaveRequestForm.value?.className?.classId?.courseId?.title,
+      applyDate:this.leaveRequestForm.value?.applyDate,
+      fromDate:this.leaveRequestForm.value?.fromDate,
+      toDate:this.leaveRequestForm.value?.toDate,
+      reason:this.leaveRequestForm.value?.reason,
+      instructorId:this.leaveRequestForm.value?.className?.classId?.sessions[0]?.instructorId,
+      classId:this.leaveRequestForm.value?.className?.classId?.id,
+      studentId:this.leaveRequestForm.value?.className?.studentId?.id,
+      status:'applied'
+
+    }
+    this.leaveRequestService.addLeaveRequest(payload);
   }
 }

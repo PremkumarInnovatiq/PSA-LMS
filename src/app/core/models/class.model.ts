@@ -133,6 +133,7 @@ export interface SessionModel {
   courseName:string;
   courseCode:string;
   status:string;
+  duration:string
 
 }
 
