@@ -324,7 +324,9 @@ export class CreateClassComponent {
         item.instructor_id === this.InstructorForm.controls['instructor'].value
     );
     this.user_id = filteredData[0].user_id.user_id;
+
     }
+
 
   onSelectChange1(event :any,element:any) {
     console.log("ele",element)

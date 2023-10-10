@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TeachersService } from '../all-teachers/teachers.service';
 
 @Component({
   selector: 'app-about-teacher',
@@ -13,7 +15,27 @@ export class AboutTeacherComponent {
       active: 'Profile',
     },
   ];
-  constructor() {
-    // constructor
-  }
-}
+  aboutDataId: any;
+  aboutData:any
+  constructor(private activeRoute:ActivatedRoute, private StudentService:TeachersService,) {
+    this.activeRoute.queryParams.subscribe(param =>{
+    console.log("params:",param['data'])
+ 
+    this.aboutDataId = param['data'];
+    })
+   }
+ 
+   ngOnInit() {
+     this.loadData();
+   }
+ 
+ 
+   loadData(){
+     this.StudentService.getUserById( this.aboutDataId).subscribe(res => {
+       this.aboutData = res;
+       console.log("edit",this.aboutData)
+ 
+     })
+ }
+ }
+

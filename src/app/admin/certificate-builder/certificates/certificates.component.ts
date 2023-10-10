@@ -16,16 +16,7 @@ export class CertificatesComponent {
       active: 'Certificates',
     },
   ];
-  displayedColumns: string[] = [
-    'select',
-    'Course Name',
-    'Course Code',
-    'Main Category',
-    'Sub Category',
-    'Fees',
-    'status'
-  ];
-
+  
   pageSizeArr = this.utils.pageSizeArr;
   totalItems: any;
 
