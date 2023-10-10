@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 export class Teachers {
   
+  
   id: number;
   avatar: string;
   name: string;
@@ -10,6 +11,9 @@ export class Teachers {
   mobile: string;
   department: string;
   degree: string;
+  qualification:string;
+  joiningDate:string;
+  data:any;
   constructor(teachers: Teachers) {
     {
       this.id = teachers.id || this.getRandomID();
@@ -21,6 +25,8 @@ export class Teachers {
       this.mobile = teachers.mobile || '';
       this.department = teachers.department || '';
       this.degree = teachers.degree || '';
+      this.qualification = teachers.qualification || '';
+      this.joiningDate = teachers.joiningDate || '';
     }
   }
   public getRandomID(): number {
