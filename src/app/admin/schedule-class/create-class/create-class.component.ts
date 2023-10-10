@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -29,6 +30,8 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { InstructorService } from '@core/service/instructor.service';
+import Swal from 'sweetalert2';
 // import * as moment from 'moment';
 
 @Component({
@@ -57,8 +60,8 @@ export class CreateClassComponent {
   dataSourceArray: DataSourceModel[] = [];
   dataSource: any;
   courseTitle: any;
-  user_id:any
-  courseCode:any
+  user_id: any;
+  courseCode: any;
   classId!: string;
   title: boolean = false;
 
@@ -88,8 +91,8 @@ export class CreateClassComponent {
   instructorControl!: FormControl;
   mode!: string;
   sessions: any = [];
-  instForm !: FormArray<any>
-  next:boolean = false;
+  instForm!: FormArray<any>;
+  next: boolean = false;
 
   addNewRow() {
     if (this.isInstructorFailed != 1 && this.isLabFailed != 1) {
@@ -112,7 +115,8 @@ export class CreateClassComponent {
     private _activeRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private snackBar: MatSnackBar,
-    private courseService:CourseService,
+    private courseService: CourseService,
+    private instructorService: InstructorService
   ) {
     this._activeRoute.queryParams.subscribe((params) => {
       this.classId = params['id'];
@@ -130,48 +134,58 @@ export class CreateClassComponent {
     this.status = !this.status;
   }
 
-
   ngOnInit(): void {
-
-    if(this.classId != undefined){
+    if (this.classId != undefined) {
       this.loadClassList(this.classId);
     }
 
-
     this.loadForm();
+    let payload = {
+      type: 'Instructor',
+    };
+
+    this.instructorService.getInstructor(payload).subscribe((res) => {
+      this.instructorList = res;
+      console.log(
+        'instructor',
+        this.instructorList
+      );
+    });
+
     forkJoin({
       courses: this._classService.getAllCoursesTitle('active'),
-      instructors: this._classService.getAllInstructor(),
+      // instructors: this.instructorService.getInstructor(payload),
       labs: this._classService.getAllLaboratory(),
     }).subscribe((response) => {
       this.courseList = response.courses;
-      this.instructorList = response.instructors;
+      console.log(this.courseList, 'cList');
+      // this.instructorList = response.instructors;
       this.labList = response.labs;
 
       this.cd.detectChanges();
     });
   }
 
-loadForm() {
-  this.classForm = this._fb.group({
-    courseId: ["", [Validators.required]],
-    classType: ["public"],
-    classDeliveryType: ["", Validators.required],
-    instructorCost: ["", Validators.required],
-    instructorCostCurrency: ["USD"],
-    currency: [""],
-    isGuaranteedToRun:[false,Validators.required],
-    externalRoom:[false,],
-    minimumEnrollment: ["", Validators.required],
-    maximumEnrollment: ["", Validators.required],
-    status: ["open"],
-    classStartDate: ["2023-05-20"],
-    classEndDate: ["2023-06-10"],
-    sessions: ["", Validators.required],
-  });
-}
+  loadForm() {
+    this.classForm = this._fb.group({
+      courseId: ['', [Validators.required]],
+      classType: ['public'],
+      classDeliveryType: ['', Validators.required],
+      instructorCost: ['', Validators.required],
+      instructorCostCurrency: ['USD'],
+      currency: [''],
+      isGuaranteedToRun: [false, Validators.required],
+      externalRoom: [false],
+      minimumEnrollment: ['', Validators.required],
+      maximumEnrollment: ['', Validators.required],
+      status: ['open'],
+      classStartDate: ['2023-05-20'],
+      classEndDate: ['2023-06-10'],
+      sessions: ['', Validators.required],
+    });
+  }
 
-  loadClassList(id:string) {
+  loadClassList(id: string) {
     this._classService.getClassById(id).subscribe((response) => {
       const item = response;
       this.classForm.patchValue({
@@ -181,37 +195,39 @@ loadForm() {
         instructorCost: item?.instructorCost,
         currency: item?.currency,
         instructorCostCurrency: item?.instructorCostCurrency,
-        isGuaranteedToRun:item?.isGuaranteedToRun,
+        isGuaranteedToRun: item?.isGuaranteedToRun,
         externalRoom: item?.externalRoom,
         minimumEnrollment: item?.minimumEnrollment,
         maximumEnrollment: item?.maximumEnrollment,
         status: item?.status,
         sessions: item?.sessions,
       });
-      item.sessions.forEach((item:any) => {
+         console.log( item.sessions, "++")
+      item.sessions.forEach((item: any) => {
+
         this.dataSourceArray.push({
-          start: `${moment(item.sessionStartDate).format("YYYY-MM-DD")}`,
-          end: `${moment(item.sessionEndDate).format("YYYY-MM-DD")}`,
-          instructor: item.instructorId?.id,
+          start: `${moment(item.sessionStartDate).format('YYYY-MM-DD')}`,
+          end: `${moment(item.sessionEndDate).format('YYYY-MM-DD')}`,
+          instructor: item.instructorId?.user_id?.id,
           lab: item.laboratoryId?.id,
         });
-
       });
       this.dataSource = this.dataSourceArray;
       this.cd.detectChanges();
     });
   }
-  nextBtn(){
-
-    if(this.classForm.get('classDeliveryType')?.valid
-    && this.classForm.get('courseId')?.valid
-    && this.classForm.get('instructorCost')?.valid
-    && this.classForm.get('minimumEnrollment')?.valid
-    && this.classForm.get('maximumEnrollment')?.valid){
+  nextBtn() {
+    if (
+      this.classForm.get('classDeliveryType')?.valid &&
+      this.classForm.get('courseId')?.valid &&
+      this.classForm.get('instructorCost')?.valid &&
+      this.classForm.get('minimumEnrollment')?.valid &&
+      this.classForm.get('maximumEnrollment')?.valid
+    ) {
       this.next = true;
     }
   }
-  back(){
+  back() {
     this.next = false;
   }
 
@@ -271,21 +287,25 @@ loadForm() {
   //   return this.sessions;
   // }
   getSession() {
-    let sessions: any=[];
+    let sessions: any = [];
     this.dataSource.forEach((item: any, index: any) => {
-      if (this.isInstructorFailed == 0 && item.instructor != "0" && item.lab != "0") {
+      if (
+        this.isInstructorFailed == 0 &&
+        item.instructor != '0' &&
+        item.lab != '0'
+      ) {
         sessions.push({
           sessionNumber: index + 1,
-          sessionStartDate: moment(item.start).format("YYYY-MM-DD"),
-          sessionEndDate: moment(item.end).format("YYYY-MM-DD"),
-          sessionStartTime: moment(item.start).format("HH:mm"),
-          sessionEndTime: moment(item.end).format("HH:mm"),
+          sessionStartDate: moment(item.start).format('YYYY-MM-DD'),
+          sessionEndDate: moment(item.end).format('YYYY-MM-DD'),
+          sessionStartTime: moment(item.start).format('HH:mm'),
+          sessionEndTime: moment(item.end).format('HH:mm'),
           instructorId: item.instructor,
           laboratoryId: item.lab,
-          courseName:this.courseTitle,
-          courseCode:this.courseCode,
-          status:"Pending",
-          user_id:this.user_id
+          courseName: this.courseTitle,
+          courseCode: this.courseCode,
+          status: 'Pending',
+          user_id: this.user_id,
         });
       } else {
         // this.toaster.error("Please choose Instructor and Lab")
@@ -294,20 +314,20 @@ loadForm() {
     });
     return sessions;
   }
-  onSelectChange(event :any) {
-   // console.log("this.classForm.controls['instructor'].value",this.classForm.controls['courseId'].value)
-    
-    this.courseService.getCourseById(this.classForm.controls['courseId'].value).subscribe((response) => {
-      console.log("-==========",response)
-     // this.router.navigateByUrl(`Schedule Class/List`);
-     this.courseTitle=response.title
-     this.courseCode=response.courseCode
+ 
 
-
-     console.log(response)
-    });
-    
+  onSelectChange(event: any) {
+    // console.log("==element=======",event.target.value)
+    console.log('==element=======', this.instructorList);
+    //this.instructorList.filter(item)
+    const filteredData = this.instructorList.filter(
+      (item: { instructor_id: string }) =>
+        item.instructor_id === this.InstructorForm.controls['instructor'].value
+    );
+    console.log('========', filteredData);
+    this.user_id = filteredData[0].user_id.user_id;
   }
+
   onSelectChange1(event :any,element:any) {
     
    console.log("==element=======",element)
@@ -316,11 +336,12 @@ loadForm() {
     const filteredData = this.instructorList.filter((item: { instructor_id: string; }) => item.instructor_id===element.instructor);
    console.log("=====filterData===",filteredData)
    this.user_id=filteredData[0].user_id.user_id
+
   }
 
-data(){
-  console.log(this.classForm.value)
-}
+  data() {
+    console.log(this.classForm.value);
+  }
 
   submit() {
     // if(!this.viewUrl&&!this.editUrl){
@@ -335,19 +356,24 @@ data(){
           .updateClass(this.classId, this.classForm.value)
           .subscribe((response) => {
             if (response) {
-              this.showNotification(
-                'snackbar-success',
-                'Class Updated Successfully...!!!',
-                'top',
-                'right'
-              );
+              Swal.fire({
+                title: 'Success',
+                text: 'Class Updated Successfully.',
+                icon: 'success',
+              });
+              // this.showNotification(
+              //   'snackbar-success',
+              //   'Class Updated Successfully...!!!',
+              //   'top',
+              //   'right'
+              // );
               this.router.navigateByUrl(`/admin/schedule/class-list`);
             }
 
             // this.router.navigateByUrl(`Schedule Class/List`);
           });
       }
-    }else{
+    } else {
       if (sessions) {
         this.classForm.value.sessions = sessions;
         // this.inProgress = false;
@@ -357,12 +383,11 @@ data(){
           .saveClass(this.classForm.value)
           .subscribe((response) => {
             if (response) {
-              this.showNotification(
-                'snackbar-success',
-                'Class Created Successfully...!!!',
-                'top',
-                'right'
-              );
+              Swal.fire({
+                title: 'Success',
+                text: 'Class Created Successfully.',
+                icon: 'success',
+              });
             }
             this.router.navigateByUrl(`/admin/schedule/class-list`);
           });
@@ -466,7 +491,6 @@ data(){
     return this.mode === 'viewUrl';
   }
 
-
   mapPropertiesInstructor(response: any[]) {
     response.forEach((element: InstructorList) => {
       this.instructorList.push(element);
@@ -485,5 +509,3 @@ data(){
     });
   }
 }
-
-

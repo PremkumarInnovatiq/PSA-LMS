@@ -24,18 +24,19 @@ export class TeachersService extends UnsubscribeOnDestroyAdapter {
     return this.dialogData;
   }
   /** CRUD METHODS */
-  // getAllTeacherss(): void {
-  //   this.subs.sink = this.httpClient.get<Teachers[]>(this.API_URL).subscribe({
-  //     next: (data) => {
-  //       this.isTblLoading = false;
-  //       this.dataChange.next(data);
-  //     },
-  //     error: (error: HttpErrorResponse) => {
-  //       this.isTblLoading = false;
-  //       console.log(error.name + ' ' + error.message);
-  //     },
-  //   });
-  // }
+  getAllTeacherss(payload:any): void {
+    const apiUrl = `${this.prefix}auth/instructorList/`;
+    this.subs.sink = this.httpClient.post<Teachers>(apiUrl,payload).subscribe({
+      next: (response) => {
+        this.isTblLoading = false;
+        this.dataChange.next(response.data);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isTblLoading = false;
+        console.log(error.name + ' ' + error.message);
+      },
+    });
+  }
   getInstructor(filter?: Partial<UsersPaginationModel>): Observable<ApiResponse> {
     const apiUrl = `${this.prefix}auth/instructorList/`;
     return this.httpClient

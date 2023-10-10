@@ -330,9 +330,9 @@
                         <mat-select [(ngModel)]="element.instructor" (selectionChange)="onSelectChange1($event,element)" (change)="onChangeInstructor(element,index)">
                           <mat-option
                             *ngFor="let instructor of instructorList"
-                            [value]="instructor.instructor_id"
+                            [value]="instructor.id"
                           >
-                            {{ instructor?.user_id.name }}
+                            {{ instructor?.name + " " + instructor?.last_name }}
                           </mat-option>
                         </mat-select>
                         <mat-error> Class Type is required </mat-error>

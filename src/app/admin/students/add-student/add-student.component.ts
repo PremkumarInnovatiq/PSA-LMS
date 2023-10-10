@@ -143,7 +143,7 @@ this.activatedRoute.queryParams.subscribe((params:any) => {
         //this.fileDropEl.nativeElement.value = "";
       this.stdForm.reset();
       //this.toggleList()
-      this.router.navigateByUrl('/admin/teachers/all-teachers');
+      this.router.navigateByUrl('/admin/teachers/all-student');
       },
       (error) => {
         Swal.fire(

@@ -107,12 +107,17 @@ export class AllStudentsComponent
           this.studentsService.getDialogData()
         );
         this.refreshTable();
-        this.showNotification(
-          'snackbar-success',
-          'Add Record Successfully...!!!',
-          'bottom',
-          'center'
-        );
+        Swal.fire({
+          title: 'Success',
+          text: 'Added Record Successfully.',
+          icon: 'success',
+        });
+        // this.showNotification(
+        //   'snackbar-success',
+        //   'Add Record Successfully...!!!',
+        //   'bottom',
+        //   'center'
+        // );
       }
     });
   }
