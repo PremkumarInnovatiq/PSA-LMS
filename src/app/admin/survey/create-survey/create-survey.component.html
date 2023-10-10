@@ -1,0 +1,44 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+      </app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>Create Survey</h2>
+          </div>
+          <div class="body">
+            <div class="container mx-auto ">
+              <div class="row justify-content-between mt-4">
+                   <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="first" required>
+                    <mat-icon matSuffix>face</mat-icon>
+                    <!-- <mat-error *ngIf="register?.get('first')?.hasError('required')">
+                      First name is required
+                    </mat-error> -->
+                  </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2 ">
+                  <button mat-raised-button >Add Ratings
+                      <i class="material-icons m-2">star_rate</i>
+                  </button>
+                  <button mat-raised-button color="warn" class="m-2">Add Questions
+                    <i class="material-icons m-2" >question_answer</i>
+                  </button>
+                   </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

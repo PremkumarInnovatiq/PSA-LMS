@@ -1,0 +1,216 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb
+        [title]="breadscrum.title"
+        [items]="breadscrum.items"
+        [active_item]="breadscrum.active"
+      >
+      </app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>Blank Page</h2>
+          </div>
+          <div class="body">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <mat-form-field
+                  class="example-full-width mb-3"
+                  appearance="outline"
+                >
+                  <mat-label>Course Name</mat-label>
+                  <mat-select  required>
+                    <mat-option [value]="'mechanical'" *ngFor="let course of courseList">{{ course?.title }} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                <mat-form-field
+                  class="example-full-width mb-3"
+                  appearance="outline"
+                >
+                  <mat-label>Instructor</mat-label>
+                  <mat-select  required>
+                    <mat-option [value]="instructor.id" *ngFor="let instructor of instructorList"> {{ instructor?.name + " " + instructor?.last_name }} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                  <div class="header">
+                    <h2>1.The Course objectives were clear</h2>
+                  </div>
+                  <div class="body">
+                    <mat-radio-group
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+
+                    >
+                      <mat-radio-button
+                        class="example-radio-button ms-0"
+                        *ngFor="let season of course"
+                        [value]="season"
+                      >
+                        {{ season }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                  <div class="header">
+                    <h2>
+                      2.The Assignments were appropriate for the level of this
+                      course
+                    </h2>
+                  </div>
+                  <div class="body">
+                    <mat-radio-group
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+
+                    >
+                      <mat-radio-button
+                        class="example-radio-button ms-0"
+                        *ngFor="let season of levelofcourse"
+                        [value]="season"
+                      >
+                        {{ season }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                  <div class="header">
+                    <h2>3.The course corresponded to my expectations</h2>
+                  </div>
+                  <div class="body">
+                    <mat-radio-group
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+                    >
+                      <mat-radio-button
+                        class="example-radio-button ms-0"
+                        *ngFor="let season of expectations"
+                        [value]="season"
+                      >
+                        {{ season }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                  <div class="header">
+                    <h2>
+                      4.The Instructor demonstrated knowledge of the subject
+                      matter
+                    </h2>
+                  </div>
+                  <div class="body">
+                    <mat-radio-group
+                      aria-labelledby="example-radio-group-label"
+                      class="example-radio-group"
+                    >
+                      <mat-radio-button
+                        class="example-radio-button ms-0"
+                        *ngFor="let season of subject"
+                        [value]="season"
+                      >
+                        {{ season }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card p-4">
+              <div class="header">
+                <h2>Which is your overall satisfaction with the course?</h2>
+                </div>
+                <div class="body mt-2">
+                  <ngb-rating [max]="5" [(rate)]="starRating"></ngb-rating>
+                </div>
+            </div>
+            <div class="card p-3">
+              <div class="header">
+                <h2>How likely is that you would recommend this course to another student?</h2>
+                </div>
+                <div class="body">
+                  <div
+            class=" mt-4"
+            *ngFor="let cunts of countNumber; let i = index"
+            style="display: inline; padding: 15px"
+            [ngClass]="selected ? 'disabled' : ''"
+          >
+            <span
+              class="shadow border rounded-circle px-3 py-2"
+              (click)="setRow(i)"
+              [ngClass]="{ highlight: selectedIndex == i }"
+            >
+              {{ cunts }}</span
+            >
+          </div>
+          <div class="mt-4">
+            <span style="color: #afaaaa">0- less likely at all</span>
+            <span style="color: #afaaaa">10- very likely </span>
+          </div>
+                </div>
+
+            </div>
+            <div class="card">
+              <div class="header">
+                <h2>Please provide any comments or suggestions that might help improve this course in the future!</h2></div>
+              <div class="body">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <textarea matInput formControlName="cDetails" required></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                <button
+                class="btn-space"
+                mat-raised-button
+                color="primary"
+
+              >
+                Submit
+              </button>
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="warn"
+                  [routerLink]="['/admin/survey/survey-list']"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
