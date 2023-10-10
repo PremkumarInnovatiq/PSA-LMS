@@ -1,3 +1,4 @@
+import { CourseId } from './../../../core/models/class.model';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, ElementRef, ViewChild } from '@angular/core';
@@ -204,11 +205,12 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
     console.log(this.dataSource)
     console.log(this.searchTerm)
     if(this.searchTerm){
-    this.dataSource = this.dataSource?.filter((item: { name: string; }) =>
-      item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.dataSource = this.dataSource?.filter((item: any) =>
+    // console.log(item.courseId?.title)
+    item.courseId?.title.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     } else {
-      // this.instructorData()
+       this.getClassList();
 
     }
   }

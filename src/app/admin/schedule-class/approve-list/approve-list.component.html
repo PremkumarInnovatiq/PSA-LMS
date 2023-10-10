@@ -28,6 +28,7 @@
                     #filter
                     class="browser-default search-field"
                     aria-label="Search box"
+                    [(ngModel)]="searchTerm" (input)="performSearch()"
 
                   />
                 </li>
@@ -97,7 +98,7 @@
                   <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image
                   </mat-header-cell>
                   <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"><span
-                      class="mobile-label">Image:</span> <img [src]="row.classId.courseId.image_link || 'assets/noimage.jpg'" />
+                      class="mobile-label">Image:</span> <img [src]="row.classId?.courseId?.image_link || 'assets/noimage.jpg'" />
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="coursename">
@@ -114,7 +115,7 @@
                     >Student Name</mat-header-cell
                   >
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Student Name:</span>{{row.studentId?.name | titlecase}}
+                    <span class="mobile-label">Student Name:</span>{{row.studentId?.name + " " + row.studentId?.last_name| titlecase}}
                   </mat-cell>
                 </ng-container>
                 <!-- Class start date -->

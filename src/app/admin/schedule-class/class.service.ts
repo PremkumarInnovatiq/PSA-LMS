@@ -125,10 +125,20 @@ getAllCoursesTitle(status: string): Observable<CourseTitleModel[]> {
   const apiUrl = `${this.prefix}admin/courses-new/title?status=${status}`;
   return this.http.get<ApiResponse>(apiUrl).pipe(map((response) => response.data));
 }
-//getAllInstructor
+// getAllInstructor
 getAllInstructor(): Observable<InstructorList[]> {
-  const apiUrl = `${this.prefix}admin/instructor/name/`;
+  const apiUrl = `${this.prefix}admin/auth/instructorList`;
   return this.http.get<ApiResponse>(apiUrl).pipe(map((response) => response.data));
+}
+getInstructor(body:any): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}auth/instructorList/`;
+  return this.http
+    .post<ApiResponse>(apiUrl,body)
+    .pipe(
+      map((response:any) => {
+        return response.data;
+      })
+    );
 }
 //getAllLab
 getAllLaboratory(): Observable<LabListModel[]> {
