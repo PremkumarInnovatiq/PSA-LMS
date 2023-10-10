@@ -12,17 +12,17 @@
           <div class="m-b-20">
             <div class="contact-grid">
               <div class="profile-header bg-dark">
-                <div class="user-name">Sarah Smith</div>
-                <div class="name-center">Senior Teacher</div>
+                <div class="user-name">{{aboutData?.name}}</div>
+                <div class="name-center">{{aboutData?.department}} Department</div>
               </div>
-              <img src="assets/images/user/usrbig3.jpg" class="user-img" alt="">
+              <img src="{{aboutData?.avatar}}" class="user-img" alt="">
               <p>
-                456, Estern evenue, Courtage area,
+                {{aboutData?.address}},
                 <br />New York
               </p>
               <div>
                 <span class="phone">
-                  <i class="material-icons">phone</i>264-625-2583</span>
+                  <i class="material-icons">phone</i>{{aboutData?.mobile}}</span>
               </div>
               <div class="row">
                 <div class="col-4">
@@ -123,17 +123,17 @@
                       <div class="col-md-3 col-6 b-r">
                         <strong>Full Name</strong>
                         <br>
-                        <p class="text-muted">Emily Smith</p>
+                        <p class="text-muted">{{aboutData?.name + aboutData?.last_name}}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
-                        <strong>Mobile</strong>
+                        <!-- <strong>{{aboutData?.mobile}}</strong> -->
                         <br>
-                        <p class="text-muted">(123) 456 7890</p>
+                        <p class="text-muted">{{aboutData?.mobile}}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Email</strong>
                         <br>
-                        <p class="text-muted">johndeo@example.com</p>
+                        <p class="text-muted">{{aboutData?.email}}</p>
                       </div>
                       <div class="col-md-3 col-6">
                         <strong>Location</strong>
