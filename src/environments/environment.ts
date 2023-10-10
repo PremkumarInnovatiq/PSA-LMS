@@ -11,9 +11,9 @@ export const environment = {
 
   awsUrl: 'https://collegey.s3.ap-southeast-1.amazonaws.com/',
   filesPath: 'https://s3.ap-southeast-1.amazonaws.com/storage.collegey/',
-  apiUrl: 'http://localhost:3000/api/',
+  // apiUrl: 'http://localhost:3000/api/',
 
-    // apiUrl:'http://13.212.97.97:3001/api/',
+    apiUrl:'http://13.212.97.97:3001/api/',
 
 
   /* * /
