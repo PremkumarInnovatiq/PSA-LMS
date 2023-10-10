@@ -9,6 +9,7 @@ import { FeatherIconsModule } from './components/feather-icons/feather-icons.mod
 import { TruncatePipe } from '@core/service/truncate.pipe';
 import { BulletPointsPipe } from '@core/service/content.pipe';
 import { CapitalizeFirstLetterPipe } from '@core/service/capitalizeFirstletter.pipe';
+import { NgbRatingModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [TruncatePipe,BulletPointsPipe,CapitalizeFirstLetterPipe],
   imports: [
@@ -29,7 +30,8 @@ import { CapitalizeFirstLetterPipe } from '@core/service/capitalizeFirstletter.p
     TranslateModule,
     TruncatePipe,
     BulletPointsPipe,
-    CapitalizeFirstLetterPipe
+    CapitalizeFirstLetterPipe,
+    NgbRatingModule
   ],
 })
 export class SharedModule {}
