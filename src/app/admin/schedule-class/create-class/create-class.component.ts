@@ -326,6 +326,7 @@ export class CreateClassComponent {
     );
     console.log('========', filteredData);
     this.user_id = filteredData[0].user_id.user_id;
+  }
 
   onSelectChange1(event :any,element:any) {
     
