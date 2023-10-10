@@ -430,7 +430,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/certificate/design',
         title: 'Design',
         iconType: '',
         icon: '',

@@ -15,8 +15,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="d-grid gap-4 d-md-flex">
-                                <button mat-raised-button type="button" class="preview" (click)="openPreview()">Preview</button>
-                                <button mat-raised-button type="button" class="delete">Delete</button>
+                                <button mat-raised-button type="button" class="preview" *ngIf="!previewImage" (click)="openPreview()">Preview</button>
+                                <button mat-raised-button type="button" class="delete" *ngIf="!previewImage">Delete</button>
                                     <div class="export-button m-l-10" matTooltip="PDF">
                                       <img src="assets/pdf (1).svg" alt="" />
                                     </div>
