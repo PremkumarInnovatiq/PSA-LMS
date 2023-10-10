@@ -255,6 +255,22 @@ export class CourseService {
         })
       );
   }
+  uploadProgramVideo(files: File[]): Observable<any> {
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('Files', file, file.name);
+    }
+    const apiUrl = `${this.prefix}admin/video/uploadProgram`;
+    return this._Http.post(apiUrl, formData);
+  }
+  createProgramCourseKit(courseKit: CourseKit): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/CreateProgramCourseKit`;
+    return this._Http.post<ApiResponse>(apiUrl, courseKit);
+  }
+  deleteProgramCourseKit(courseKitId: string): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/deletedProgramCourseKit/${courseKitId}`;
+    return this._Http.delete<ApiResponse>(apiUrl);
+  }
 
 }
 
