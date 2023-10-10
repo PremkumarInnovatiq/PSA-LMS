@@ -235,7 +235,7 @@ ngOnInit(): void {
 
     getData(){
       forkJoin({
-        course: this.courseService.getProgramById(this.courseId),
+        course: this.courseService.getProgramKitsById(this.courseId),
         
       }).subscribe((response: any) => {
         if(response){

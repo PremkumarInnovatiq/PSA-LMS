@@ -232,8 +232,12 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/studentClasses?classId=${classId}&studentId=${studentId}`;
     return this._Http.get<any>(apiUrl);
   }
-  getProgramById(id: any) {
+  getProgramKitsById(id: any) {
     const apiUrl = `${this.prefix}admin/course-kit/ListProgramCourseKit/${id}`;
+    return this._Http.get<any>(apiUrl).pipe(map((response) => response));
+  }
+  getProgramById(id: any) {
+    const apiUrl = `${this.prefix}admin/courseprogram/${id}`;
     return this._Http.get<any>(apiUrl).pipe(map((response) => response));
   }
 
