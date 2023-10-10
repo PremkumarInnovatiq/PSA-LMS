@@ -32,7 +32,7 @@ import { CreateClassComponent } from './create-class/create-class.component';
         ProgaramCompletionListComponent,
         ProgramApprovalListComponent,
         CreateProgramKitComponent,
-        EditProgramKitComponent,,
+        EditProgramKitComponent,
         CreateClassComponent
          ],
     imports: [
