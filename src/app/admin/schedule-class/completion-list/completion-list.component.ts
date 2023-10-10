@@ -41,6 +41,7 @@ export class CompletionListComponent {
   totalItems: any;
   studentPaginationModel: StudentPaginationModel;
   isLoading: boolean = true;
+  searchTerm: string = '';
   // @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) matSort! : MatSort;
   upload() {
@@ -62,16 +63,24 @@ export class CompletionListComponent {
       this.getCompletedClasses();
      }
 
-     filterData($event:any){
-      console.log($event.target.value)
-      this.dataSource.filter = $event.target.value;
+     filterData() {
+      console.log("data",this.dataSource)
+      if(this.searchTerm){
+      this.dataSource = this.dataSource?.filter((item: any) =>
+      console.log(item.courseId?.title)
 
+      // item.classId.courseId?.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      } else {
+        // this.getCompletedClasses();
+
+      }
     }
     getCompletedClasses() {
       this.classService
         .getSessionCompletedStudent(this.studentPaginationModel.page, this.studentPaginationModel.limit)
         .subscribe((response: { docs: any; page: any; limit: any; totalDocs: any; }) => {
-          console.log("data",response)
+          // console.log("data",response)
           this.isLoading = false;
         this.studentPaginationModel.docs = response.docs;
         this.studentPaginationModel.page = response.page;
@@ -79,7 +88,7 @@ export class CompletionListComponent {
         this.totalItems=response.totalDocs;
         this.dataSource = response.docs;
         this.dataSource.sort = this.matSort;
-        this.mapClassList();
+        // this.mapClassList();
         })
     }
 

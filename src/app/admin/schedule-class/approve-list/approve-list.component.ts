@@ -54,6 +54,7 @@ export class ApproveListComponent  {
       active: 'Class List',
     },
   ];
+  searchTerm: string = '';
   studentPaginationModel: StudentPaginationModel;
   selection = new SelectionModel<ClassModel>(true, []);
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -203,7 +204,18 @@ export class ApproveListComponent  {
       );
     };
   }
+  performSearch() {
+    if(this.searchTerm){
+    this.dataSource = this.dataSource?.filter((item: any) =>
+    // console.log(item.courseId?.title)
 
+    item.classId.courseId?.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    } else {
+      this.getRegisteredClasses();
+
+    }
+  }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
