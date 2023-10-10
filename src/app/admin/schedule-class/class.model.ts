@@ -117,7 +117,7 @@ export interface Session {
 
 export interface StudentApproval {
   studentId: string;
-  classId: string;
+  classId: String;
   status: string;
   approvedOn: string;
   approvedBy: string;
@@ -178,11 +178,11 @@ export interface LabListModel {
   docs: LabDetail[];
 }
 
-export interface StudentApproval {
-  studentId: string;
-  classId: string;
-  status: string;
-  approvedOn: string;
-  approvedBy: string;
-  session: Session[];
-}
+// export interface StudentApproval {
+//   studentId: string;
+//   classId: string;
+//   status: string;
+//   approvedOn: string;
+//   approvedBy: string;
+//   session: Session[];
+// }
