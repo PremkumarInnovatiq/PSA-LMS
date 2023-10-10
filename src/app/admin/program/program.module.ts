@@ -16,6 +16,8 @@ import {
 } from '@danielmoncada/angular-datetime-picker';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CreateProgramKitComponent } from './program-kit/create-program-kit/create-program-kit.component';
+import { EditProgramKitComponent } from './program-kit/edit-program-kit/edit-program-kit.component';
 
 
 
@@ -28,6 +30,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         StudentApprovalListComponent,
         ProgaramCompletionListComponent,
         ProgramApprovalListComponent,
+        CreateProgramKitComponent,
+        EditProgramKitComponent,
          ],
     imports: [
         CommonModule,
