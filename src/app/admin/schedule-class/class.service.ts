@@ -211,6 +211,23 @@ getProgramClassById(id: string) {
   const apiUrl = `${this.prefix}admin/program-class/${id}`;
   return this.http.get<any>(apiUrl).pipe(map((response) => response.data));
 }
+saveProgramClass(formData: any): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}admin/program-class/`;
+  return this.http.post<ApiResponse>(apiUrl, formData).pipe(
+    map((response) => {
+      return response.data;
+    })
+  );
+}
+updateProgramClass(id: string, formData: any): Observable<ApiResponse> {
+  const apiUrl = `${this.prefix}admin/program-class/${id}`;
+  return this.http.put<ApiResponse>(apiUrl, formData).pipe(
+    map((response) => {
+      return response.data;
+    })
+  );
+}
+
 
 }
 

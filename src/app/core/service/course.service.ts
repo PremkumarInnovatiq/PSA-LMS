@@ -72,10 +72,21 @@ export class CourseService {
       .get<ApiResponse>(apiUrl, { params: this.buildParams(filter)})
       .pipe(
         map((response) => {
-          return response.data;
+          return response.data
         })
       );
   }
+  getPrograms(filter?: Partial<Program>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/courseprogram`;
+    return this._Http
+      .get<ApiResponse>(apiUrl, { params: this.buildParams(filter)})
+      .pipe(
+        map((response) => {
+          return response.data.docs
+        })
+      );
+  }
+
   getCount(
     filter?: Partial<CoursePaginationModel>
   ): Observable<ApiResponse> {

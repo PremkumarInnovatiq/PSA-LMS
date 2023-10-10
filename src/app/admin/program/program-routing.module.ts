@@ -8,6 +8,7 @@ import { StudentApprovalListComponent } from './student-approval-list/student-ap
 import { ProgaramCompletionListComponent } from './progaram-completion-list/progaram-completion-list.component';
 import { ProgramKitComponent } from './program-kit/program-kit.component';
 import { ProgramApprovalListComponent } from './program-approval-list/program-approval-list.component';
+import { CreateClassComponent } from './create-class/create-class.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     component:ScheduleClassComponent
   },
   {
-    path:'create-course', 
+    path:'create-program', 
     component:CreateProgramComponent
   },
   {
@@ -30,6 +31,15 @@ const routes: Routes = [
     path:'edit-program/:id', 
     component:CreateProgramComponent
   },
+  {
+    path:'create-class', 
+    component:CreateClassComponent
+  },
+  {
+    path:'edit-class/:id', 
+    component:CreateClassComponent
+  },
+
   {
     path:'student-approve-list', 
     component:StudentApprovalListComponent

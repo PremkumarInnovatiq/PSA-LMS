@@ -15,6 +15,7 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CreateClassComponent } from './create-class/create-class.component';
 
 
 
@@ -26,7 +27,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         ProgramKitComponent,
         StudentApprovalListComponent,
         ProgaramCompletionListComponent,
-        ProgramApprovalListComponent
+        ProgramApprovalListComponent,
+        CreateClassComponent
     ],
     imports: [
         CommonModule,

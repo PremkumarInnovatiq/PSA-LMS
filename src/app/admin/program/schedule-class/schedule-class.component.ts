@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { InstructorService } from '@core/service/instructor.service';
 
 @Component({
   selector: 'app-schedule-class',
@@ -50,14 +51,16 @@ export class ScheduleClassComponent {
   selectedLabPosition: number = 0;
   dataSourceArray: DataSourceModel[] = [];
   coursePaginationModel!: Partial<CoursePaginationModel>;
+  pageSizeArr = [10, 20, 50, 100];
 
-  displayedColumns = ['img', 'courseName', 'startDate', 'endDate', 'Options'];
+
+  displayedColumns = [ 'courseName', 'startDate', 'endDate', 'Options'];
 
   breadscrums = [
     {
-      title: 'Class List',
-      items: ['Schedule Class'],
-      active: 'Class List',
+      title: 'Schedule Class',
+      items: ['Program'],
+      active: 'Schedule Class',
     },
   ];
   dataSource: any;
@@ -66,39 +69,14 @@ export class ScheduleClassComponent {
     public courseService: ProgramService,
     private classService: ClassService,
     private cd: ChangeDetectorRef,
-    public router: Router
+    public router: Router,
+    private instructorService:InstructorService
   ) {
     this.coursePaginationModel = {};
   }
 
   ngOnInit(): void {
     this.getClassList();
-    this.courseNameControl = this.classForm.get('courseId') as FormControl;
-    this.classTypeControl = this.classForm.get(
-      'classAccessType'
-    ) as FormControl;
-    this.classDeliveryControl = this.classForm.get(
-      'classDeliveryType'
-    ) as FormControl;
-    this.guaranteeControl = this.classForm.get(
-      'isGuaranteedToRun'
-    ) as FormControl;
-    this.roomTypeControl = this.classForm.get('externalRoom') as FormControl;
-
-    forkJoin({
-      courses: this.courseService.getCourseProgram({
-        ...this.coursePaginationModel,
-        status: 'active',
-      }),
-      instructors: this.classService.getAllInstructor(),
-      labs: this.classService.getAllLaboratory(),
-    }).subscribe((response) => {
-      this.programList = response.courses.docs;
-      this.instructorList = response.instructors;
-      this.labList = response.labs;
-      this.cd.detectChanges();
-    });
-    this.dataSource = this.dataSourceArray;
   }
 
   pageSizeChange($event: any) {
@@ -140,11 +118,6 @@ export class ScheduleClassComponent {
   }
   back() {
     this.next = false;
-  }
-
-  deleteRecord(index: number) {
-    this.dataSourceArray.splice(index, 1);
-    this.dataSource = this.dataSourceArray;
   }
 
   addNewRow() {
@@ -268,52 +241,5 @@ export class ScheduleClassComponent {
       }
     });
     return sessions;
-  }
-  submit() {
-    // if(!this.viewUrl&&!this.editUrl){
-    const sessions = this.getSession();
-
-    // }
-    if (this.classId) {
-      this.sessions = this.getSession();
-      if (this.sessions) {
-        this.classForm.value.sessions = sessions;
-        this.courseService
-          .updateProgramClass(this.classId, this.classForm.value)
-          .subscribe((response) => {
-            if (response) {
-              Swal.fire({
-                title: 'Success',
-                text: 'Program Class updated successfully.',
-                icon: 'success',
-                confirmButtonColor: '#526D82',
-              });
-              this.router.navigateByUrl(`/admin/program/schedule-class`);
-            }
-
-            // this.router.navigateByUrl(`Schedule Class/List`);
-          });
-      }
-    } else {
-      if (sessions) {
-        this.classForm.value.sessions = sessions;
-        // this.inProgress = false;
-        // this.isSubmitted = true;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        this.courseService
-          .saveProgramClass(this.classForm.value)
-          .subscribe((response) => {
-            if (response) {
-              Swal.fire({
-                title: 'Success',
-                text: 'Program Class Created successfully.',
-                icon: 'success',
-                confirmButtonColor: '#526D82',
-              });
-            }
-            this.router.navigateByUrl(`/admin/program/schedule-class`);
-          });
-      }
-    }
   }
 }
