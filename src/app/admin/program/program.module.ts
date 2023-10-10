@@ -15,6 +15,7 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -26,11 +27,12 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
         ProgramKitComponent,
         StudentApprovalListComponent,
         ProgaramCompletionListComponent,
-        ProgramApprovalListComponent
-    ],
+        ProgramApprovalListComponent,
+         ],
     imports: [
         CommonModule,
         SharedModule,
+        ModalModule.forRoot(),
         ProgramRoutingModule,
         ComponentsModule,OwlDateTimeModule,OwlNativeDateTimeModule,
         CKEditorModule,

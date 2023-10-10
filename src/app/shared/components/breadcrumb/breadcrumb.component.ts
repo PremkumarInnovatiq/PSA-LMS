@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent {
-  @Input()
-  title!: string;
+  // @Input()
+  // title!: string;
   @Input()
   items!: string[];
   @Input()
