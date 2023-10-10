@@ -233,7 +233,7 @@ export class CourseService {
     return this._Http.get<any>(apiUrl);
   }
   getProgramById(id: any) {
-    const apiUrl = `${this.prefix}admin/courseprogram/${id}`;
+    const apiUrl = `${this.prefix}admin/course-kit/ListProgramCourseKit/${id}`;
     return this._Http.get<any>(apiUrl).pipe(map((response) => response));
   }
 
@@ -265,6 +265,29 @@ export class CourseService {
           return response.data;
         })
       );
+  }
+  uploadProgramVideo(files: File[]): Observable<any> {
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('Files', file, file.name);
+    }
+    const apiUrl = `${this.prefix}admin/video/uploadProgram`;
+    return this._Http.post(apiUrl, formData);
+  }
+  createProgramCourseKit(courseKit: CourseKit): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/CreateProgramCourseKit`;
+    return this._Http.post<ApiResponse>(apiUrl, courseKit);
+  }
+  deleteProgramCourseKit(courseKitId: string): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/deletedProgramCourseKit/${courseKitId}`;
+    return this._Http.delete<ApiResponse>(apiUrl);
+  }
+  editProgramCourseKit(
+    courseKitId: string,
+    courseKit: CourseKit
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/updateProgramCourseKit/${courseKitId}`;
+    return this._Http.put<ApiResponse>(apiUrl, courseKit);
   }
 
 }

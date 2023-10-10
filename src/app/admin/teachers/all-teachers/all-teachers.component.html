@@ -24,7 +24,7 @@
                         </li>
                         <li class="tbl-search-box">
                           <label for="search-input"><i class="material-icons search-icon">search</i></label>
-                          <input placeholder="Search" ontype="text" #filter class="browser-default search-field" [(ngModel)]="searchTerm" (input)="performSearch()"
+                          <input placeholder="Search" type="text" #filter class="browser-default search-field"
                             aria-label="Search box">
                         </li>
                       </ul>
@@ -94,7 +94,7 @@
                           <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image
                           </mat-header-cell>
                           <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"><span
-                              class="mobile-label">Image:</span> <img [src]="row.avatar" />
+                              class="mobile-label">Image:</span> <img [src]="row.avatar || 'assets/noimage.jpg'"/>
                           </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="name">
@@ -160,40 +160,40 @@
                         <ng-container matColumnDef="actions">
                           <mat-header-cell class="pr-0" *matHeaderCellDef>Actions
                           </mat-header-cell>
+                          <mat-cell *matCellDef="let row"  let i=index; class="pr-0">
+                            <button mat-button [matMenuTriggerFor]="menu" >
+                              <svg class="dropdown-toggle border rounded-circle" data-bs-toggle="dropdown" aria-expanded="false"
+                              xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                              class="bi bi-three-dots border rounded-circle bg" viewBox="0 0 16 16">
+                              <path
+                                d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                            </svg>
+
+                            </button>
+
+
+
+                                    <mat-menu #menu="matMenu" xPosition="before">
+                                      <!-- <button mat-menu-item [routerLink]="['/admin/courses/view-course-kit/',row.id]">
+                                        <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                                        <span class="menu-text">View</span>
+                                      </button> -->
+                                      <button mat-menu-item [routerLink]="['/admin/teachers/edit-teacher',row.id]" >
+                                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                                        <span class="menu-text px-3">Edit</span>
+                                      </button>
+                                      <button mat-menu-item  (click)="deleteItem(row)" class="align-items-center">
+                                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                                        <span class="menu-text px-3">Delete</span>
+                                      </button>
+                                    </mat-menu>
+                          </mat-cell>
                           
 
                             
                           
-                           <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
-                            <!-- <div class="input-group">
-                              <svg class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
-                                xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                class="bi bi-three-dots rounded-circle" viewBox="0 0 16 16">
-                                <path
-                                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                              </svg>
-          
-                              <ul class="dropdown-menu dropdown-menu-end">
-                                <li [routerLink]="['/course/view',row.id]">  
-                                  <img src="/assets/eye.svg" alt="view">
-                                  <a type="button"  class="menu_text">View</a>
-                                </li>
-                                <li [routerLink]="['/course/edit',row.id]">
-                                  <img src="/assets/pencil.svg" alt="pencil">
-                                  <a type="button" class="menu_text">Edit</a> -->
-                                  <!-- <a class="dropdown-item" [routerLink]="['/course/edit',item.id]"> <i class='bx bx-edit-alt'></i> Edit</a> -->
-                                <!-- </li>
-                                <li  [routerLink]="['/Course/List']" (click)="deleteItem(row.id)">
-                                  <img src="/assets/delete.svg" alt="delete">
-                                  <a type="button"
-                                    class="menu_text">Delete</a>
-                                </li>
-                                <li class="disabled">
-                                  <img src="/assets/people.svg" alt="person">
-                                  <a href="#" class="menu_text">Attendance</a>
-                                </li>
-                              </ul>
-                            </div> -->
+                           <!-- <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                            
                             <button mat-icon-button (click)="$event.stopPropagation()"  [routerLink]="['/admin/teachers/edit-teacher',row.id]"
                               class="tbl-action-btn">
                               <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
@@ -202,17 +202,17 @@
                               class="tbl-action-btn">
                               <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                             </button>
-                          </mat-cell> 
+                          </mat-cell>  -->
                         </ng-container>
                         <mat-header-row *matHeaderRowDef="displayedColumns">
                         </mat-header-row>
                         <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
-                        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
-                          [style.cursor]="'pointer'" matRipple>
-                        </mat-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                        [style.cursor]="'pointer'" matRipple>
+                      </mat-row>
                       </table>
                       <!-- Loading spinner -->
-                      <div *ngIf="isTblLoading" class="tbl-spinner">
+                      <div *ngIf="exampleDatabase?.isTblLoading" class="tbl-spinner">
                         <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
                         </mat-progress-spinner>
                       </div>
@@ -263,12 +263,12 @@
                         </button>
                       </mat-menu>
                       <!-- context menu end -->
-                      <div *ngIf="!isTblLoading" class="no-results"
-                        [style.display]="dataSource.length === 0 ? '' : 'none'">
+                      <div *ngIf="!exampleDatabase?.isTblLoading" class="no-results"
+                        [style.display]="dataSource.filteredData.length === 0 ? '' : 'none'">
                         No results
                       </div>
-                      <mat-paginator #paginator [length]="totalItems" [pageIndex]="0"
-                        [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageSizeChange($event)">
+                      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0"
+                        [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
                       </mat-paginator>
                     </div>
                   </div>
@@ -282,7 +282,7 @@
               Grid View
             </ng-template>
             <div class="row mt-5 ml-0 mr-0">
-              <div class="col-md-4"  *ngFor="let row of dataSource">
+              <div class="col-md-4"  *ngFor="let row of dataSource.filteredData">
                 <div class="card border-apply">
                   <div class="m-b-20">
                     <div class="contact-grid">
@@ -317,7 +317,7 @@
                       </div>
                      
                       <div class="profile-userbuttons">
-                        <button mat-flat-button color="primary">Read More</button>
+                        <button mat-flat-button color="primary" (click)="aboutInstructor(row.id)">Read More</button>
                       </div>
                     </div>
                   </div>

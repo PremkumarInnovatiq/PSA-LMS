@@ -38,10 +38,15 @@ const routes: Routes = [
       import('./users/users.module').then((m) => m.UsersModule),
   },
   {
+    path: 'survey',
+    loadChildren: () =>
+      import('./survey/survey.module').then((m) => m.SurveyModule),
+  },
+  {
     path: 'certificate',
     loadChildren: () =>
     import('./certificate-builder/certificate.module').then((m) => m.CertificateModule)
-      
+
   },
   {
     path: 'library',

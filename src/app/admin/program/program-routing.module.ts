@@ -9,6 +9,8 @@ import { ProgaramCompletionListComponent } from './progaram-completion-list/prog
 import { ProgramKitComponent } from './program-kit/program-kit.component';
 import { ProgramApprovalListComponent } from './program-approval-list/program-approval-list.component';
 import { CreateClassComponent } from './create-class/create-class.component';
+import { CreateProgramKitComponent } from './program-kit/create-program-kit/create-program-kit.component';
+import { EditProgramKitComponent } from './program-kit/edit-program-kit/edit-program-kit.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,18 @@ const routes: Routes = [
   {
     path:'program-kit', 
     component:ProgramKitComponent
+  },
+  {
+    path:'create-program-kit', 
+    component:CreateProgramKitComponent
+  },
+  {
+    path:'edit-program-kit/:id', 
+    component:EditProgramKitComponent
+  },
+  {
+    path:'view-program-kit/:id', 
+    component:EditProgramKitComponent
   },
   {
     path:'program-approve-list', 

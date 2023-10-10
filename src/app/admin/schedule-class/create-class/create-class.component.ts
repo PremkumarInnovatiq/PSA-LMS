@@ -154,7 +154,7 @@ export class CreateClassComponent {
 
     forkJoin({
       courses: this._classService.getAllCoursesTitle('active'),
-      // instructors: this.instructorService.getInstructor(payload),
+      // instructors: this.instructorService.getInstructor(),
       labs: this._classService.getAllLaboratory(),
     }).subscribe((response) => {
       this.courseList = response.courses;
@@ -208,7 +208,7 @@ export class CreateClassComponent {
         this.dataSourceArray.push({
           start: `${moment(item.sessionStartDate).format('YYYY-MM-DD')}`,
           end: `${moment(item.sessionEndDate).format('YYYY-MM-DD')}`,
-          instructor: item.instructorId?.user_id?.id,
+          instructor: item.instructorId?.id,
           lab: item.laboratoryId?.id,
         });
       });
@@ -289,6 +289,7 @@ export class CreateClassComponent {
   getSession() {
     let sessions: any = [];
     this.dataSource.forEach((item: any, index: any) => {
+      console.log("items", item)
       if (
         this.isInstructorFailed == 0 &&
         item.instructor != '0' &&
@@ -314,30 +315,30 @@ export class CreateClassComponent {
     });
     return sessions;
   }
- 
+
 
   onSelectChange(event: any) {
-    // console.log("==element=======",event.target.value)
-    console.log('==element=======', this.instructorList);
     //this.instructorList.filter(item)
     const filteredData = this.instructorList.filter(
       (item: { instructor_id: string }) =>
         item.instructor_id === this.InstructorForm.controls['instructor'].value
     );
-    console.log('========', filteredData);
     this.user_id = filteredData[0].user_id.user_id;
-  }
+
+    }
+
 
   onSelectChange1(event :any,element:any) {
-    
-   console.log("==element=======",element)
-    console.log("==element=======",this.instructorList)
+    console.log("ele",element)
     //this.instructorList.filter(item)
-    const filteredData = this.instructorList.filter((item: { instructor_id: string; }) => item.instructor_id===element.instructor);
-   console.log("=====filterData===",filteredData)
-   this.user_id=filteredData[0].user_id.user_id
+    console.log("ibstList",this.instructorList)
+    const filteredData = this.instructorList.filter((item: { id: string; }) => item.id === element.instructor);
+    console.log(filteredData,"filter")
+     this.user_id = filteredData[0].id;
 
   }
+
+
 
   data() {
     console.log(this.classForm.value);
