@@ -43,6 +43,11 @@ const routes: Routes = [
       import('./survey/survey.module').then((m) => m.SurveyModule),
   },
   {
+    path: 'banners',
+    loadChildren: () =>
+      import('./banners/banner.module').then((m) => m.BannerModule),
+  },
+  {
     path: 'certificate',
     loadChildren: () =>
     import('./certificate-builder/certificate.module').then((m) => m.CertificateModule)

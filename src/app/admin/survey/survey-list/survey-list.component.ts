@@ -105,7 +105,7 @@ export class SurveyListComponent extends UnsubscribeOnDestroyAdapter
 
     console.log("rowEdit",row)
 
-    this.router.navigate(['/admin/survey/create-survey'])
+    this.router.navigate(['/admin/survey/create-survey'], {queryParams: {id : row}})
     // this.id = row.id;
     // let tempDirection: Direction;
     // if (localStorage.getItem('isRtl') === 'true') {

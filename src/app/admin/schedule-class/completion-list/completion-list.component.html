@@ -39,12 +39,12 @@
                 </li>
                 <li>
                   <div class="export-button m-l-10" matTooltip="XLSX">
-                    <img src="assets/images/icons/xlsx.png" alt=""  (click)=" exportExcel()">
+                    <img src="assets/excel.svg" alt="" (click)=" exportExcel()">
                   </div>
                 </li>
                 <li>
                   <div class="export-button m-l-10" matTooltip="PDF">
-                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
+                    <img src="assets/pdf (1).svg" alt="" (click)="generatePdf()" />
                   </div>
                 </li>
               </ul>
@@ -77,7 +77,7 @@
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Student Name
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row" >
-                    <span class="mobile-label">Student Name:</span> {{row.studentId?.name}}</mat-cell>
+                    <span class="mobile-label">Student Name:</span> {{row.studentId?.name }}</mat-cell>
                 </ng-container>
                 <!-- Start date -->
                 <ng-container matColumnDef="Start Date">

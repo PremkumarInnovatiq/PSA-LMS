@@ -88,7 +88,7 @@ export class CompletionListComponent {
         this.totalItems=response.totalDocs;
         this.dataSource = response.docs;
         this.dataSource.sort = this.matSort;
-        // this.mapClassList();
+        this.mapClassList();
         })
     }
 

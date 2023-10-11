@@ -9,15 +9,16 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card">
           <div class="header">
-            <h2>Create Survey</h2>
+            <h2>{{surveyBuilderId?'Create Survey':'Edit Survey'}}</h2>
           </div>
           <div class="body">
             <div class="container mx-auto ">
+              <form [formGroup]="surveyForm">
               <div class="row justify-content-between mt-4">
                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                   <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Name</mat-label>
-                    <input matInput formControlName="first" required>
+                    <input matInput formControlName="title" >
                     <mat-icon matSuffix>face</mat-icon>
                     <!-- <mat-error *ngIf="register?.get('first')?.hasError('required')">
                       First name is required
@@ -25,15 +26,69 @@
                   </mat-form-field>
                 </div>
 
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2 ">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2 " (click)="preinitRating()">
                   <button mat-raised-button >Add Ratings
                       <i class="material-icons m-2">star_rate</i>
                   </button>
-                  <button mat-raised-button color="warn" class="m-2">Add Questions
+                  <button mat-raised-button color="warn" class="m-2" (click)="addQuestion()">Add Questions
                     <i class="material-icons m-2" >question_answer</i>
                   </button>
                    </div>
               </div>
+              <div class="row" formArrayName="questions">
+                <div class="row mt-5  align-items-center" *ngFor="let question of questions.controls; let index= index" [formGroupName]="index">
+                  <div class="col-lg-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Question {{index + 1}}</mat-label>
+                      <input matInput formControlName="question" >
+                      <mat-error *ngIf="surveyForm?.get('question')?.hasError('required')">
+                      Question is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-3">
+                              <mat-form-field class="example-full-width " appearance="outline">
+                                <mat-label>Type</mat-label>
+                                <mat-select formControlName="type"  >
+                                  <mat-option value="single">
+                                    Single Choice
+                                  </mat-option>
+                                  <mat-option value="multi">
+                                    Multiple Choice
+                                  </mat-option>
+                                  <mat-option value="text">
+                                    Text Input
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="surveyForm?.get('type')?.hasError('required')">
+                                  Question is required
+                                  </mat-error>
+                              </mat-form-field>
+                  </div>
+                  <div class="col-lg-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Choices (comma-separated)</mat-label>
+                      <input matInput  formControlName="choices" >
+                      <!-- <mat-error *ngIf="register?.get('first')?.hasError('required')">
+                        First name is required
+                      </mat-error> -->
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-3">
+                    <button mat-icon-button color="accent" class="tbl-action-btn" (click)="deleteQuestion(index)">
+                      <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'">
+                      </app-feather-icons>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2 " [routerLink]="['/admin/survey/survey-list']" >
+                <button mat-raised-button >Cancel
+                </button>
+                <button mat-raised-button color="warn" class="m-2" (click)="createSurvey()">Save
+                </button>
+                 </div>
+            </form>
             </div>
           </div>
         </div>
