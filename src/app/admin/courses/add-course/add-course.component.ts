@@ -13,6 +13,7 @@ import { forkJoin } from 'rxjs';
 import { CertificateService } from '@core/service/certificate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { InstructorService } from '@core/service/instructor.service';
 @Component({
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
@@ -59,6 +60,7 @@ export class AddCourseComponent implements OnInit {
   subscribeParams: any;
   mode: string = 'editUrl';
   public Editor: any = ClassicEditor;
+  instructorList: any = [];
 
   breadscrums = [
     {
@@ -73,6 +75,7 @@ export class AddCourseComponent implements OnInit {
     private certificateService:CertificateService,
     private cd: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
+    private instructorService: InstructorService
     ) {
       let urlPath = this.router.url.split('/')
     this.editUrl = urlPath.includes('edit-course');
@@ -159,6 +162,18 @@ export class AddCourseComponent implements OnInit {
       this.mode = 'viewUrl';
   
     }
+    let payload = {
+      type: 'Instructor',
+    };
+
+    this.instructorService.getInstructor(payload).subscribe((res) => {
+      this.instructorList = res;
+      console.log(
+        'instructor',
+        this.instructorList
+      );
+    });
+
 }
  
 isInputReadonly(): boolean {
