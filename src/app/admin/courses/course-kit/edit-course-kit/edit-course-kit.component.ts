@@ -127,7 +127,7 @@ export class EditCourseKitComponent {
               icon: "success",
             });
             //this.modalRef.close();
-            this.router.navigateByUrl("Course/Course Kit")
+            this.router.navigateByUrl("/admin/courses/course-kit")
           },
           (error: { message: any; error: any; }) => {
             Swal.fire(

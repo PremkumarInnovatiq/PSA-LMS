@@ -1,0 +1,19 @@
+#convert{
+    margin-top: 35px;
+    margin-right: 20px;
+    background: #526D82;
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    color: #FFF;
+    font: 'Nunito';
+}
+label{
+    font-size: 20px;
+    font-weight: 500;
+}
+::ng-deep .example-full-width .mdc-text-field--outlined{
+    --mdc-outlined-text-field-container-shape : 12px;
+    font-style: italic;
+}
