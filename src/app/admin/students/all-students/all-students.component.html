@@ -55,12 +55,12 @@
                         </li>
                         <li>
                           <div class="export-button m-l-10" matTooltip="XLSX">
-                            <img src="assets/images/icons/xlsx.png" alt=""  (click)="exportExcel()"/>
+                            <img src="assets/excel.svg" alt="" (click)=" exportExcel()">
                           </div>
                         </li>
                         <li>
                           <div class="export-button m-l-10" matTooltip="PDF">
-                            <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
+                            <img src="assets/pdf (1).svg" alt="" (click)="generatePdf()" />
                           </div>
                         </li>
                       </ul>
@@ -101,21 +101,21 @@
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Roll No
                           </mat-header-cell>
                           <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> <span
-                              class="mobile-label">Roll No:</span>{{row.rollNo}}
+                              class="mobile-label">Roll No:</span>{{row?.rollNo}}
                           </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="name">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Name
                           </mat-header-cell>
                           <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> <span
-                              class="mobile-label">Name:</span>{{row.name}}
+                              class="mobile-label">Name:</span>{{row.name + " " + row?.last_name}}
                           </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="department">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Department
                           </mat-header-cell>
                           <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                            <span class="mobile-label">Department:</span> {{row.department}}</mat-cell>
+                            <span class="mobile-label">Department:</span> {{row?.department}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="gender">
                           <mat-header-cell *matHeaderCellDef mat-sort-header> Gender
@@ -140,14 +140,14 @@
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile
                           </mat-header-cell>
                           <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> <span
-                              class="mobile-label">Mobile:</span>{{row.mobile}}
+                              class="mobile-label">Mobile:</span>{{row?.mobile}}
                           </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="email">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Email
                           </mat-header-cell>
                           <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"><span
-                              class="mobile-label">Email:</span> {{row.email}}
+                              class="mobile-label">Email:</span> {{row?.email}}
                           </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="date">
@@ -155,7 +155,7 @@
                             Date
                           </mat-header-cell>
                           <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                            <span class="mobile-label">Admission Date:</span>{{row.joiningDate| date: 'MM/dd/yyyy'}}
+                            <span class="mobile-label">Admission Date:</span>{{row?.joiningDate| date: 'MM/dd/yyyy'}}
                           </mat-cell>
                         </ng-container>
                         <!-- actions -->

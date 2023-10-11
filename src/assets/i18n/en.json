@@ -85,6 +85,13 @@
         "LIKERT-CHART": "Likert Chart"
       }
     },
+    "BANNER": {
+      "TEXT": "Banners",
+      "LIST": {
+        "INSTRUCTOR": "Instructors Banner",
+        "STUDENT": "Student Banner"
+      }
+    },
 
     "LIBRARY": {
       "TEXT": "Library",

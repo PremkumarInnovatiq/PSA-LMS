@@ -59,12 +59,12 @@
                 </li>
                 <li (click)="exportExcel()">
                   <div class="export-button m-l-10" matTooltip="XLSX"  >
-                    <img src="assets/images/icons/xlsx.png" alt="" />
+                    <img src="assets/excel.svg" alt="" />
                   </div>
                 </li>
                 <li>
                   <div class="export-button m-l-10" matTooltip="PDF">
-                    <img src="assets/images/icons/pdf-icon.png" alt="" (click)="generatePdf()" />
+                    <img src="assets/pdf (1).svg" alt="" (click)="generatePdf()" />
                   </div>
                 </li>
               </ul>
@@ -94,13 +94,13 @@
                   >
                   <mat-cell *matCellDef="let row"></mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="img">
+                <!-- <ng-container matColumnDef="img">
                   <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image
                   </mat-header-cell>
                   <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"><span
                       class="mobile-label">Image:</span> <img [src]="row.classId?.courseId?.image_link || 'assets/noimage.jpg'" />
                   </mat-cell>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="coursename">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Course Name</mat-header-cell
@@ -125,7 +125,7 @@
                     >Class Start Date
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row">
-                    <span class="mobile-label">Class Start Date:</span>{{row?.classStartDate |date}}
+                    <span class="mobile-label">Class Start Date:</span>{{row?.classStartDate | date}}
                   </mat-cell>
                 </ng-container>
                 <!--Class Enddate -->

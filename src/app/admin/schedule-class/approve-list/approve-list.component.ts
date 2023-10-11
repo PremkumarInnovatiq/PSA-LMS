@@ -38,7 +38,6 @@ import { BehaviorSubject, Observable, fromEvent, map, merge } from 'rxjs';
 export class ApproveListComponent  {
   displayedColumns = [
     'select',
-    'img',
     'coursename',
     'studentname',
     'classstartDate',

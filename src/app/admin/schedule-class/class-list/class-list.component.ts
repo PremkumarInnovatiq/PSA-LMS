@@ -69,19 +69,11 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
             this.isLoading = false;
             this.dataSource = response.data.docs;
             this.totalItems = response.data.totalDocs;
-            this.coursePaginationModel.docs = this.dataSource;
+            this.coursePaginationModel.docs = response.data.docs;
             this.coursePaginationModel.page = response.data.page;
             this.coursePaginationModel.limit = response.data.limit;
             this.mapClassList();
           }
-          // this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
-          //   () => {
-          //     if (!this.dataSource) {
-          //       return;
-          //     }
-          //     this.dataSource.filter = this.filter.nativeElement.value;
-          //   }
-          // );
         },
         (error) => {
           console.log('error', error);

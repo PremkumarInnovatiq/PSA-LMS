@@ -602,7 +602,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '',
-    title: 'Banners',
+    title: 'MENUITEMS.BANNER.TEXT',
     iconType: 'material-icons-two-tone',
     icon: 'art_track',
     class: 'menu-toggle',
@@ -612,8 +612,8 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
-        title: 'Instructor Banner',
+        path: '/admin/banners/instructor-banner-list',
+        title: 'MENUITEMS.BANNER.LIST.INSTRUCTOR',
         iconType: '',
         icon: '',
         class: 'ml-menu',
@@ -624,8 +624,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
-        title: 'Student Banner',
+        path: '/admin/banners/student-banner-list',
+        title: 'MENUITEMS.BANNER.LIST.STUDENT',
         iconType: '',
         icon: '',
         class: 'ml-menu',
