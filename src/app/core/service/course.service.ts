@@ -72,10 +72,21 @@ export class CourseService {
       .get<ApiResponse>(apiUrl, { params: this.buildParams(filter)})
       .pipe(
         map((response) => {
-          return response.data;
+          return response.data
         })
       );
   }
+  getPrograms(filter?: Partial<Program>): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/courseprogram`;
+    return this._Http
+      .get<ApiResponse>(apiUrl, { params: this.buildParams(filter)})
+      .pipe(
+        map((response) => {
+          return response.data.docs
+        })
+      );
+  }
+
   getCount(
     filter?: Partial<CoursePaginationModel>
   ): Observable<ApiResponse> {
@@ -221,6 +232,10 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/studentClasses?classId=${classId}&studentId=${studentId}`;
     return this._Http.get<any>(apiUrl);
   }
+  getProgramKitsById(id: any) {
+    const apiUrl = `${this.prefix}admin/course-kit/ListProgramCourseKit/${id}`;
+    return this._Http.get<any>(apiUrl).pipe(map((response) => response));
+  }
   getProgramById(id: any) {
     const apiUrl = `${this.prefix}admin/courseprogram/${id}`;
     return this._Http.get<any>(apiUrl).pipe(map((response) => response));
@@ -270,6 +285,13 @@ export class CourseService {
   deleteProgramCourseKit(courseKitId: string): Observable<ApiResponse> {
     const apiUrl = `${this.prefix}admin/course-kit/deletedProgramCourseKit/${courseKitId}`;
     return this._Http.delete<ApiResponse>(apiUrl);
+  }
+  editProgramCourseKit(
+    courseKitId: string,
+    courseKit: CourseKit
+  ): Observable<ApiResponse> {
+    const apiUrl = `${this.prefix}admin/course-kit/updateProgramCourseKit/${courseKitId}`;
+    return this._Http.put<ApiResponse>(apiUrl, courseKit);
   }
 
 }

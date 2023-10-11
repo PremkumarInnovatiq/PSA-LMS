@@ -85,7 +85,7 @@ export class CreateProgramComponent {
     this.programFormGroup = this.fb.group({
       deliveryMode:["",[]],
       electiveCourseCount:["",[]],
-      course:["",[Validators.required,...this.utils.validators.title,...this.utils.validators.noLeadingSpace]],
+      course:["",[Validators.required]],
       coreProgramName:["",[]],
       coreProgramCode:["",[]],
       coreProgramDescription:["",[]],
@@ -101,10 +101,11 @@ export class CreateProgramComponent {
       prerequisites:["",[]],
       sessionEndDate:["",[]],
       sessionEndTime:["",[]],
-      programCode:["",[Validators.required,...this.utils.validators.title,...this.utils.validators.noLeadingSpace]],
+      programCode:["",[Validators.required]],
       coreCourseCount:["",[]],
       image_link: ["", []],
-      programKit:["",[]]
+      programKit:["",[]],
+      currency:["",[]]
     });
     this.getProgramList();
     
@@ -178,6 +179,7 @@ save(){
           sessionEndTime:this.programFormGroup.value.sessionEndTime,
           duration:this.programFormGroup.value.duration,
           courseFee:this.programFormGroup.value.courseFee,
+          currency:this.programFormGroup.value.currency,
           learningOutcomes:this.programFormGroup.value.learningOutcomes,
           attendees:this.programFormGroup.value.attendees,
           prerequisites:this.programFormGroup.value.prerequisites,
@@ -194,7 +196,7 @@ save(){
             text: 'Program updated succesfully',
             icon: 'success',
           });
-          this.router.navigate(['/Programs/List'])
+          this.router.navigate(['/admin/program/program-list'])
         },
         (err: any) => {
           Swal.fire(
@@ -217,6 +219,7 @@ save(){
         sessionEndTime:this.programFormGroup.value.sessionEndTime,
         duration:this.programFormGroup.value.duration,
         courseFee:this.programFormGroup.value.courseFee,
+        currency:this.programFormGroup.value.currency,
         learningOutcomes:this.programFormGroup.value.learningOutcomes,
         attendees:this.programFormGroup.value.attendees,
         prerequisites:this.programFormGroup.value.prerequisites,
@@ -233,7 +236,7 @@ save(){
           text: 'Program created succesfully',
           icon: 'success',
         });
-        this.router.navigate(['/Programs/Program Approve List'])
+        this.router.navigate(['/admin/program/program-approve-list'])
       },
       (err: any) => {
         Swal.fire(
@@ -245,6 +248,7 @@ save(){
       }
   }
   else{
+    console.log('hi')
     this.isSubmitted=true;
   }
 }
@@ -284,6 +288,7 @@ getData() {
         sessionEndTime: this.course?.sessionEndTime,
         duration:this.course?.duration,
         courseFee: this.course?.courseFee,
+        currency: this.course?.currency,
         learningOutcomes: this.course?.learningOutcomes,
         attendees: this.course?.attendees,
         prerequisites:this.course?.prerequisites,

@@ -8,6 +8,9 @@ import { StudentApprovalListComponent } from './student-approval-list/student-ap
 import { ProgaramCompletionListComponent } from './progaram-completion-list/progaram-completion-list.component';
 import { ProgramKitComponent } from './program-kit/program-kit.component';
 import { ProgramApprovalListComponent } from './program-approval-list/program-approval-list.component';
+import { CreateClassComponent } from './create-class/create-class.component';
+import { CreateProgramKitComponent } from './program-kit/create-program-kit/create-program-kit.component';
+import { EditProgramKitComponent } from './program-kit/edit-program-kit/edit-program-kit.component';
 
 const routes: Routes = [
   {
@@ -19,7 +22,7 @@ const routes: Routes = [
     component:ScheduleClassComponent
   },
   {
-    path:'create-course', 
+    path:'create-program', 
     component:CreateProgramComponent
   },
   {
@@ -31,6 +34,15 @@ const routes: Routes = [
     component:CreateProgramComponent
   },
   {
+    path:'create-class', 
+    component:CreateClassComponent
+  },
+  {
+    path:'edit-class/:id', 
+    component:CreateClassComponent
+  },
+
+  {
     path:'student-approve-list', 
     component:StudentApprovalListComponent
   },
@@ -41,6 +53,18 @@ const routes: Routes = [
   {
     path:'program-kit', 
     component:ProgramKitComponent
+  },
+  {
+    path:'create-program-kit', 
+    component:CreateProgramKitComponent
+  },
+  {
+    path:'edit-program-kit/:id', 
+    component:EditProgramKitComponent
+  },
+  {
+    path:'view-program-kit/:id', 
+    component:EditProgramKitComponent
   },
   {
     path:'program-approve-list', 

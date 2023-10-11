@@ -1,0 +1,397 @@
+<section class="content">
+    <div class="content-block">
+      <div class="block-header" *ngFor="let breadscrum of breadscrums">
+        <!-- breadcrumb -->
+        <app-breadcrumb
+          [title]="breadscrum.title"
+          [items]="breadscrum.items"
+          [active_item]="breadscrum.active"
+        >
+        </app-breadcrumb>
+      </div>
+      <div class="row clearfix">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="header">
+              <!-- <h2>Create Course</h2> -->
+            </div>
+  
+  
+            <div class="main" *ngIf="!next">
+              <section class="step-wizard">
+                <ul class="step-wizard-list " >
+                    <li class="step-wizard-item" [ngClass]="{'current-item':classForm.invalid}" >
+                        <span class="progress-count">1</span>
+                        <span class="progress-label">Program </span>
+                    </li>
+                    <li class="step-wizard-item " [ngClass]="{'current-item':classForm.valid}">
+                        <span class="progress-count">2</span>
+                        <span class="progress-label">Instructor & Lab</span>
+                    </li>
+  
+                </ul>
+            </section>
+                <form [formGroup]="classForm">
+                  <h2 class="text-center" >{{classId? "Edit Class" :"Create Class" }}</h2>
+                  <div class="body">
+                    <!-- <form class="m-4" [formGroup]="firstFormGroup" (ngSubmit)="onSubmit()"> -->
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Program Name</mat-label>
+                          <mat-select required formControlName="courseId" >
+                            <mat-option> Choose Program Name... </mat-option>
+                            <mat-option
+                              *ngFor="let programName of programList"
+                              [value]="programName.id"
+                            >
+                              {{ programName.title }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              classForm.get('courseId')?.hasError('required') ||
+                              classForm.get('courseId')?.touched
+                            "
+                          >
+                           Program Name is required.
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Class Type</mat-label>
+                          <mat-select formControlName="classType">
+                            <mat-option [value]="'2'"> Private </mat-option>
+                            <mat-option [value]="'1'"> Public </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Class delivery</mat-label>
+                          <mat-select formControlName="classDeliveryType">
+                            <mat-option [value]="'online'"> Online </mat-option>
+                            <mat-option [value]="'offline'"> Offline </mat-option>
+                            <mat-option [value]="'hybrid'"> Hybrid </mat-option>
+                          </mat-select>
+                          <mat-error
+                          *ngIf="
+                            classForm.get('classDeliveryType')?.hasError('required') ||
+                            classForm.get('classDeliveryType')?.touched
+                          "
+                        >
+                        Class delivery type is requried.
+                        </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Instructor Cost</mat-label>
+                          <input
+                            matInput
+                            formControlName="instructorCost"
+                            (keypress)="keyPressNumbers($event)"
+                            required
+                          />
+                          <mat-error
+                          *ngIf="
+                            classForm.get('instructorCost')?.hasError('required') ||
+                            classForm.get('instructorCost')?.touched
+                          "
+                        >
+                        Instructor Cost is requried.
+                        </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Select Currency Type</mat-label>
+                          <mat-select formControlName="currency">
+                            <mat-option value="USD">USD</mat-option>
+                            <mat-option value="SGD">SGD</mat-option>
+                            <mat-option value="NZD">NZD</mat-option>
+                            <mat-option value="YEN">YEN</mat-option>
+                            <mat-option value="GBP">GBP</mat-option>
+                            <mat-option value="KWN">KWN</mat-option>
+                            <mat-option value="IDR">IDR</mat-option>
+                            <mat-option value="TWD">TWD</mat-option>
+                            <mat-option value="MYR">MYR</mat-option>
+                            <mat-option value="AUD">AUD</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Minimum Enrollment</mat-label>
+                          <input matInput formControlName="minimumEnrollment" />
+                          <mat-error
+                          *ngIf="
+                            classForm.get('minimumEnrollment')?.hasError('required') ||
+                            classForm.get('minimumEnrollment')?.touched
+                          "
+                        >
+                        Minimum Enrollment is requried.
+                        </mat-error>
+  
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Maximum Enrollment</mat-label>
+                          <input matInput formControlName="maximumEnrollment" />
+                          <mat-error
+                          *ngIf="
+                            classForm.get('maximumEnrollment')?.hasError('required') ||
+                            classForm.get('maximumEnrollment')?.touched
+                          "
+                        >
+                        Maximum Enrollment is requried.
+                        </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                        <label for="" class="form-label">Status</label>
+                        <div class="selections">
+                          <div class="toggle" (click)="toggleStatus()">
+                            <div
+                              class="switch-1"
+                              [ngStyle]="{
+                                background: status ? '#D64E49' : 'white'
+                              }"
+                            ></div>
+                            <div
+                              class="switch-2"
+                              [ngStyle]="{
+                                background: !status ? '#379600' : 'white'
+                              }"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                        <section class="example-section">
+                          <mat-checkbox
+                            class="example-margin"
+                            formControlName="isGuaranteedToRun"
+                            ><span class="fs-6"
+                              >Is Guaranteed To Run</span
+                            ></mat-checkbox
+                          >
+                        </section>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                        <section class="example-section">
+                          <mat-checkbox
+                            class="example-margin"
+                            formControlName="externalRoom"
+                            ><span class="fs-6">External Room</span></mat-checkbox
+                          >
+                        </section>
+                      </div>
+                    </div>
+                    <div class="row mt-4">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                        <button
+                          class="btn-space"
+                          mat-raised-button
+                          color="primary"
+                          (click)="nextBtn()"
+                        >
+                          Next
+                        </button>
+                        <button
+                          type="button"
+                          mat-raised-button
+                          color="warn"
+                          [routerLink]="['/admin/program/schedule-class']"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                    <!-- </form> -->
+                  </div>
+  
+  
+                  <!-- </div> -->
+                </form>
+                </div>
+              <div class="sub" *ngIf="next">
+                <section class="step-wizard">
+                  <ul class="step-wizard-list ">
+                      <li class="step-wizard-item ">
+                          <span class="progress-count">1</span>
+                          <span class="progress-label">Program </span>
+                      </li>
+                      <!-- <li class="step-wizard-item" [ngClass]="{'current-item':wbsForm.invalid}"> -->
+                        <li class="step-wizard-item" >
+                          <span class="progress-count">2</span>
+                          <span class="progress-label">Instructor & Lab</span>
+                      </li>
+  
+                  </ul>
+              </section>
+                <div class="d-flex justify-content-around">
+                  <h3 >Assign Instructor & Lab Schedule</h3>
+                  <button (click)="addNewRow()"
+                  mat-mini-fab
+                  color="primary"
+                >
+                  <mat-icon class="col-white">add</mat-icon>
+                </button>
+                </div>
+  
+  
+  
+                <div class="body">
+                    <div class="row mt-5" *ngFor="let element of dataSource; index as index">
+                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                        <h6>Start Date</h6>
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Choose a date</mat-label>
+                          <input
+                            matInput
+                            [owlDateTimeTrigger]="date"
+                            [owlDateTime]="date"
+                            [(ngModel)]="element.start" (change)="startDateChange(element)"
+                            [value]="element.start"
+  
+                          />
+                          <mat-icon
+                            matSuffix
+                            [owlDateTimeTrigger]="date"
+                            class="date-icon"
+                            >today</mat-icon
+                          >
+                          <owl-date-time #date></owl-date-time>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                        <h6>End Date</h6>
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Choose a date</mat-label>
+                          <input
+                            matInput
+                            [owlDateTimeTrigger]="date2"
+                            [owlDateTime]="date2" [(ngModel)]="element.end" [value]="element.end"
+  
+                          />
+                          <mat-icon
+                            matSuffix
+                            [owlDateTimeTrigger]="date2"
+                            class="date-icon"
+                            >today</mat-icon
+                          >
+                          <owl-date-time #date2></owl-date-time>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
+                        <h6>Select Instructor</h6>
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Choose Instructor</mat-label>
+                          <mat-select [(ngModel)]="element.instructor" (selectionChange)="onSelectChange1($event,element)" (change)="onChangeInstructor(element,index)">
+                            <mat-option
+                              *ngFor="let instructor of instructorList"
+                              [value]="instructor.id"
+                            >
+                              {{ instructor?.name + " " + instructor?.last_name }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error> Class Type is required </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
+                        <h6>Select Lab</h6>
+                        <mat-form-field
+                          class="example-full-width mb-3"
+                          appearance="outline"
+                        >
+                          <mat-label>Choose Lab</mat-label>
+                          <mat-select  [(ngModel)]="element.lab" (change)="onChangeLab(element,index)">
+                            <mat-option
+                              *ngFor="let lab of labList"
+                              [value]="lab.id"
+                            >
+                              {{ lab?.name }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error> Class Type is required </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div
+                        class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mt-4 mx-auto"
+                      >
+                        <button mat-icon-button class="tbl-action-btn"  (click)="deleteRecord(index)">
+                          <app-feather-icons
+                            [icon]="'trash-2'"
+                            [class]="'tbl-fav-delete'"
+                          ></app-feather-icons>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row mt-4">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                        <button
+                          class="btn-space"
+                          mat-raised-button
+                          color="primary"
+                          (click)="saveProgramClass()"
+                        >
+                          Submit
+                        </button>
+                        <button
+                          type="button"
+                          mat-raised-button
+                          color="warn"
+                          (click)="back()"
+                        >
+                          Back
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+  </section>
+  

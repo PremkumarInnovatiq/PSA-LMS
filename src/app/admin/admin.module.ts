@@ -9,6 +9,8 @@ import { StudentsService } from './students/all-students/students.service';
   declarations: [
 
 
+
+
   ],
   imports: [CommonModule, AdminRoutingModule],
   providers: [StudentsService],

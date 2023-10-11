@@ -78,6 +78,13 @@
       }
     },
 
+    "SURVEY": {
+      "TEXT": "Survey",
+      "LIST": {
+        "ALL-SURVEY": "Survey List",
+        "LIKERT-CHART": "Likert Chart"
+      }
+    },
 
     "LIBRARY": {
       "TEXT": "Library",

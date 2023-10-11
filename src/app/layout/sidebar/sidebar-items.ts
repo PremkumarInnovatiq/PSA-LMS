@@ -309,7 +309,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '',
-    title: 'Survey',
+    title: 'MENUITEMS.SURVEY.TEXT',
     iconType: 'material-icons-two-tone',
     icon: 'school',
     class: 'menu-toggle',
@@ -319,8 +319,20 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
-        title: 'List',
+        path: '/admin/survey/survey-list',
+        title: 'MENUITEMS.SURVEY.LIST.ALL-SURVEY',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        role: [''],
+        submenu: [],
+      },
+      {
+        path: '/admin/survey/likert-chart',
+        title: 'MENUITEMS.SURVEY.LIST.LIKERT-CHART',
         iconType: '',
         icon: '',
         class: 'ml-menu',

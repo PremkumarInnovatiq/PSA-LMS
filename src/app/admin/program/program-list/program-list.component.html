@@ -21,7 +21,7 @@
             <div class="right">
               <ul class="tbl-export-btn">
                 <li class="tbl-header-btn">
-                  <div class="m-l-10" matTooltip="ADD" [routerLink]="['/admin/program/create-course']">
+                  <div class="m-l-10" matTooltip="ADD" [routerLink]="['/admin/program/create-program']">
                     <button mat-mini-fab color="primary">
                       <mat-icon class="col-white">add</mat-icon>
                     </button>
@@ -80,7 +80,7 @@
                           <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                           <span class="menu-text">Edit</span>
                         </button>
-                        <button mat-menu-item >
+                        <button mat-menu-item  (click)="delete(program.id)">
                           <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                           <span class="menu-text">Delete</span>
                         </button>

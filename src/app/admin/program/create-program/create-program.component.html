@@ -11,7 +11,7 @@
                     <div class="header">
                     </div>
                     <form [formGroup]="programFormGroup">
-                        <ng-template matStepLabel>{{' editUrl ? 'Edit Course' : 'Course Create'}}</ng-template>
+                        <!-- <ng-template matStepLabel>{{' editUrl ? 'Edit Course' : 'Course Create'}}</ng-template> -->
 
                         <div class="row m-3 justify-content-between ">
                             <div class="col-md">
@@ -20,7 +20,7 @@
                                 <mat-form-field class="example-full-width mb-2" appearance="outline">
                                     <input matInput type="text" placeholder="Enter Program Name" class="form-control"
                                         formControlName="course" required>
-                                    <mat-error *ngIf="programFormGroup.get('course')?.hasError('required')">
+                                    <mat-error *ngIf="isSubmitted || programFormGroup.get('course')?.hasError('required')">
                                         Enter Program Name
                                     </mat-error>
                                     <mat-error
@@ -36,7 +36,7 @@
                                 <mat-form-field class="example-full-width mb-2" appearance="outline">
                                     <input matInput type="text" placeholder="Enter Program Code" class="form-control"
                                         formControlName="programCode" required>
-                                    <mat-error *ngIf="programFormGroup.get('programCode')?.hasError('required')">
+                                    <mat-error *ngIf="isSubmitted || programFormGroup.get('programCode')?.hasError('required')">
                                         Enter Program Code
                                     </mat-error>
                                     <mat-error
@@ -47,7 +47,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                    <label class="form-label fs-5 fw-bold">Program Kit</label>
+                                    <label class="form-label fs-5 fw-bold">Program Kit<span
+                                        class="mandatory">&nbsp;*</span></label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline">
                                         <mat-select formControlName="programKit" required>
                                             <mat-option *ngFor="let item of programKits" [value]="item.id">
@@ -61,7 +62,8 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                    <label class="form-label fs-5 fw-bold">Mode of delivery</label>
+                                    <label class="form-label fs-5 fw-bold">Mode of delivery<span
+                                        class="mandatory">&nbsp;*</span></label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline">
                                         <mat-select formControlName="deliveryMode" required>
                                             <mat-option value="online">Online</mat-option>
@@ -80,7 +82,10 @@
                                     <label>Thumbnail</label>
                                     <div class="file-drop-area">
                                         <div class="file">
-                                            <button mat-raised-button color="primary">Choose file</button>
+                                            <button mat-raised-button color="primary">             
+                                                <input type="file" #fileDropRef id="fileDropRef" formControlName="image_link"
+                                                (change)="onFileUpload($event)" accept="image/*" class="input">
+                                  Choose file</button>
                                             <span class="file-msg">
                                                 <h5>{{uploadedImage ? uploadedImage : 'Drag and Drop File Here' }}</h5>
                                             </span>
@@ -183,7 +188,7 @@
                                         <div class="row">
                                             <div class="col-10">
                                                 <div class="d-flex gap-4">
-                                                    <label class="card_course fs-5">Elcetive course</label>
+                                                    <label class="card_course fs-5">Elective course</label>
                                                     <select name="coursename"
                                                         class="form-select rounded-2 w-50 border-secondary"
                                                         formControlName="electiveProgramName">
@@ -265,7 +270,7 @@
                                             style="margin-left: 7px; width: 25%; border: solid 1px rgb(56, 56, 56); 
                                             height: 30px;font-style: italic; font-size: 12px;"
                                             class="form-select" aria-label="Default select example"
-                                            formControlName="currency_code">
+                                            formControlName="currency">
                                             <option disabled>Choose...</option>
                                             <option value="USD">USD</option>
                                             <option value="SGD">SGD</option>
@@ -318,7 +323,7 @@
                         </div>
                         <div class="col-md-4">
                           <div class="d-grid gap-4 d-md-flex">
-                          <button mat-raised-button type="button" color="primary" id="cancel" (click)="save()" [routerLink]="['/admin/program/program-list']">Submit</button>
+                          <button mat-raised-button type="button" color="primary" id="cancel" (click)="save()" >Submit</button>
                           </div>
                         </div>
                       </div>
