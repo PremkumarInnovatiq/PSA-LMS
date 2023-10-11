@@ -21,6 +21,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { EditCourseKitComponent } from './course-kit/edit-course-kit/edit-course-kit.component';
 import { EditCategoriesComponent } from './categories/edit-categories/edit-categories.component';
+import { CreateTemplateComponent } from './course-kit/create-template/create-template.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { EditCategoriesComponent } from './categories/edit-categories/edit-categ
     CreateCourseKitComponent,
     EditCourseKitComponent,
     EditCategoriesComponent,
+    CreateTemplateComponent,
 
   ],
   imports: [

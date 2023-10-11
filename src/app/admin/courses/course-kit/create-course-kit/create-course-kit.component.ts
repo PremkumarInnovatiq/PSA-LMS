@@ -111,28 +111,28 @@ ngOnInit(): void {
  
 
 }
-  private createCourseKit(courseKitData: CourseKit): void {
-    this.courseService.createCourseKit(courseKitData).subscribe(
-      () => {
-        Swal.fire({
-          title: "Successful",
-          text: "Course Kit created successfully",
-          icon: "success",
-        });
-        // this.fileDropEl.nativeElement.value = "";
-        this.courseKitForm.reset();
-        // this.toggleList()
-        this.router.navigateByUrl('/Course/create-template');
-      },
-      (error) => {
-        Swal.fire(
-          "Failed to create course kit",
-          error.message || error.error,
-          "error"
-        );
-      }
-    );
-  }
+private createCourseKit(courseKitData: CourseKit): void {
+  this.courseService.createCourseKit(courseKitData).subscribe(
+    () => {
+      Swal.fire({
+        title: "Successful",
+        text: "Course Kit created successfully",
+        icon: "success",
+      });
+      // this.fileDropEl.nativeElement.value = "";
+      this.courseKitForm.reset();
+      // this.toggleList()
+      this.router.navigateByUrl("/admin/courses/create-template");
+    },
+    (error) => {
+      Swal.fire(
+        "Failed to create course kit",
+        error.message || error.error,
+        "error"
+      );
+    }
+  );
+}
   fileBrowseHandler(event: any) {
     const files = event.target.files;
     this.onFileDropped(files);
@@ -149,39 +149,58 @@ ngOnInit(): void {
     //this.fileDropEl.nativeElement.value = "";
   }
   submitCourseKit(): void {
-    const courseKitData: CourseKit = this.courseKitForm.value;
-      
+    this.isSubmitted=true
+    console.log("=========",this.courseKitForm)
     if (this.courseKitForm.valid) {
-    
-      const updatedCourseKit: CourseKit = {
-        id: this.courseId,
-        ...this.courseKitForm.value,
+      const courseKitData: CourseKit = this.courseKitForm.value;
+                const loader = Swal.fire({
+            title: 'Uploading...',
+            text: 'Please wait...',
+            allowOutsideClick: false,
+            timer: 18000,
+            timerProgressBar: true
+            // onBeforeOpen: () => {
+            // //   Swal.showLoading();
+            //  },
+          })
+        
 
-      };
-      this.courseService
-        .editCourseKit(this.courseId, updatedCourseKit)
-        .subscribe(
-          () => {
-            Swal.fire({
-              title: "Updated",
-              text: "Course Kit updated successfully",
-              icon: "success",
-            });
-            //this.modalRef.close();
-            this.router.navigateByUrl("/admin/courses/course-kit")
-          },
-          (error: { message: any; error: any; }) => {
-            Swal.fire(
-              "Failed to update course kit",
-              error.message || error.error,
-              "error"
-            );
-          }
-        );
-    } else {
-      this.isSubmitted=true;    }
-  }
- 
+          this.courseService.uploadVideo(this.files).subscribe(
+            (response: any) => {
+              const videoId = response.videoIds;
+              this.commonService.setVideoId(videoId)
+
+              courseKitData.videoLink = videoId;
+              //this.currentVideoIds = [...this.currentVideoIds, ...videoId]
+              // this.currentVideoIds.push(videoId);
+              this.createCourseKit(courseKitData);
+
+              Swal.close();
+            },
+            (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Upload Failed',
+                text: 'An error occurred while uploading the video',
+              });
+              Swal.close();
+            }
+          );
+        // } else {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     title: 'Invalid File Type',
+        //     text: 'Please upload video files',
+        //   });
+        // }
+      } 
+      
+      else {
+        //this.createCourseKit(courseKitData);
+        // this.isSubmitted=false
+      }
+    }
+    
 
     // getData(){
     //   forkJoin({

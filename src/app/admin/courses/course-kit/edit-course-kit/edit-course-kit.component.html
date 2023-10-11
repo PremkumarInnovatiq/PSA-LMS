@@ -16,7 +16,7 @@
                         <div class="body m-4">
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                    <label>Course Name <span class="mandatory">&nbsp;*</span></label>
+                                    <label>Course Kit Name <span class="mandatory">&nbsp;*</span></label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline">
                                         <!-- <mat-label>Course Name</mat-label> -->
 
@@ -76,6 +76,23 @@
                                     <button mat-raised-button color="primary">Choose file</button>
                                     <span class="file-msg"><h5>{{fileName ? fileName : 'Drag and Drop File Here' }}</h5></span>
                                     <input formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)" class="file-input" type="file">
+                                    <div class="files-list">
+                                        <div class="single-file" *ngFor="let file of files; let i = index">
+                                            <img src="../../assets/images/dnd/ic-file.svg" alt="" class="file-icon" />
+                                            <div class="infos">
+                                                <p class="name">{{ file?.name }}</p>
+                                                <!-- <p class="size">{{ formatBytes(file?.size) }}</p> -->
+                                                <!-- <app-progress [progress]="file?.progress"></app-progress> -->
+                                            </div>
+                                            <!-- <img
+                                            src="../../assets/images/dnd/ic-delete-file.svg"
+                                            class="delete"
+                                            width="20px"
+                                            alt="file"
+                                            
+                                          /> -->
+                                        </div>
+                                    </div>
                                     </div>
                                   </div>
                                   <!-- <app-file-upload formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)"></app-file-upload> -->
@@ -141,9 +158,8 @@
                         </div>
                         <div class="col-md-4">
                           <div class="d-grid gap-4 d-md-flex">
-                          <button mat-raised-button *ngIf="editUrl  || viewUrl" type="button" color="warn" id="cancel" [routerLink]="['/admin/courses/course-kit']">Cancel</button>
-                          <button mat-button *ngIf="!editUrl  && !viewUrl" id="submit" (click)="submitCourseKit()" >Submit</button>
-                          <button mat-button *ngIf="editUrl  && !viewUrl" id="save" (click)="submitCourseKit()"> Save </button>
+                          <button mat-raised-button  type="button" color="warn" id="cancel" [routerLink]="['/admin/courses/course-kit']">Cancel</button>
+                          <button mat-button id="save" (click)="submitCourseKit()"> Save </button>
                           </div>
                         </div>
                       </div>
@@ -162,7 +178,7 @@
                         <div class="body m-4">
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                    <label>Program Name <span class="mandatory">&nbsp;*</span></label>
+                                    <label>Course Kit Name <span class="mandatory">&nbsp;*</span></label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline" >
                                         <!-- <mat-label>Course Name</mat-label> -->
 
@@ -220,6 +236,23 @@
                                     
                                     
                                     <input formControlName="videoLink" (fileDropped)="onFileDropped($event)" (change)="fileBrowseHandler($event)" class="file-input" type="file">
+                                    <div class="files-list">
+                                        <div class="single-file" *ngFor="let file of files; let i = index">
+                                            <img src="../../assets/images/dnd/ic-file.svg" alt="" class="file-icon" />
+                                            <div class="infos">
+                                                <p class="name">{{ file?.name }}</p>
+                                                <!-- <p class="size">{{ formatBytes(file?.size) }}</p> -->
+                                                <!-- <app-progress [progress]="file?.progress"></app-progress> -->
+                                            </div>
+                                            <!-- <img
+                                            src="../../assets/images/dnd/ic-delete-file.svg"
+                                            class="delete"
+                                            width="20px"
+                                            alt="file"
+                                            
+                                          /> -->
+                                        </div>
+                                    </div>
                                     </div>
                                     <h5 class="name">{{ fileName }}</h5>
                                   </div>
@@ -235,9 +268,8 @@
                         </div>
                         <div class="col-md-4">
                           <div class="d-grid gap-4 d-md-flex">
-                          <button mat-raised-button *ngIf="editUrl  || viewUrl" type="button" color="warn" id="cancel" [routerLink]="['/admin/program/program-kit']">Cancel</button>
-                          <button mat-button *ngIf="!editUrl  && !viewUrl" id="submit" (click)="submitCourseKit()" >Submit</button>
-                          <button mat-button *ngIf="editUrl  && !viewUrl" id="save" (click)="submitCourseKit()"> Save </button>
+                          <button mat-raised-button  type="button" color="warn" id="cancel" [routerLink]="['/admin/courses/course-kit']">Cancel</button>
+                        
                           </div>
                           
                         </div>

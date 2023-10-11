@@ -11,6 +11,7 @@ import { CreateCategoriesComponent } from './categories/create-categories/create
 import { CreateCourseKitComponent } from './course-kit/create-course-kit/create-course-kit.component';
 import { EditCourseKitComponent } from './course-kit/edit-course-kit/edit-course-kit.component';
 import { EditCategoriesComponent } from './categories/edit-categories/edit-categories.component';
+import { CreateTemplateComponent } from './course-kit/create-template/create-template.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
   {
     path: 'view-course-kit/:id',
     component:  EditCourseKitComponent
+  },
+  {
+    path: 'create-template',
+    component: CreateTemplateComponent
   },
 ];
 

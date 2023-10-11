@@ -293,6 +293,17 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/course-kit/updateProgramCourseKit/${courseKitId}`;
     return this._Http.put<ApiResponse>(apiUrl, courseKit);
   }
+  getUploadedVideos(): Observable<any> {
+    const url = `${this.prefix}admin/video/`;
+    return this._Http.get(url);
+  }
+  convertMediaAws(currentVideoId: string, jobTemplateName: string): Observable<any> {
+    const url = `${this.prefix}admin/video/convert/${currentVideoId}`;
+    const payload = {
+      jobTemplateName
+    };
+    return this._Http.post(url, payload);
+  }
 
 }
 
