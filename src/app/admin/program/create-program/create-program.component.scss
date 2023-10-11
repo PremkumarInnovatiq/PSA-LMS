@@ -52,9 +52,28 @@ h5 {
     font-style: italic;
     padding: 10px;
 }
+:host ::ng-deep .ck-editor__editable_inline {
+    --mdc-outlined-text-field-container-shape : 12px;
+    min-height: 150px;
+    min-width: 90%;
+    
+  }
+  ::ng-deep .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    border-radius: var(--ck-border-radius);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin: -3px 25px;
+  }
+  ::ng-deep .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+    border-radius: var(--ck-border-radius);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    margin: -3px 25px;
+  }
+  
 
 #back {
-    margin-left: 15px;
+    margin-left: -20px;
     margin-bottom: 20px;
     background: #FFF;
     border: 1px solid #000000;
@@ -66,7 +85,7 @@ h5 {
 }
 
 #submit {
-    margin-left: -10px;
+margin-left: 60px;
     margin-bottom: 20px;
     background: #6777ef;
     border: none;
