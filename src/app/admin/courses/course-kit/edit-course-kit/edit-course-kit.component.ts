@@ -167,8 +167,9 @@ export class EditCourseKitComponent {
           shortDescription: response?.course?.shortDescription,
           longDescription: response?.course?.longDescription,
           videoLink: response?.course?.videoLink?response?.course?.videoLink[0]._id:null,
-          startDate:`${moment(startingDate).format("YYYY-MM-DD")}T${startingTime}`,
-          endDate:`${moment(endingDate).format("YYYY-MM-DD")}T${endingTime}`
+          startDate:this.courseKitForm.get('startDate')?.patchValue(startingDate),
+            // moment(startingDate).format("MM/DD/YYYY,h:mm A"),
+            endDate:this.courseKitForm.get('endDate')?.patchValue(endingDate),
           
         });
 

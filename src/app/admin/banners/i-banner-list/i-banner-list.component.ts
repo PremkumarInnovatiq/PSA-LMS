@@ -11,8 +11,8 @@ export class IBannerListComponent {
   breadscrums = [
     {
       title: 'Blank',
-      items: ['Extra'],
-      active: 'Blank',
+      items: ['Banners'],
+      active: 'Instructor Banner',
     },
   ];
   instructorBanner : FormGroup

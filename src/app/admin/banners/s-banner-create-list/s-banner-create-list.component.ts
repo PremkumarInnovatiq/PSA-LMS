@@ -9,8 +9,8 @@ export class SBannerCreateListComponent {
   breadscrums = [
     {
       title: 'Blank',
-      items: ['Extra'],
-      active: 'Blank',
+      items: ['Banners'],
+      active: 'Student Banner',
     },
   ];
   constructor() {
