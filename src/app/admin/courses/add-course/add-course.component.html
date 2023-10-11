@@ -307,7 +307,7 @@
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="course_instructor" required>
                             <mat-option *ngFor="let item of instructors" [value]="item.id">
-                              {{item.user_id.name + ' ' + item.user_id.last_name}}
+                              {{item?.user_id?.name + ' ' + item?.user_id?.last_name}}
                             </mat-option>
 
                           </mat-select>
