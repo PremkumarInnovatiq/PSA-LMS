@@ -69,18 +69,18 @@ export class EditProgramKitComponent {
     if(this.editUrl===true){
       this.breadscrums = [
         {
-          title:'Edit Course Kit',
-          items: ['Course'],
-          active: 'Edit Course Kit',
+          title:'Edit Program Kit',
+          items: ['Program'],
+          active: 'Edit Program Kit',
         },
       ];
     }
     else if(this.viewUrl===true){
       this.breadscrums = [
         {
-          title:'View Course Kit',
-          items: ['Course'],
-          active: 'View Course Kit',
+          title:'View Program Kit',
+          items: ['Program'],
+          active: 'View Program Kit',
         },
       ];
     }
@@ -91,8 +91,9 @@ export class EditProgramKitComponent {
       shortDescription: new FormControl('', [Validators.required,...this.utils.validators.descripton, ...this.utils.validators.noLeadingSpace]),
       longDescription: new FormControl('', [Validators.required,...this.utils.validators.longDescription, ...this.utils.validators.noLeadingSpace]),
       videoLink:new FormControl('', []),
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]]
+      startDate: new FormControl('',[Validators.required]),
+      endDate: new FormControl('',[Validators.required]),
+
       // sections: new FormControl('', [ Validators.required,...this.utils.validators.sections]),
     } ,{ validator: this.dateValidator });
 
@@ -237,8 +238,9 @@ ngOnInit(): void {
             shortDescription: response?.course?.shortDescription,
             longDescription: response?.course?.longDescription,
             videoLink: response?.course?.videoLink?response?.course?.videoLink[0]._id:null,
-            startDate:moment(startingDate).format("MM/DD/YYYY,h:mm A"),
-            endDate:moment(endingDate).format("MM/DD/YYYY,h:mm A")
+            startDate:this.courseKitForm.get('startDate')?.patchValue(startingDate),
+            // moment(startingDate).format("MM/DD/YYYY,h:mm A"),
+            endDate:this.courseKitForm.get('endDate')?.patchValue(endingDate),
             
           });
   

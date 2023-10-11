@@ -40,12 +40,12 @@
                                 </li>
                                 <li>
                                     <div class="export-button m-l-10" matTooltip="XLSX">
-                                        <img src="assets/excel.svg" alt="" />
+                                        <img src="assets/excel.svg" (click)="exportExcel()"alt="" />
                                     </div>
                                 </li>
                                 <li>
                                     <div class="export-button m-l-10" matTooltip="PDF">
-                                        <img src="assets/pdf (1).svg" alt="" />
+                                        <img src="assets/pdf (1).svg" alt=""(click)="generatePdf()"/>
                                     </div>
                                 </li>
                             </ul>
@@ -129,7 +129,7 @@
                                                 <img class="img-w" src="/assets/approve.svg" alt="approve">
                                                 <span class="menu-text px-3 color">Approve</span>
                                             </button>
-                                            <button mat-menu-item (click)="changeStatus(row,'approved')">
+                                            <button mat-menu-item (click)="Status(row,'cancel')">
                                                 <img class="img-w" src="/assets/archive.svg" alt="approve">
                                                 <span class="menu-text px-3 text-danger">Withdraw</span>
                                             </button>

@@ -257,7 +257,8 @@
                                         matInput
                                         [owlDateTimeTrigger]="date"
                                         [owlDateTime]="date"
-                                        formControlName="startDate"
+                                        
+                                        [formControlName]="'startDate'"
                                        
                                         [readonly]="isInputReadonly()"
                                       />
@@ -282,7 +283,8 @@
                                         matInput
                                         [owlDateTimeTrigger]="date2"
                                         [owlDateTime]="date2"
-                                        formControlName="endDate"
+                                        
+                                        [formControlName]="'endDate'"
                                         
                                         [readonly]="isInputReadonly()"
                                       />

@@ -18,9 +18,9 @@ import Swal from 'sweetalert2';
 export class CreateProgramKitComponent {
   breadscrums = [
     {
-      title: 'Create Course Kit',
-      items: ['Course'],
-      active: 'Create Course Kit',
+      title: 'Create Program Kit',
+      items: ['Program'],
+      active: 'Create Program Kit',
     },
   ];
   @ViewChild("fileDropRef", { static: false })
