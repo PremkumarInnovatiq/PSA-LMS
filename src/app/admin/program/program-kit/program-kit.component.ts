@@ -8,7 +8,10 @@ import { CourseKit, CourseKitModel, CourseModel } from '@core/models/course.mode
 import { CommonService } from '@core/service/common.service';
 import { CourseService } from '@core/service/course.service';
 import { UtilsService } from '@core/service/utils.service';
+import { TableElement } from '@shared/TableElement';
+import { TableExportUtil } from '@shared/tableExportUtil';
 import { VideoPlayerComponent } from 'app/admin/courses/course-kit/video-player/video-player.component';
+import jsPDF from 'jspdf';
 import {  BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 
@@ -124,6 +127,59 @@ export class ProgramKitComponent {
   }
   toggleList() {
     this.list = !this.list;
+  }
+  exportExcel() {
+    //k//ey name with space add in brackets
+   const exportData: Partial<TableElement>[] =
+      this.dataSource.map((x: {
+        videoLink: any; name: any; shortDescription: any;  longDescription: any; documentLink: any;  
+})=>({
+        
+  
+        "Name": x.name,
+        "Short Description": x.shortDescription,
+        "Long Description": x.longDescription,
+       
+        
+        
+        "Document Link": x.documentLink,
+        
+      }));
+
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Name', 'Short Description', 'Long Description','Document Link']];
+    const data = this.dataSource.map((user: {
+      //formatDate(arg0: Date, arg1: string, arg2: string): unknown;
+
+      name: any; shortDescription: any;  longDescription: any; documentLink: any;
+    }, index: any) => [user.name, user.shortDescription, user.longDescription,user.documentLink,
+     
+      //formatDate(new Date(user.joiningDate), 'yyyy-MM-dd', 'en') || '',
+
+
+    ]);
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+
+
+
+    });
+
+    // Save or open the PDF
+    doc.save('program-kit-list.pdf');
+    
   }
 
   submitCourseKit(): void {

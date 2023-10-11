@@ -1,7 +1,11 @@
+import { formatDate } from '@angular/common';
 import { Component } from '@angular/core';
 import { Student, StudentApproval, StudentPaginationModel } from '@core/models/class.model';
 import { UtilsService } from '@core/service/utils.service';
+import { TableElement } from '@shared/TableElement';
+import { TableExportUtil } from '@shared/tableExportUtil';
 import { ClassService } from 'app/admin/schedule-class/class.service';
+import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 
@@ -67,7 +71,7 @@ export class ProgaramCompletionListComponent {
     return JSON.parse(localStorage.getItem("user_data")!).user.id;
   }
 
-  complete(element: Student) {
+  changeStatus(element: Student) {
     let item: StudentApproval = {
       approvedBy: this.getCurrentUserId(),
       approvedOn: moment().format("YYYY-MM-DD"),
@@ -76,7 +80,9 @@ export class ProgaramCompletionListComponent {
       studentId: element.studentId.id,
       session: [] 
     };
-    this.classService.saveApprovedClasses(element.id, item).subscribe((response:any) => {
+  
+
+    this.classService.saveApprovedProgramClasses(element.id, item).subscribe((response:any) => {
       Swal.fire({
         title: 'Success',
         text: 'Course approved successfully.',
@@ -96,4 +102,52 @@ export class ProgaramCompletionListComponent {
         };
 
   }
+  exportExcel() {
+    //k//ey name with space add in brackets
+   const exportData: Partial<TableElement>[] =
+      this.dataSource.map((x: { program_name: any; student_name: any; classStartDate: string | number | Date; classEndDate: string | number | Date; registeredOn: string | number | Date; })=>({
+        "Program Name": x.program_name,
+        "Student Name": x.student_name,
+        'Class Start Date': formatDate(new Date(x.classStartDate), 'yyyy-MM-dd', 'en') || '',
+        'Class End Date': formatDate(new Date(x.classEndDate), 'yyyy-MM-dd', 'en') || '',
+        'Registered Date': formatDate(new Date(x.registeredOn), 'yyyy-MM-dd', 'en') || '',
+      }));
+
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Program Name', 'Student Name', 'Class Start Date','Class End Date','Registered Date']];
+    const data = this.dataSource.map((user: {
+      //formatDate(arg0: Date, arg1: string, arg2: string): unknown;
+
+      program_name: any; student_name: any; classStartDate: any; classEndDate: any; registeredOn: any; 
+    }, index: any) => [user.program_name, user.student_name, 
+      
+      formatDate(new Date(user.classStartDate), 'yyyy-MM-dd', 'en') || '',
+      formatDate(new Date(user.classEndDate), 'yyyy-MM-dd', 'en') || '',
+      formatDate(new Date(user.registeredOn), 'yyyy-MM-dd', 'en') || '',
+
+
+    ]);
+    //const columnWidths = [60, 80, 40];
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+    // Add a page to the document (optional)
+    //doc.addPage();
+
+    // Generate the table using jspdf-autotable
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+
+
+
+    });
+
+    // Save or open the PDF
+    doc.save('student-completion.pdf');
+  }
+
 }

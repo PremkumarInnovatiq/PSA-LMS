@@ -39,14 +39,14 @@
                 </li>
                 <li>
                   <div class="export-button m-l-10" matTooltip="XLSX">
-                    <img src="assets/images/icons/xlsx.png" alt="">
+                      <img src="assets/excel.svg" (click)="exportExcel()"alt="" />
                   </div>
-                </li>
-                <li>
+              </li>
+              <li>
                   <div class="export-button m-l-10" matTooltip="PDF">
-                    <img src="assets/images/icons/pdf-icon.png" alt="" />
+                      <img src="assets/pdf (1).svg" alt=""(click)="generatePdf()"/>
                   </div>
-                </li>
+              </li>
               </ul>
             </div>
           </div>
@@ -98,14 +98,25 @@
                 <ng-container matColumnDef="actions">
                   <mat-header-cell *matHeaderCellDef class="pr-0">Actions</mat-header-cell>
                   <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
-                    <!-- <button
-                      (click)="complete(row)"
-                      class="badge badge-solid-green mx-2"
-                    >Approved
+                    
+                      <button mat-button [matMenuTriggerFor]="menu">
+                          <svg class="dropdown-toggle border rounded-circle" data-bs-toggle="dropdown"
+                              aria-expanded="false" xmlns="http://www.w3.org/2000/svg" width="25"
+                              height="25" fill="currentColor"
+                              class="bi bi-three-dots border rounded-circle bg" viewBox="0 0 16 16">
+                              <path
+                                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                          </svg>
 
-                    </button> -->
-
-                    <span class="label l-bg-red shadow-style" (click)="complete(row)">Approve</span>
+                      </button>
+                      <mat-menu #menu="matMenu" xPosition="before">
+                          <button mat-menu-item (click)="changeStatus(row)">
+                              <img class="img-w" src="/assets/approve.svg" alt="approve">
+                              <span class="menu-text px-3 color">Approve</span>
+                          </button>
+                        </mat-menu>
+                          
+                  
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
