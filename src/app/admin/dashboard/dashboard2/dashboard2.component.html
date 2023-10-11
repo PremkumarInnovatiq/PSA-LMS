@@ -308,7 +308,7 @@
             <div class="card-block">
               <div  *ngFor="let program of upcomingPrograms" class="row m-b-20">
                 <div class="col-auto p-r-0">
-                  <img src="assets/images/banner/cargo-container-ship.jpg" alt="user image" class="latest-posts-img">
+                  <img src="{{program?.image_link}}" alt="user image" class="latest-posts-img">
                 </div>
                 <div class="col">
                   <h6>{{program?.title}}</h6>
@@ -323,12 +323,15 @@
                       <b>{{ program?.courseFee }}$</b>
                   </div>
                   <div class="col">
-                      <b>{{ program?.deliveryMode }}</b>
+                      <b>{{ program?.deliveryMode | titlecase }}</b>
+                  </div>
+                  <div class="col">
+                    <b>
+                      <i class="fa fa-play-circle-o"></i> {{program?.sessionStartDate | date}}</b>
                   </div>
                   </div>
 
-                  <p class="text-end">
-                    <i class="fa fa-play-circle-o"></i> {{program?.sessionStartDate | date}}</p>
+                 
                 </div>
               </div>
            

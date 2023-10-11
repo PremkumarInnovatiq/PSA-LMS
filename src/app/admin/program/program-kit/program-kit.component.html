@@ -106,12 +106,12 @@
                       [class.disabled]="parseDate(row.endDate) < currentDate"
                       (click)="playVideo(video)">
                       {{ video.filename |truncate : 07}}
-
-                      <img   *ngIf="!(parseDate(row.endDate) < currentDate)"  style="display: inline; float: right;" src="/assets/video-icon.svg"
+                    </a>
+                      <img   *ngIf="!(parseDate(row.endDate) < currentDate)"  style="display: inline; float: right;margin-left: -30px;" src="/assets/video-icon.svg"
                       alt="">
-                  <img class="info" [matTooltip]="'This video has ben expired, very soon we will upload latest course video.'"  *ngIf="parseDate(row.endDate) < currentDate"  style="display: inline; float: right;" src="/assets/info.png"
+                  <img class="info" [matTooltip]="'This video has ben expired, very soon we will upload latest course video.'"  *ngIf="parseDate(row.endDate) < currentDate"  style="display: inline; float: right;margin-left: -30px;" src="/assets/info.png"
                       alt="">
-                      </a>
+                    
 
                      
                      </mat-cell>
