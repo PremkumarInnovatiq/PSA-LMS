@@ -11,6 +11,7 @@ import { ProgramApprovalListComponent } from './program-approval-list/program-ap
 import { CreateClassComponent } from './create-class/create-class.component';
 import { CreateProgramKitComponent } from './program-kit/create-program-kit/create-program-kit.component';
 import { EditProgramKitComponent } from './program-kit/edit-program-kit/edit-program-kit.component';
+import { CreateTemplateComponent } from './program-kit/create-template/create-template.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,10 @@ const routes: Routes = [
   {
     path:'program-approve-list', 
     component:ProgramApprovalListComponent
+  },
+  {
+    path:'program-kit-template', 
+    component:CreateTemplateComponent
   },
 ];
 

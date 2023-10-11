@@ -19,6 +19,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CreateProgramKitComponent } from './program-kit/create-program-kit/create-program-kit.component';
 import { EditProgramKitComponent } from './program-kit/edit-program-kit/edit-program-kit.component';
 import { CreateClassComponent } from './create-class/create-class.component';
+import { CreateTemplateComponent } from './program-kit/create-template/create-template.component';
 
 
 
@@ -33,7 +34,8 @@ import { CreateClassComponent } from './create-class/create-class.component';
         ProgramApprovalListComponent,
         CreateProgramKitComponent,
         EditProgramKitComponent,
-        CreateClassComponent
+        CreateClassComponent,
+        CreateTemplateComponent
          ],
     imports: [
         CommonModule,

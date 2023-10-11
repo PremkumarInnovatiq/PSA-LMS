@@ -170,7 +170,7 @@ ngOnInit(): void {
       })
 
 
-      this.courseService.uploadProgramVideo(this.files).subscribe(
+      this.courseService.uploadVideo(this.files).subscribe(
         (response: any) => {
           const videoId = response.videoIds;
           this.commonService.setVideoId(videoId)
@@ -217,7 +217,9 @@ ngOnInit(): void {
         //this.fileDropEl.nativeElement.value = "";
         this.courseKitForm.reset();
         //this.toggleList()
-        this.router.navigateByUrl('/admin/program/program-kit');
+        //this.router.navigateByUrl("/admin/courses/create-template");
+        this.router.navigateByUrl('/admin/program/program-kit-template');
+        //this.router.navigateByUrl('/admin/program/program-kit');
 
       },
       (error) => {
