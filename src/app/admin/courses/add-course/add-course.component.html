@@ -52,8 +52,8 @@
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                           <label>Main Category <span class="mandatory">&nbsp;*</span></label>
                           <mat-form-field class="example-full-width mb-3" appearance="outline">
-                            <mat-select formControlName="main_category" required (selectionChange)="mainCategoryChange()">
-                              <mat-option *ngFor="let item of mainCategories" [value]="item.id">
+                            <mat-select formControlName="main_category" required (selectionChange)="mainCategoryChange()" >
+                              <mat-option *ngFor="let item of mainCategories" [value]="item.id" [disabled]="viewUrl == true">
                                 {{item.category_name}}
                               </mat-option>
                             </mat-select>
@@ -69,8 +69,8 @@
                       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                         <label>Sub Category <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
-                          <mat-select formControlName="sub_category" required>
-                            <mat-option *ngFor="let item of subCategories" [value]="item.id">
+                          <mat-select formControlName="sub_category" required> 
+                            <mat-option *ngFor="let item of subCategories" [value]="item.id" [disabled]="viewUrl == true">
                               {{item.category_name}}
                             </mat-option>
                           </mat-select>
@@ -126,16 +126,16 @@
                         <label>Currency</label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="currency_code">
-                            <mat-option value="USD">USD</mat-option>
-                            <mat-option value="SGD">SGD</mat-option>
-                            <mat-option value="NZD">NZD</mat-option>
-                            <mat-option value="YEN">YEN</mat-option>
-                            <mat-option value="GBP">GBP</mat-option>
-                            <mat-option value="KWN">KWN</mat-option>
-                            <mat-option value="IDR">IDR</mat-option>
-                            <mat-option value="TWD">TWD</mat-option>
-                            <mat-option value="MYR">MYR</mat-option>
-                            <mat-option value="AUD">AUD</mat-option>
+                            <mat-option value="USD" [disabled]="viewUrl == true">USD</mat-option>
+                            <mat-option value="SGD" [disabled]="viewUrl == true">SGD</mat-option>
+                            <mat-option value="NZD" [disabled]="viewUrl == true">NZD</mat-option>
+                            <mat-option value="YEN" [disabled]="viewUrl == true">YEN</mat-option>
+                            <mat-option value="GBP" [disabled]="viewUrl == true">GBP</mat-option>
+                            <mat-option value="KWN" [disabled]="viewUrl == true">KWN</mat-option>
+                            <mat-option value="IDR" [disabled]="viewUrl == true">IDR</mat-option>
+                            <mat-option value="TWD" [disabled]="viewUrl == true">TWD</mat-option>
+                            <mat-option value="MYR" [disabled]="viewUrl == true">MYR</mat-option>
+                            <mat-option value="AUD" [disabled]="viewUrl == true">AUD</mat-option>
                           </mat-select>
                           <mat-error *ngIf="
                           firstFormGroup.get('currency_code')?.hasError('required') ||
@@ -270,7 +270,7 @@
                         <label>Funding/Grant <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="funding_grant" required>
-                            <mat-option *ngFor="let item of fundingGrants" [value]="item.id">
+                            <mat-option *ngFor="let item of fundingGrants" [value]="item.id" [disabled]="viewUrl == true">
                               {{item.grant_type}}
                             </mat-option>
 
@@ -289,7 +289,7 @@
                         <label>Survey <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="survey" required>
-                            <mat-option *ngFor="let item of survey" [value]="item.id">
+                            <mat-option *ngFor="let item of survey" [value]="item.id" [disabled]="viewUrl == true">
                               {{item.name}}
                             </mat-option>
 
@@ -306,7 +306,7 @@
                         <label>Assign Instructors <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="course_instructor" required>
-                            <mat-option *ngFor="let item of instructors" [value]="item.id">
+                            <mat-option *ngFor="let item of instructors" [value]="item.id" [disabled]="viewUrl == true">
                               {{item?.user_id?.name + ' ' + item?.user_id?.last_name}}
                             </mat-option>
 
@@ -325,7 +325,7 @@
                         <label>Assign Coursekit <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="course_kit" required>
-                            <mat-option *ngFor="let item of courseKits" [value]="item.id">
+                            <mat-option *ngFor="let item of courseKits" [value]="item.id" [disabled]="viewUrl == true">
                               {{item.name}}
                             </mat-option>
 
@@ -342,7 +342,7 @@
                         <label>Certificates <span class="mandatory">&nbsp;*</span></label>
                         <mat-form-field class="example-full-width mb-3" appearance="outline">
                           <mat-select formControlName="certificates" required>
-                            <mat-option *ngFor="let certificate of certificates" [value]="certificate.id">
+                            <mat-option *ngFor="let certificate of certificates" [value]="certificate.id" [disabled]="viewUrl == true">
                               {{certificate.title}}
                             </mat-option>
 

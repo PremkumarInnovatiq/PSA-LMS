@@ -147,14 +147,14 @@ export class AddCourseComponent implements OnInit {
     this.instuctorCategoryControl = this.secondFormGroup.get('course_instructor') as FormControl;
     this.courseKitCategoryControl = this.secondFormGroup.get('course_kit') as FormControl;
     this.certificatesCategoryControl = this.secondFormGroup.get('certificates') as FormControl;
-    this.setMainCategoryControlState();
-    this.setSubCategoryControlState();
-    this.setCurrencyControlState();
-    this.setFundingControlState();
-    this.setSurveyControlState();
-    this.setInstructorControlState();
-    this.setCourseKitControlState();
-    this.setCertificatesControlState();
+    // // this.setMainCategoryControlState();
+    // this.setSubCategoryControlState();
+    // this.setCurrencyControlState();
+    // this.setFundingControlState();
+    // this.setSurveyControlState();
+    // this.setInstructorControlState();
+    // this.setCourseKitControlState();
+    // this.setCertificatesControlState();
     if(!this.editUrl){
       this.setup();
     }
@@ -183,62 +183,62 @@ isInputDisabled(): boolean {
   return this.mode === 'viewUrl'; // If mode is 'viewUrl', return true (disabled); otherwise, return false (enabled).
 }
 
-setMainCategoryControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.mainCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.mainCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setSubCategoryControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.subCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.subCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setCurrencyControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.currencyControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.currencyControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setFundingControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.fundingGrant.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.fundingGrant.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setSurveyControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.surveyCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.surveyCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setInstructorControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.instuctorCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.instuctorCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setCourseKitControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.courseKitCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.courseKitCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
-setCertificatesControlState(): void {
-  if (this.mode === 'viewUrl') {
-    this.certificatesCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
-  } else {
-    this.certificatesCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
-  }
-}
+// setMainCategoryControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.mainCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.mainCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setSubCategoryControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.subCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.subCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setCurrencyControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.currencyControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.currencyControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setFundingControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.fundingGrant.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.fundingGrant.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setSurveyControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.surveyCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.surveyCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setInstructorControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.instuctorCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.instuctorCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setCourseKitControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.courseKitCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.courseKitCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
+// setCertificatesControlState(): void {
+//   if (this.mode === 'viewUrl') {
+//     this.certificatesCategoryControl.disable({ emitEvent: false }); // Disable the control when in viewUrl mode.
+//   } else {
+//     this.certificatesCategoryControl.enable({ emitEvent: false }); // Enable the control for other modes.
+//   }
+// }
 
 mainCategoryChange(): void {
     this.subCategories = this.allSubCategories.filter(
