@@ -12,15 +12,16 @@
                     </div>
                     <form [formGroup]="programFormGroup">
                         <!-- <ng-template matStepLabel>{{' editUrl ? 'Edit Course' : 'Course Create'}}</ng-template> -->
-
-                        <div class="row m-3 justify-content-between ">
-                            <div class="col-md">
+                        <div class="body m-3 justify-content-between ">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                                 <label class="form-label fs-5 fw-bold">Program Name<span
                                         class="mandatory">&nbsp;*</span></label>
                                 <mat-form-field class="example-full-width mb-2" appearance="outline">
                                     <input matInput type="text" placeholder="Enter Program Name" class="form-control"
                                         formControlName="course" required>
-                                    <mat-error *ngIf="isSubmitted || programFormGroup.get('course')?.hasError('required')">
+                                    <mat-error
+                                        *ngIf="isSubmitted || programFormGroup.get('course')?.hasError('required')">
                                         Enter Program Name
                                     </mat-error>
                                     <mat-error
@@ -29,14 +30,15 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-md">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                                 <label class="form-label fs-5 fw-bold">Program Code<span
                                         class="mandatory">&nbsp;*</span>
                                 </label>
                                 <mat-form-field class="example-full-width mb-2" appearance="outline">
                                     <input matInput type="text" placeholder="Enter Program Code" class="form-control"
                                         formControlName="programCode" required>
-                                    <mat-error *ngIf="isSubmitted || programFormGroup.get('programCode')?.hasError('required')">
+                                    <mat-error
+                                        *ngIf="isSubmitted || programFormGroup.get('programCode')?.hasError('required')">
                                         Enter Program Code
                                     </mat-error>
                                     <mat-error
@@ -45,232 +47,229 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                    <label class="form-label fs-5 fw-bold">Program Kit<span
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label class="form-label fs-5 fw-bold">Program Kit<span
                                         class="mandatory">&nbsp;*</span></label>
-                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                                        <mat-select formControlName="programKit" required>
-                                            <mat-option *ngFor="let item of programKits" [value]="item.id">
-                                                {{item.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error
-                                            *ngIf="programFormGroup.get('programKit')?.hasError('required') ||programFormGroup.get('programKit')?.touched">
-                                            Select Program Kit
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-                                    <label class="form-label fs-5 fw-bold">Mode of delivery<span
+                                <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                    <mat-select formControlName="programKit" required>
+                                        <mat-option *ngFor="let item of programKits" [value]="item.id">
+                                            {{item.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="programFormGroup.get('programKit')?.hasError('required') ||programFormGroup.get('programKit')?.touched">
+                                        Select Program Kit
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <label class="form-label fs-5 fw-bold">Mode of delivery<span
                                         class="mandatory">&nbsp;*</span></label>
-                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
-                                        <mat-select formControlName="deliveryMode" required>
-                                            <mat-option value="online">Online</mat-option>
-                                            <mat-option value="offline">Offline</mat-option>
-                                            <mat-option value="hybrid">Hybrid</mat-option>
-                                        </mat-select>
-                                        <mat-error
-                                            *ngIf="programFormGroup.get('deliveryMode')?.hasError('required') ||programFormGroup.get('deliveryMode')?.touched">
-                                            Select Mode of delivery
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
+                                <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                    <mat-select formControlName="deliveryMode" required>
+                                        <mat-option value="online">Online</mat-option>
+                                        <mat-option value="offline">Offline</mat-option>
+                                        <mat-option value="hybrid">Hybrid</mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="programFormGroup.get('deliveryMode')?.hasError('required') ||programFormGroup.get('deliveryMode')?.touched">
+                                        Select Mode of delivery
+                                    </mat-error>
+                                </mat-form-field>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
-                                    <label>Thumbnail</label>
-                                    <div class="file-drop-area">
-                                        <div class="file">
-                                            <button mat-raised-button color="primary">             
-                                                <input type="file" #fileDropRef id="fileDropRef" formControlName="image_link"
-                                                (change)="onFileUpload($event)" accept="image/*" class="input">
-                                  Choose file</button>
-                                            <span class="file-msg">
-                                                <h5>{{uploadedImage ? uploadedImage : 'Drag and Drop File Here' }}</h5>
-                                            </span>
-                                            <input formControlName="image_link" (change)="onFileUpload($event)"
-                                                class="file-input" type="file">
-                                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                                <label>Thumbnail</label>
+                                <div class="file-drop-area">
+                                    <div class="file">
+                                        <button mat-raised-button color="primary">
+                                            <input type="file" #fileDropRef id="fileDropRef"
+                                                formControlName="image_link" (change)="onFileUpload($event)"
+                                                accept="image/*" class="input">
+                                            Choose file</button>
+                                        <span class="file-msg">
+                                            <h5>{{uploadedImage ? uploadedImage : 'Drag and Drop File Here' }}</h5>
+                                        </span>
+                                        <input formControlName="image_link" (change)="onFileUpload($event)"
+                                            class="file-input" type="file">
                                     </div>
                                 </div>
                             </div>
-                            <hr class="mt-4 mx-4" />
-                            <div class="d-flex m-3 justify-content-between m-4  ">
-                                <div class="d-flex gap-4">
-                                    <span class="fs-5 fw-bold">Compulsory Count</span>
-                                    <input type="text" class="form-control rounded-3 p-1 w-25 border-secondary"
-                                        formControlName="coreCourseCount"
-                                        [class.invalid-input]="isSubmitted && programFormGroup.get('coreCourseCount')?.invalid || programFormGroup.get('coreCourseCount')?.invalid && programFormGroup.get('coreCourseCount')?.touched" />
-                                </div>
-                                <div class="d-flex gap-4">
-                                    <button (click)="addCoreCard()" class="btn rounded-2 px-4">
-                                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" style="fill: #526d82">
-                                            <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path>
-                                            <path
-                                                d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
-                                            </path>
-                                        </svg>
-                                        Add
-                                    </button>
-                                </div>
+                        </div>
+                        <hr class="m-4" style="width: 94%;" />
+                        <div class="d-flex m-3 justify-content-between m-4  ">
+                            <div class="d-flex gap-4">
+                                <span class="fs-5 fw-bold">Compulsory Count</span>
+                                <input type="text" class="form-control rounded-3 p-1 w-25 border-secondary"
+                                    formControlName="coreCourseCount"
+                                    [class.invalid-input]="isSubmitted && programFormGroup.get('coreCourseCount')?.invalid || programFormGroup.get('coreCourseCount')?.invalid && programFormGroup.get('coreCourseCount')?.touched" />
                             </div>
-                            <div class="m-3">
-                                <div class="card border-light mb-3 shadow rounded-5"
-                                    *ngFor="let card of coreProgramCards; let i = index">
-                                    <div class="card-header header p-4 rounded-top-5">
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <div class="d-flex gap-4">
-                                                    <label class="card_course fs-5">Certificate Program</label>
-                                                    <select name="coursename"
-                                                        class="form-select rounded-2 w-50 border-secondary"
-                                                        formControlName="coreProgramName">
-                                                        <option>Choose...</option>
-                                                        <option *ngFor="let item of programList" [value]="item.title">
-                                                            {{item.title}}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-1 ms-5">
-                                                <svg (click)="deleteCoreCard(i)" class="ms-2 rounded-4 border"
-                                                    xmlns="http://www.w3.org/2000/svg" width="34" height="34"
-                                                    viewBox="0 0 24 24"
-                                                    style="fill: rgba(0, 0, 0, 1);padding: 5px;background: #fff;">
-                                                    <path
-                                                        d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="d-flex gap-4">
+                                <button (click)="addCoreCard()" class="btn rounded-2 px-4">
+                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" style="fill: #526d82">
+                                        <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path>
+                                        <path
+                                            d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
+                                        </path>
+                                    </svg>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="m-3">
+                            <div class="card border-light mb-3 shadow rounded-5"
+                                *ngFor="let card of coreProgramCards; let i = index">
+                                <div class="card-header header p-4 rounded-top-5">
                                     <div class="row">
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                                            <ckeditor [editor]="Editor" id="editor"
-                                                formControlName="coreProgramDescription">
-                                            </ckeditor>
+                                        <div class="col-10">
+                                            <div class="d-flex gap-4">
+                                                <label class="card_course fs-5">Certificate Program</label>
+                                                <select name="coursename"
+                                                    class="form-select rounded-2 w-50 border-secondary"
+                                                    formControlName="coreProgramName">
+                                                    <option>Choose...</option>
+                                                    <option *ngFor="let item of programList" [value]="item.title">
+                                                        {{item.title}}</option>
+                                                </select>
+                                            </div>
                                         </div>
-
+                                        <div class="col-1 ms-5">
+                                            <svg (click)="deleteCoreCard(i)" class="ms-2 rounded-4 border"
+                                                xmlns="http://www.w3.org/2000/svg" width="34" height="34"
+                                                viewBox="0 0 24 24"
+                                                style="fill: rgba(0, 0, 0, 1);padding: 5px;background: #fff;">
+                                                <path
+                                                    d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
+                                        <ckeditor [editor]="Editor" id="editor"
+                                            formControlName="coreProgramDescription"></ckeditor>
                                     </div>
                                 </div>
                             </div>
-                            <hr class="mt-4 mx-4" />
-                            <div class="d-flex m-3 justify-content-between m-4">
-                                <div class="d-flex gap-4">
-                                    <span class="fs-5 fw-bold fs-5">Elective Count</span>
-                                    <input type="text" class="form-control rounded-3 p-1 w-25 border-secondary"
-                                        formControlName="electiveCourseCount"
-                                        [class.invalid-input]="isSubmitted && programFormGroup.get('electiveCourseCount')?.invalid || programFormGroup.get('electiveCourseCount')?.invalid && programFormGroup.get('electiveCourseCount')?.touched" />
-                                </div>
-                                <div class="d-flex gap-4">
-                                    <button (click)="addElectiveCard()" class="btn rounded-2 px-4">
-                                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" style="fill: #526d82">
-                                            <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path>
-                                            <path
-                                                d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
-                                            </path>
-                                        </svg>
-                                        Add
-                                    </button>
-                                </div>
+                        </div>
+                        <hr class="m-4" style="width: 94%;" />
+                        <div class="d-flex m-3 justify-content-between m-4">
+                            <div class="d-flex gap-4">
+                                <span class="fs-5 fw-bold fs-5">Elective Count</span>
+                                <input type="text" class="form-control rounded-3 p-1 w-25 border-secondary"
+                                    formControlName="electiveCourseCount"
+                                    [class.invalid-input]="isSubmitted && programFormGroup.get('electiveCourseCount')?.invalid || programFormGroup.get('electiveCourseCount')?.invalid && programFormGroup.get('electiveCourseCount')?.touched" />
                             </div>
-                            <div *ngIf="isSubmitted"
-                                [class.invalid-text]="isSubmitted && programFormGroup.get('electiveCourseCount')?.invalid || programFormGroup.get('electiveCourseCount')?.invalid && programFormGroup.get('electiveCourseCount')?.touched">
-                                {{ utils.getErrorMessage(programFormGroup, 'electiveCourseCount')?.message }}
+                            <div class="d-flex gap-4">
+                                <button (click)="addElectiveCard()" class="btn rounded-2 px-4">
+                                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" style="fill: #526d82">
+                                        <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z"></path>
+                                        <path
+                                            d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
+                                        </path>
+                                    </svg>
+                                    Add
+                                </button>
                             </div>
+                        </div>
+                        <div *ngIf="isSubmitted"
+                            [class.invalid-text]="isSubmitted && programFormGroup.get('electiveCourseCount')?.invalid || programFormGroup.get('electiveCourseCount')?.invalid && programFormGroup.get('electiveCourseCount')?.touched">
+                            {{ utils.getErrorMessage(programFormGroup, 'electiveCourseCount')?.message }}
+                        </div>
 
-                            <div class="m-3">
-                                <div class="card border-light mb-3 shadow rounded-5"
-                                    *ngFor="let card of electiveProgramCards; let i = index">
-                                    <div class="card-header header p-4 rounded-top-5">
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <div class="d-flex gap-4">
-                                                    <label class="card_course fs-5">Elective course</label>
-                                                    <select name="coursename"
-                                                        class="form-select rounded-2 w-50 border-secondary"
-                                                        formControlName="electiveProgramName">
-                                                        <option>Choose...</option>
-                                                        <option *ngFor="let item of programList" [value]="item.title">
-                                                            {{item.title}}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-1 ms-5">
-                                                <svg (click)="deleteElectiveCard(i)" class="ms-2 rounded-4 border"
-                                                    xmlns="http://www.w3.org/2000/svg" width="34" height="34"
-                                                    viewBox="0 0 24 24"
-                                                    style="fill: rgba(0, 0, 0, 1);padding: 5px;background: #fff;">
-                                                    <path
-                                                        d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="m-3">
+                            <div class="card border-light mb-3 shadow rounded-5"
+                                *ngFor="let card of electiveProgramCards; let i = index">
+                                <div class="card-header header p-4 rounded-top-5">
                                     <div class="row">
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                                            <ckeditor [editor]="Editor" id="editor"
-                                                formControlName="electiveProgramDescription">
-                                            </ckeditor>
-                                        </div>
-                                    </div>
-                                    <div class="card-body"></div>
-                                </div>
-                            </div>
-                            <hr class="m-4" />
-                            <div class="m-4">
-                                <p class="fs-4">Schedule Course & Set Fees</p>
-                            </div>
-                            <div class="">
-                                <div class="row m-2">
-                                    <div class="col-md-4">
-                                        <div class="d-flex gap-4">
-                                            <span class="fw-bold">Start Date</span><span>
-                                                <input type="date" formControlName="sessionStartDate"
-                                                    class="form-control rounded-2 p-1 border-secondary" />
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="d-flex gap-4">
-                                            <span class="fw-bold">End Date</span><span class="mx-2">
-                                                <input type="date" formControlName="sessionEndDate"
-                                                    class="form-control rounded-2 p-1 border-secondary" />
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="d-flex gap-4">
-                                            <span class="fw-bold">Duration</span>
-                                            <span style="margin-left: 5px;"><input type="text"
-                                                    formControlName="duration"
-                                                    class="form-control rounded-2 p-1 border-secondary"
-                                                    style="width: 70%;" /></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <div class="row m-2">
-                                        <div class="col-md-4 mt-3">
-                                            <div class="d-flex gap-1">
-                                                <span class="fw-bold">Course Fees</span>
-                                                <span style="margin-left: 3px;">
-                                                    <input type="text" formControlName="courseFee"
-                                                        class="form-control rounded-2 p-1 border-secondary"
-                                                        style="width: 75%;" /></span>
+                                        <div class="col-10">
+                                            <div class="d-flex gap-4">
+                                                <label class="card_course fs-5">Elective course</label>
+                                                <select name="coursename"
+                                                    class="form-select rounded-2 w-50 border-secondary"
+                                                    formControlName="electiveProgramName">
+                                                    <option>Choose...</option>
+                                                    <option *ngFor="let item of programList" [value]="item.title">
+                                                        {{item.title}}</option>
+                                                </select>
                                             </div>
                                         </div>
+                                        <div class="col-1 ms-5">
+                                            <svg (click)="deleteElectiveCard(i)" class="ms-2 rounded-4 border"
+                                                xmlns="http://www.w3.org/2000/svg" width="34" height="34"
+                                                viewBox="0 0 24 24"
+                                                style="fill: rgba(0, 0, 0, 1);padding: 5px;background: #fff;">
+                                                <path
+                                                    d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                        <ckeditor [editor]="Editor" id="editor"
+                                            formControlName="electiveProgramDescription">
+                                        </ckeditor>
+                                    </div>
+                                </div>
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                        <hr class="m-4" style="width: 94%;" />
+                        <div class="mt-2">
+                            <p class="fs-4 mx-3">Schedule Course & Set Fees</p>
+                        </div>
+                        <div class="">
+                            <div class="row m-2">
+                                <div class="col-md-4">
+                                    <div class="d-flex gap-4">
+                                        <span class="fw-bold">Start Date</span><span>
+                                            <input type="date" formControlName="sessionStartDate"
+                                                class="form-control rounded-2 p-1 border-secondary" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex gap-4">
+                                        <span class="fw-bold">End Date</span><span class="mx-2">
+                                            <input type="date" formControlName="sessionEndDate"
+                                                class="form-control rounded-2 p-1 border-secondary" />
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="d-flex gap-4">
+                                        <span class="fw-bold">Duration</span>
+                                        <span style="margin-left: 5px;"><input type="text" formControlName="duration"
+                                                class="form-control rounded-2 p-1 border-secondary"
+                                                style="width: 70%;" /></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-md-4 mt-3">
+                                    <div class="d-flex gap-1">
+                                        <span class="fw-bold">Course Fees</span>
+                                        <span style="margin-left: 3px;">
+                                            <input type="text" formControlName="courseFee"
+                                                class="form-control rounded-2 p-1 border-secondary"
+                                                style="width: 75%;" /></span>
+                                    </div>
+                                </div>
                                 <div class="col mt-3">
                                     <div class="d-flex gap-4">
                                         <span class="fw-bold" style="margin-top: 1px;">Currency</span>
-                                        <select
-                                            style="margin-left: 7px; width: 25%; border: solid 1px rgb(56, 56, 56); 
-                                            height: 30px;font-style: italic; font-size: 12px;"
-                                            class="form-select" aria-label="Default select example"
-                                            formControlName="currency">
+                                        <select style="margin-left: 7px; width: 25%; border: solid 1px rgb(56, 56, 56); 
+                                            height: 30px;font-style: italic; font-size: 12px;" class="form-select"
+                                            aria-label="Default select example" formControlName="currency">
                                             <option disabled>Choose...</option>
                                             <option value="USD">USD</option>
                                             <option value="SGD">SGD</option>
@@ -286,47 +285,45 @@
                                     </div>
                                 </div>
                             </div>
-                                <hr class="m-4" />
-                                <div class="mt-2">
-                                    <span class="fw-bold mx-3"> Learning Outcomes</span>
-                                    <div class="row">
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                                            <ckeditor [editor]="Editor" id="editor"
-                                                formControlName="learningOutcomes">
-                                            </ckeditor>
-                                        </div>
+                            <hr class="m-4" />
+                            <div class="mt-2">
+                                <span class="fw-bold mx-3"> Learning Outcomes</span>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                        <ckeditor [editor]="Editor" id="editor" formControlName="learningOutcomes">
+                                        </ckeditor>
                                     </div>
                                 </div>
-                                <div class="mt-2">
-                                    <span class="fw-bold mx-3">Who Should Attend</span>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                                        <ckeditor [editor]="Editor" id="editor"
-                                            formControlName="attendees">
-                                        </ckeditor>
-                                    </div>
-                                  </div>
-                                  <div class="mt-2">
-                                    <span class="fw-bold mx-3">Prerequisites</span>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                                        <ckeditor [editor]="Editor" id="editor"
-                                            formControlName="prerequisites">
-                                        </ckeditor>
-                                    </div>
-                                  </div>
                             </div>
-
+                            <div class="mt-2">
+                                <span class="fw-bold mx-3">Who Should Attend</span>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                    <ckeditor [editor]="Editor" id="editor" formControlName="attendees">
+                                    </ckeditor>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <span class="fw-bold mx-3">Prerequisites</span>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                    <ckeditor [editor]="Editor" id="editor" formControlName="prerequisites">
+                                    </ckeditor>
+                                </div>
+                            </div>
                         </div>
+
+                    </div>
                     </form>
                     <div class="row">
-                        <div class="col-md-8">
-                          <button mat-button  id="back" [routerLink]="['/admin/program/program-list']">Back</button>
+                        <div class="col-md-8 offset-lg-1">
+                            <button mat-button id="back" [routerLink]="['/admin/program/program-list']">Back</button>
                         </div>
-                        <div class="col-md-4">
-                          <div class="d-grid gap-4 d-md-flex">
-                          <button mat-raised-button type="button" color="primary" id="cancel" (click)="save()" >Submit</button>
-                          </div>
+                        <div class="col-md-3">
+
+                            <button mat-raised-button type="button" color="primary" id="submit"
+                                (click)="save()">Submit</button>
+
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>
