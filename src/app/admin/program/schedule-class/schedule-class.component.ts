@@ -11,6 +11,13 @@ import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { InstructorService } from '@core/service/instructor.service';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import {
+  TableExportUtil,
+  TableElement,
+  UnsubscribeOnDestroyAdapter,
+} from '@shared';
 
 @Component({
   selector: 'app-schedule-class',
@@ -54,7 +61,7 @@ export class ScheduleClassComponent {
   pageSizeArr = [10, 20, 50, 100];
 
 
-  displayedColumns = [ 'courseName', 'startDate', 'endDate', 'Options'];
+  displayedColumns = ['courseName', 'startDate', 'endDate', 'Options'];
 
   breadscrums = [
     {
@@ -70,7 +77,7 @@ export class ScheduleClassComponent {
     private classService: ClassService,
     private cd: ChangeDetectorRef,
     public router: Router,
-    private instructorService:InstructorService
+    private instructorService: InstructorService
   ) {
     this.coursePaginationModel = {};
   }
@@ -97,7 +104,7 @@ export class ScheduleClassComponent {
           this.coursePaginationModel.page = response.data.page;
           this.coursePaginationModel.limit = response.data.limit;
         },
-        () => {}
+        () => { }
       );
   }
 
@@ -119,6 +126,34 @@ export class ScheduleClassComponent {
   back() {
     this.next = false;
   }
+  exportExcel() {
+    const exportData: Partial<TableElement>[] =
+      this.dataSource.map((user: any) => ({
+        ProgramName: user?.courseId?.title,
+        StartDate: user?.sessions[0]?.sessionStartDate,
+        EndDate: user?.sessions[0]?.sessionEndDate,
+      }));
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Program Name', 'Start Date', 'End Date']];
+    const data = this.dataSource.map((user: any) =>
+      [user?.courseId?.title,
+      user?.sessions[0].sessionStartDate,
+      user?.sessions[0].sessionEndDate
+      ]);
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+    });
+    doc.save('Program Class-list.pdf');
+  }
+
+
+
 
   addNewRow() {
     if (this.isInstructorFailed != 1 && this.isLabFailed != 1) {
@@ -133,8 +168,8 @@ export class ScheduleClassComponent {
       this.dataSource = this.dataSourceArray;
     }
   }
-  editRow(_id:string){
-     console.log("id",_id)
+  editRow(_id: string) {
+    console.log("id", _id)
   }
   delete(id: string) {
     this.courseService

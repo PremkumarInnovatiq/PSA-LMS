@@ -20,22 +20,4 @@ export class TableExportUtil {
     XLSX.writeFile(wb, `${fileName}.xlsx`);
   }
 
-  // static exportToPDF(exportData: any[]) {
-  //   const doc = new jsPDF();
-  //   const dataValue: any = Object.keys(exportData).map(function (
-  //     personNamedIndex: any
-  //   ) {
-  //     return Object.values(exportData[personNamedIndex]);
-  //   });
-  //   const keys: any = Object.keys(exportData[0]);
-
-  //   autoTable(doc, {
-  //     head: [keys],
-  //     body: dataValue,
-  //   });
-
-  //   const { fileName } = getFileName('pdf');
-
-  //   doc.save(`${fileName}.pdf`);
-  // }
 }

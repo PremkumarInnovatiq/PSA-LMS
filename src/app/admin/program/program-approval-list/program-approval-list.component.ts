@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 // import { StudentsService } from './students.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, fromEvent, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 // import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
 // import { DeleteDialogComponent } from './dialogs/delete/delete.component';
@@ -29,351 +29,195 @@ import { Students } from 'app/admin/students/all-students/students.model';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { FormDialogComponent } from 'app/admin/students/all-students/dialogs/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/admin/students/all-students/dialogs/delete/delete.component';
+import { CourseModel, CoursePaginationModel, MainCategory, SubCategory } from '@core/models/course.model';
+import { Router } from '@angular/router';
+import { CourseService } from '@core/service/course.service';
+import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-program-approval-list',
   templateUrl: './program-approval-list.component.html',
   styleUrls: ['./program-approval-list.component.scss']
 })
-export class ProgramApprovalListComponent extends UnsubscribeOnDestroyAdapter
-implements OnInit
-{
-displayedColumns = [
-  'select',
-  'img',
-  'rollNo',
-  'name',
-  'department',
-  'gender',
-  'mobile',
-  'email',
-  'date',
-  'actions',
-];
-exampleDatabase?: StudentsService;
-dataSource!: ExampleDataSource;
-selection = new SelectionModel<Students>(true, []);
-id?: number;
-students?: Students;
-breadscrums = [
-  {
-    title: 'All Student',
-    items: ['Student'],
-    active: 'All Student',
-  },
-];
-constructor(
-  public httpClient: HttpClient,
-  public dialog: MatDialog,
-  public studentsService: StudentsService,
-  private snackBar: MatSnackBar
-) {
-  super();
-}
-@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-@ViewChild(MatSort, { static: true }) sort!: MatSort;
-@ViewChild('filter', { static: true }) filter!: ElementRef;
-@ViewChild(MatMenuTrigger)
-contextMenu?: MatMenuTrigger;
-contextMenuPosition = { x: '0px', y: '0px' };
-
-ngOnInit() {
-  this.loadData();
-}
-refresh() {
-  this.loadData();
-}
-addNew() {
-  let tempDirection: Direction;
-  if (localStorage.getItem('isRtl') === 'true') {
-    tempDirection = 'rtl';
-  } else {
-    tempDirection = 'ltr';
-  }
-  const dialogRef = this.dialog.open(FormDialogComponent, {
-    data: {
-      students: this.students,
-      action: 'add',
-    },
-    direction: tempDirection,
-  });
-  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
-      // After dialog is closed we're doing frontend updates
-      // For add we're just pushing a new row inside DataServicex
-      this.exampleDatabase?.dataChange.value.unshift(
-        this.studentsService.getDialogData()
-      );
-      this.refreshTable();
-      this.showNotification(
-        'snackbar-success',
-        'Add Record Successfully...!!!',
-        'bottom',
-        'center'
-      );
-    }
-  });
-}
-editCall(row: Students) {
-  this.id = row.id;
-  let tempDirection: Direction;
-  if (localStorage.getItem('isRtl') === 'true') {
-    tempDirection = 'rtl';
-  } else {
-    tempDirection = 'ltr';
-  }
-  const dialogRef = this.dialog.open(FormDialogComponent, {
-    data: {
-      students: row,
-      action: 'edit',
-    },
-    direction: tempDirection,
-  });
-  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
-      // When using an edit things are little different, firstly we find record inside DataService by id
-      const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-        (x) => x.id === this.id
-      );
-      // Then you update that record using data from dialogData (values you enetered)
-      if (foundIndex != null && this.exampleDatabase) {
-        this.exampleDatabase.dataChange.value[foundIndex] =
-          this.studentsService.getDialogData();
-        // And lastly refresh table
-        this.refreshTable();
-        this.showNotification(
-          'black',
-          'Edit Record Successfully...!!!',
-          'bottom',
-          'center'
-        );
-      }
-    }
-  });
-}
-deleteItem(row: Students) {
-  this.id = row.id;
-  let tempDirection: Direction;
-  if (localStorage.getItem('isRtl') === 'true') {
-    tempDirection = 'rtl';
-  } else {
-    tempDirection = 'ltr';
-  }
-  const dialogRef = this.dialog.open(DeleteDialogComponent, {
-    data: row,
-    direction: tempDirection,
-  });
-  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
-      const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-        (x) => x.id === this.id
-      );
-      // for delete we use splice in order to remove single object from DataService
-      if (foundIndex != null && this.exampleDatabase) {
-        this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-        this.refreshTable();
-        this.showNotification(
-          'snackbar-danger',
-          'Delete Record Successfully...!!!',
-          'bottom',
-          'center'
-        );
-      }
-    }
-  });
-}
-private refreshTable() {
-  this.paginator._changePageSize(this.paginator.pageSize);
-}
-/** Whether the number of selected elements matches the total number of rows. */
-isAllSelected() {
-  const numSelected = this.selection.selected.length;
-  const numRows = this.dataSource.renderedData.length;
-  return numSelected === numRows;
-}
-
-/** Selects all rows if they are not all selected; otherwise clear selection. */
-masterToggle() {
-  this.isAllSelected()
-    ? this.selection.clear()
-    : this.dataSource.renderedData.forEach((row) =>
-        this.selection.select(row)
-      );
-}
-removeSelectedRows() {
-  const totalSelect = this.selection.selected.length;
-  this.selection.selected.forEach((item) => {
-    const index: number = this.dataSource.renderedData.findIndex(
-      (d) => d === item
-    );
-    // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
-    this.exampleDatabase?.dataChange.value.splice(index, 1);
-    this.refreshTable();
-    this.selection = new SelectionModel<Students>(true, []);
-  });
-  this.showNotification(
-    'snackbar-danger',
-    totalSelect + ' Record Delete Successfully...!!!',
-    'bottom',
-    'center'
-  );
-}
-public loadData() {
-  this.exampleDatabase = new StudentsService(this.httpClient);
-  this.dataSource = new ExampleDataSource(
-    this.exampleDatabase,
-    this.paginator,
-    this.sort
-  );
-  console.log("datataewe",this.exampleDatabase)
-  this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
-    () => {
-      if (!this.dataSource) {
-        return;
-      }
-      this.dataSource.filter = this.filter.nativeElement.value;
-    }
-  );
-}
-// export table data in excel file
-exportExcel() {
-  // key name with space add in brackets
-  const exportData: Partial<TableElement>[] =
-    this.dataSource.filteredData.map((x) => ({
-      'Roll No': x.rollNo,
-      Name: x.name,
-      Department: x.department,
-      Gender: x.gender,
-      Mobile: x.mobile,
-      Email: x.email,
-      'Admission Date':
-        formatDate(new Date(x.joiningDate), 'yyyy-MM-dd', 'en') || '',
-    }));
-
-  TableExportUtil.exportToExcel(exportData, 'excel');
-}
-
-showNotification(
-  colorName: string,
-  text: string,
-  placementFrom: MatSnackBarVerticalPosition,
-  placementAlign: MatSnackBarHorizontalPosition
-) {
-  this.snackBar.open(text, '', {
-    duration: 2000,
-    verticalPosition: placementFrom,
-    horizontalPosition: placementAlign,
-    panelClass: colorName,
-  });
-}
-// context menu
-onContextMenu(event: MouseEvent, item: Students) {
-  event.preventDefault();
-  this.contextMenuPosition.x = event.clientX + 'px';
-  this.contextMenuPosition.y = event.clientY + 'px';
-  if (this.contextMenu !== undefined && this.contextMenu.menu !== null) {
-    this.contextMenu.menuData = { item: item };
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
-  }
-}
-}
-export class ExampleDataSource extends DataSource<Students> {
-filterChange = new BehaviorSubject('');
-get filter(): string {
-  return this.filterChange.value;
-}
-set filter(filter: string) {
-  this.filterChange.next(filter);
-}
-filteredData: Students[] = [];
-renderedData: Students[] = [];
-constructor(
-  public exampleDatabase: StudentsService,
-  public paginator: MatPaginator,
-  public _sort: MatSort
-) {
-  super();
-  // Reset to the first page when the user changes the filter.
-  this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
-}
-/** Connect function called by the table to retrieve one stream containing the data to render. */
-connect(): Observable<Students[]> {
-  // Listen for any changes in the base data, sorting, filtering, or pagination
-  const displayDataChanges = [
-    this.exampleDatabase.dataChange,
-    this._sort.sortChange,
-    this.filterChange,
-    this.paginator.page,
+export class ProgramApprovalListComponent
+implements OnInit{
+  displayedColumns: string[] = [
+    'select',
+    'Program Name',
+    'Compulsory Count',
+    'Elective Count',
+    'status'
   ];
- const type = {
-    type:'Student'
+  breadscrums = [
+    {
+      title: 'Program Approval',
+      items: ['Program'],
+      active: 'Program Approval',
+    },
+  ];
+  edit :boolean = false;
+  dataSource: any;
+  mainCategories!: MainCategory[]; 
+  subCategories!: SubCategory[];
+  allSubCategories!: SubCategory[];
+  coursePaginationModel: Partial<CoursePaginationModel>;
+  totalItems: any;
+  pageSizeArr = [10, 20, 50, 100];
+  isLoading = true;
+  selection = new SelectionModel<CourseModel>(true, []);
+
+  constructor(private router: Router,
+  private courseService: CourseService,private cd: ChangeDetectorRef, private snackBar: MatSnackBar){
+    this.coursePaginationModel = {};
+    this.coursePaginationModel.main_category = '0';
+    this.coursePaginationModel.sub_category = '0';
   }
-  this.exampleDatabase.getAllStudentss(type);
-  return merge(...displayDataChanges).pipe(
-    map(() => {
-      // Filter data
-      console.log(this.exampleDatabase.data)
-      this.filteredData = this.exampleDatabase.data
-        .slice()
-        .filter((students: Students) => {
-          const searchStr = (
-            students.id +
-            students.name +
-            students.email +
-            students.mobile
-          ).toLowerCase();
-          return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-        });
-        console.log("filted",this.filteredData)
-      // Sort filtered data
-      const sortedData = this.sortData(this.filteredData.slice());
-      // Grab the page's slice of the filtered sorted data.
-      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      this.renderedData = sortedData.splice(
-        startIndex,
-        this.paginator.pageSize
-      );
-      return this.renderedData;
-    })
-  );
-}
-disconnect() {
-  // disconnect
-}
-/** Returns a sorted copy of the database data. */
-sortData(data: Students[]): Students[] {
-  if (!this._sort.active || this._sort.direction === '') {
-    return data;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('filter', { static: true }) filter!: ElementRef;
+
+  upload() {
+    document.getElementById('input')?.click();
   }
-  return data.sort((a, b) => {
-    let propertyA: number | string = '';
-    let propertyB: number | string = '';
-    switch (this._sort.active) {
-      case 'id':
-        [propertyA, propertyB] = [a.id, b.id];
-        break;
-      case 'name':
-        [propertyA, propertyB] = [a.name, b.name];
-        break;
-      case 'email':
-        [propertyA, propertyB] = [a.email, b.email];
-        break;
-      case 'date':
-        [propertyA, propertyB] = [a.joiningDate, b.joiningDate];
-        break;
-      case 'time':
-        [propertyA, propertyB] = [a.department, b.department];
-        break;
-      case 'mobile':
-        [propertyA, propertyB] = [a.mobile, b.mobile];
-        break;
-    }
-    const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-    const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-    return (
-      (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
+  selectopt(item: any) {
+    item.optselected = !item.optselected;
+  }
+
+  ngOnInit(): void {
+    this.setup()
+  }
+  private setup(): void {
+    forkJoin({
+      mainCategory: this.courseService.getMainCategories(),
+      subCategory: this.courseService.getSubCategories(),
+    }).subscribe((response:any) => {
+      this.mainCategories = response.mainCategory;
+      this.allSubCategories = response.subCategory;
+      this.getProgramList();
+      this.cd.detectChanges();
+    });
+  }
+  pageSizeChange($event: any) {
+    this.coursePaginationModel.page= $event?.pageIndex + 1;
+    this.coursePaginationModel.limit= $event?.pageSize;
+    this.getProgramList();
+   }
+ 
+  getProgramList(filters?: any) {
+    this.courseService.getCourseProgram({...this.coursePaginationModel,status:'inactive'}).subscribe(
+      (response: any) => {
+        console.log("page",response)
+        this.totalItems = response.totalDocs;
+        this.dataSource = response.docs;
+        this.coursePaginationModel.docs = response.docs;
+        this.coursePaginationModel.page = response.page;
+        this.coursePaginationModel.limit = response.limit;
+        this.coursePaginationModel.totalDocs = response.totalDocs;
+      },
+      (error) => {
+      }
     );
-  });
+  }
+
+  approveProgram(id:any,program: any): void {
+    program.status = 'active';
+    this.courseService.updateCourseProgram(id,program).subscribe(() => {
+      Swal.fire({
+        title: 'Success',
+        text: 'Program approved successfully.',
+        icon: 'success',
+        confirmButtonColor: '#526D82',
+      });
+      this.getProgramList();
+    }, (error) => {
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to approve program. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#526D82',
+      });
+    });
+  }
+  exportExcel() {
+   const exportData: Partial<TableElement>[] =
+      this.dataSource.map((user:any) => ({
+        ProgramName:user?.title,
+        CompulsoryCount: user?.coreCourseCount,
+        ElectiveCount: user?.electiveCourseCount,
+        status:user?.status
+      }));
+    TableExportUtil.exportToExcel(exportData, 'excel');
+  }
+  generatePdf() {
+    const doc = new jsPDF();
+    const headers = [['Program Name','Compulsory Count','Elective Count','Status']];
+    const data = this.dataSource.map((user:any) =>
+      [user?.title,
+        user?.coreCourseCount,
+       user?.electiveCourseCount,
+       user?.status,
+
+    ] );
+    const columnWidths = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+    (doc as any).autoTable({
+      head: headers,
+      body: data,
+      startY: 20,
+    });
+    doc.save('Program Approve-list.pdf');
+  }
+
+
+
+  private refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.forEach((row: CourseModel) =>
+          this.selection.select(row)
+        );
+  }
+  
+  showNotification(
+    colorName: string,
+    text: string,
+    placementFrom: MatSnackBarVerticalPosition,
+    placementAlign: MatSnackBarHorizontalPosition
+  ) {
+    this.snackBar.open(text, '', {
+      duration: 2000,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName,
+    });
+  }
+  removeSelectedRows() {
+    const totalSelect = this.selection.selected.length;
+    this.selection.selected.forEach((item) => {
+      const index: number = this.dataSource.findIndex(
+        (d: CourseModel) => d === item
+      );
+      // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
+      this.courseService?.dataChange.value.splice(index, 1);
+      this.refreshTable();
+      this.selection = new SelectionModel<CourseModel>(true, []);
+    });
+    this.showNotification(
+      'snackbar-danger',
+      totalSelect + ' Record Delete Successfully...!!!',
+      'top',
+      'right'
+    );
+  }
 }
-}
+
