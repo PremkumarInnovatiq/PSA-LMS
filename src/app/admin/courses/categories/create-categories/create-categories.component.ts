@@ -78,7 +78,7 @@ export class CreateCategoriesComponent implements OnInit{
     if(this.editUrl){
           this.getData();
           }
-    // this.fetchSubCategories();
+   
     this.initMainCategoryForm();
     this.initSubCategoryForm();
     this.addSubCategoryField();
@@ -86,7 +86,7 @@ export class CreateCategoriesComponent implements OnInit{
   pageSizeChange($event: any) {
     this.coursePaginationModel.page= $event?.pageIndex + 1;
     this.coursePaginationModel.limit= $event?.pageSize;
-    // this.fetchSubCategories();
+    
    }
 
   addSubCategoryField(): void {
@@ -98,7 +98,6 @@ export class CreateCategoriesComponent implements OnInit{
   }
   initSubCategoryForm(): void {
     this.subCategoryForm = this.formBuilder.group({
-      category_name: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]/)]),
       main_category_id: [''],
       subcategories: this.formBuilder.array([])
     });
@@ -123,7 +122,38 @@ export class CreateCategoriesComponent implements OnInit{
     );
     this.isSubmitted=false
   }
-  
+  deleteItem(item: any) {
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: "Are you sure you want to delete this course kit?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.deleteCategory(item._id).subscribe(
+          () => {
+            Swal.fire({
+              title: "Deleted",
+              text: "Category deleted successfully",
+              icon: "success",
+            });
+            // this.fetchSubCategories();
+          },
+          (error: { message: any; error: any; }) => {
+            Swal.fire(
+              "Failed to delete course kit",
+              error.message || error.error,
+              "error"
+            );
+          }
+        );
+      }
+    });
+  }
   createSubCategory(): void {
     this.isSubmitted=true
     if (this.subCategoryForm.invalid) {
@@ -143,7 +173,6 @@ export class CreateCategoriesComponent implements OnInit{
         this.subCategoryForm.reset();
         this.initSubCategoryForm();
         this.addSubCategoryField();
-        // this.fetchSubCategories();
       },
       (error) => {
         Swal.fire('Error', 'Failed to create subcategories!', 'error');
@@ -154,11 +183,15 @@ export class CreateCategoriesComponent implements OnInit{
 
   initMainCategoryForm(): void {
     this.mainCategoryForm = this.formBuilder.group({
-      category_name: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]/)]),
+      category_name: new FormControl('', [Validators.required,...this.utils.validators.category_name,...this.utils.validators.noLeadingSpace]),
       
     });
   }
-
+  
+  
+  upload() {
+    document.getElementById('input')?.click();
+  }
   getData(){
     console.log("=======test")
     
@@ -187,18 +220,9 @@ export class CreateCategoriesComponent implements OnInit{
         this.subCategoryForm = this.formBuilder.group({
           subcategories: this.formBuilder.array(itemControls),
         });
-        
-  
       }
-     
-      
-      
-      
     });
-  
   
   }
 
-
- 
 }

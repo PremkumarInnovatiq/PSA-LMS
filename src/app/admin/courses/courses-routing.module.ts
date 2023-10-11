@@ -9,6 +9,8 @@ import { CourseKitComponent } from './course-kit/course-kit.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CreateCategoriesComponent } from './categories/create-categories/create-categories.component';
 import { CreateCourseKitComponent } from './course-kit/create-course-kit/create-course-kit.component';
+import { EditCourseKitComponent } from './course-kit/edit-course-kit/edit-course-kit.component';
+import { EditCategoriesComponent } from './categories/edit-categories/edit-categories.component';
 
 const routes: Routes = [
   {
@@ -53,7 +55,7 @@ const routes: Routes = [
   },
   {
     path: 'edit-categories/:id',
-    component:  CreateCategoriesComponent
+    component:  EditCategoriesComponent
   },
   {
     path: 'create-course-kit',
@@ -61,11 +63,11 @@ const routes: Routes = [
   },
   {
     path: 'edit-course-kit/:id',
-    component:  CreateCourseKitComponent
+    component:  EditCourseKitComponent
   },
   {
     path: 'view-course-kit/:id',
-    component:  CreateCourseKitComponent
+    component:  EditCourseKitComponent
   },
 ];
 

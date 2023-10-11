@@ -37,10 +37,10 @@ export class CreateCourseKitComponent implements OnInit{
   pageSizeArr = this.utils.pageSizeArr;
   dataSource: any;
   displayedColumns!: string[];
-  viewUrl: any;
+  
   isSubmitted = false;
-  editUrl: any;
-  //viewUrl: any;
+  
+  
   totalItems: any;
   currentDate: Date;
   model = { coursename: "", sd: "", ld: "", dl: "", vltitle: "", selectopt: false };
@@ -49,7 +49,7 @@ export class CreateCourseKitComponent implements OnInit{
   courseId!: string;
   course:any;
   fileName:any;
-  mode: string = 'editUrl';
+  
 
 
   constructor(private router: Router,
@@ -63,28 +63,9 @@ export class CreateCourseKitComponent implements OnInit{
   ) {
     this.currentDate = new Date();
     this.courseKitModel = {};
-    let urlPath = this.router.url.split('/')
-    this.editUrl = urlPath.includes('edit-course-kit');
-    this.viewUrl = urlPath.includes('view-course-kit');
+   
 
-    if(this.editUrl===true){
-      this.breadscrums = [
-        {
-          title:'Edit Course Kit',
-          items: ['Course'],
-          active: 'Edit Course Kit',
-        },
-      ];
-    }
-    else if(this.viewUrl===true){
-      this.breadscrums = [
-        {
-          title:'View Course Kit',
-          items: ['Course'],
-          active: 'View Course Kit',
-        },
-      ];
-    }
+    
 
     this.courseKitForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required, ...this.utils.validators.title, ...this.utils.validators.noLeadingSpace]),
@@ -127,15 +108,7 @@ export class CreateCourseKitComponent implements OnInit{
     element.end = element.start;
   }
 ngOnInit(): void {
-  if(this.editUrl){
-    this.getData();
-  }
  
-
-  if(this.viewUrl){
-    this.mode = 'viewUrl';
-
-  }
 
 }
   private createCourseKit(courseKitData: CourseKit): void {
@@ -208,44 +181,42 @@ ngOnInit(): void {
     } else {
       this.isSubmitted=true;    }
   }
-  isInputReadonly(): boolean {
-    return this.mode === 'viewUrl'; // If mode is 'viewUrl', return true (readonly); otherwise, return false (editable).
-  } 
+ 
 
-    getData(){
-      forkJoin({
-        course: this.courseService.getCourseKitById(this.courseId),
+    // getData(){
+    //   forkJoin({
+    //     course: this.courseService.getCourseKitById(this.courseId),
         
-      }).subscribe((response: any) => {
-        if(response){
-          this.course = response.course;
-          this.fileName=response?.course?.videoLink?response?.course?.videoLink[0].filename:null
-          let startingDate=response?.course?.startDate;
-          let endingDate=response?.course?.endDate;
-          let startTime=response?.course?.startDate.split("T")[1];
-          let startingTime=startTime?.split(".")[0];
-          let endTime=response?.course?.endDate.split("T")[1];
-          let endingTime=endTime?.split(".")[0];
+    //   }).subscribe((response: any) => {
+    //     if(response){
+    //       this.course = response.course;
+    //       this.fileName=response?.course?.videoLink?response?.course?.videoLink[0].filename:null
+    //       let startingDate=response?.course?.startDate;
+    //       let endingDate=response?.course?.endDate;
+    //       let startTime=response?.course?.startDate.split("T")[1];
+    //       let startingTime=startTime?.split(".")[0];
+    //       let endTime=response?.course?.endDate.split("T")[1];
+    //       let endingTime=endTime?.split(".")[0];
   
-          this.courseKitForm.patchValue({
-            name: response?.course?.name,
-            documentLink: response?.course?.documentLink,
-            shortDescription: response?.course?.shortDescription,
-            longDescription: response?.course?.longDescription,
-            videoLink: response?.course?.videoLink?response?.course?.videoLink[0]._id:null,
-            startDate:`${moment(startingDate).format("YYYY-MM-DD")}T${startingTime}`,
-            endDate:`${moment(endingDate).format("YYYY-MM-DD")}T${endingTime}`
+    //       this.courseKitForm.patchValue({
+    //         name: response?.course?.name,
+    //         documentLink: response?.course?.documentLink,
+    //         shortDescription: response?.course?.shortDescription,
+    //         longDescription: response?.course?.longDescription,
+    //         videoLink: response?.course?.videoLink?response?.course?.videoLink[0]._id:null,
+    //         startDate:`${moment(startingDate).format("YYYY-MM-DD")}T${startingTime}`,
+    //         endDate:`${moment(endingDate).format("YYYY-MM-DD")}T${endingTime}`
             
-          });
+    //       });
   
-        }
+    //     }
        
         
         
         
-      });
+    //   });
     
   
-    }
+    // }
 
 }
