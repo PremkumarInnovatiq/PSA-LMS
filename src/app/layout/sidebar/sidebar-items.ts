@@ -467,7 +467,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/email-configuration/forgot-password',
         title: 'Forgot Password',
         iconType: '',
         icon: '',
@@ -479,7 +479,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/welcome-mail',
         title: 'Welcome E-mail',
         iconType: '',
         icon: '',
@@ -491,7 +491,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/instructor-request',
         title: 'Instructor Request',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -503,7 +503,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/invite-user-reject',
         title: 'Invite User Reject',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -515,7 +515,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/new-student-referred',
         title: 'New Student Referred',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -527,7 +527,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/course-referral-invite',
         title: 'Course Referral Invite',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -539,7 +539,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/completed-course',
         title: 'Completed Course',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -551,7 +551,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/instructor-course-invite',
         title: 'Instructor Course Invite',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -563,7 +563,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/instructor-accept-course-invite-status',
         title: 'Instructor Accept Course Invite Status',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -575,7 +575,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/send-course-invoice',
         title: 'Send Course Invoice',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -587,7 +587,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/email-configuration/admin-new-mail',
         title: 'Admin New Email',
         iconType: 'material-icons-two-tone',
         icon: '',
