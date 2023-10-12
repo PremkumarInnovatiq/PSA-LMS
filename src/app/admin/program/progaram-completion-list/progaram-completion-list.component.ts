@@ -85,7 +85,7 @@ export class ProgaramCompletionListComponent {
     this.classService.saveApprovedProgramClasses(element.id, item).subscribe((response:any) => {
       Swal.fire({
         title: 'Success',
-        text: 'Course approved successfully.',
+        text: 'Program approved successfully.',
         icon: 'success',
         confirmButtonColor: '#526D82',
       });
