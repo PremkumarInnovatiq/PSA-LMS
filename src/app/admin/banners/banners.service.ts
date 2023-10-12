@@ -25,4 +25,34 @@ export class BannersService {
       })
     );
   }
+
+
+  editBanner(id:any, activeStatus:any): Observable<AddDefaultBanner> {
+    const apiUrl = `${this.defaultUrl}admin/bannerImage/${id}`;
+    return this.http.put<ApiResponse>(apiUrl, {"isActivated": activeStatus}).pipe(
+      map((response) => {
+        Logging.debug(response.data);
+        return response.data;
+      })
+    );
+  }
+
+  deleteBanner(id:any): Observable<AddDefaultBanner> {
+    const apiUrl = `${this.defaultUrl}admin/bannerImage/${id}`;
+    return this.http.delete<ApiResponse>(apiUrl).pipe(
+      map((response) => {
+        Logging.debug(response.data);
+        return response.data;
+      })
+    );
+  }
+
+  removeBannerImage(formData:any): Observable<AddDefaultBanner> {
+    const apiUrl = this.defaultUrl + 'admin/bannerImage/removeBannerImage';
+    return this.http.post<ApiResponse>(apiUrl, formData).pipe(map(response => {
+      Logging.debug(response);
+      return response.data;
+    }));
+  }
+
 }
