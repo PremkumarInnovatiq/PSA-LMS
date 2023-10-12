@@ -86,7 +86,7 @@ export class StudentApprovalListComponent {
    }
 
   changeStatus(element: Student, status:string) {
-    debugger
+    //debugger
     let item: StudentApproval = {
       approvedBy: this.getCurrentUserId(),
       approvedOn: moment().format("YYYY-MM-DD"),
