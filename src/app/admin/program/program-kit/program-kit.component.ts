@@ -56,7 +56,7 @@ export class ProgramKitComponent {
   currentDate: Date;
 
 
-  headeritems = ["Program Name", "Short Description", "Long Description",
+  headeritems = ["Program Kit Name", "Short Description", "Long Description",
     "Video Link", "Document Link", "Actions"]
   model = { programname: "", sd: "", ld: "", dl: "", vltitle: "", selectopt: false };
   fileDropRef: any;
