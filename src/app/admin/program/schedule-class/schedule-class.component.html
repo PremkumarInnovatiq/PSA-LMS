@@ -166,11 +166,11 @@
                               </button> -->
                               <button mat-menu-item [routerLink]="['/admin/program/edit-class',row.id]">
                                 <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                                <span class="menu-text px-3 color">Edit</span>
+                                <span class="menu-text px-3">Edit</span>
                               </button>
                               <button  (click)="delete(row.id)"mat-menu-item  class="align-items-center">
                                 <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                                <span class="menu-text px-3 text-danger">Delete</span>
+                                <span class="menu-text px-3">Delete</span>
                               </button>
                             </mat-menu>
                   </mat-cell>
