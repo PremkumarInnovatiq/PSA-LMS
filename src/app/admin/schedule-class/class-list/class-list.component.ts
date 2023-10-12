@@ -178,7 +178,7 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
       if (matchingClasses.length > 0) {
         Swal.fire({
           title: 'Error',
-          text: 'Classes have been registered with this course. Cannot delete.',
+          text: 'Class have been registered . Cannot delete.',
           icon: 'error',
         });
         return;
@@ -186,7 +186,7 @@ export class ClassListComponent extends UnsubscribeOnDestroyAdapter{
       this._classService.deleteClass(id).subscribe(() => {
         Swal.fire({
           title: 'Success',
-          text: 'Course deleted successfully.',
+          text: 'Class deleted successfully.',
           icon: 'success',
         });
         this.getClassList();
