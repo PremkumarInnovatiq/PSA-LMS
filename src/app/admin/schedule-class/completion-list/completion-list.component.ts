@@ -30,7 +30,7 @@ export class CompletionListComponent {
     {
       title: 'Class List',
       items: ['Schedule Class'],
-      active: 'Class List',
+      active: 'Completion List',
     },
   ];
 

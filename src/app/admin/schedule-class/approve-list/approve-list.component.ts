@@ -50,7 +50,7 @@ export class ApproveListComponent  {
     {
       title: 'Class List',
       items: ['Schedule Class'],
-      active: 'Class List',
+      active: 'Approve List',
     },
   ];
   searchTerm: string = '';

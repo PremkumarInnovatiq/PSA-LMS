@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-md-4">
                           <div class="d-grid gap-4 d-md-flex">
-                          <button mat-button id="submit">Submit</button>
+                          <button mat-button id="submit" (click)="update()">{{editUrl? 'Update': 'Create'}}</button>
                    
                           </div>
                         </div>

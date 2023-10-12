@@ -84,7 +84,7 @@ export class CreateAllUsersComponent {
           }).then(() => {
             resolve(response);
           });
-          this.router.navigate(['/Users/All User'])
+          this.router.navigate(['/admin/users/all-users'])
 
         },
         (error) => {

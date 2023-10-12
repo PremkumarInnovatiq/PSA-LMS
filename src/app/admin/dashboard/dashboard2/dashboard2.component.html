@@ -181,12 +181,26 @@
                     <td>{{instructor?.mobile}}</td>
                     <td>{{instructor?.joiningDate | date}}</td>
                     <td>
-                      <button mat-icon-button class="tbl-action-btn"  [routerLink]="['/admin/teachers/edit-teacher',instructor.id]">
-                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                      <button mat-button [matMenuTriggerFor]="menu">
+                        <svg class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                        xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-three-dots rounded-circle" viewBox="0 0 16 16">
+                        <path
+                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                      </svg>
+  
                       </button>
-                      <button mat-icon-button class="tbl-action-btn" (click)="deleteItem(instructor)">
-                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
-                      </button>
+                      
+                              <mat-menu #menu="matMenu" xPosition="before">
+                                <button mat-menu-item  class="tbl-action-btn" [routerLink]="['/admin/teachers/edit-teacher',instructor.id]">
+                                  <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                                  <span class="menu-text">Edit</span>
+                                </button>
+                                <button mat-menu-item class="tbl-action-btn" (click)="deleteItem(instructor)">
+                                  <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                                  <span class="menu-text">Delete</span>
+                                </button>
+                              </mat-menu>
                     </td>
                   </tr>
                  
