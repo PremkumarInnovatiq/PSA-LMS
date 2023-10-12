@@ -27,7 +27,7 @@ export class InviteUserRejectComponent {
     {
       title: 'Forgot Mail',
       items: ['Email Configuration'],
-      active: 'Instructor Request',
+      active: 'Invite User Reject',
     },
   ];
   constructor(
