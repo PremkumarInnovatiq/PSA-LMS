@@ -1,3 +1,4 @@
+
 <section class="content">
   <div class="content-block">
     <div class="block-header" *ngFor="let breadscrum of breadscrums">
@@ -5,22 +6,38 @@
       <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
       </app-breadcrumb>
     </div>
-    <div class="row clearfix">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
+      <div class="col-md-12">
         <div class="card">
           <div class="header">
             <h2>Instructor Banner</h2>
           </div>
           <div class="body">
-
-            <div class="row" *ngFor="let banner of bannerList">
-              <div class="card">
-                <img [src]="banner.imagePath" alt="Image" class="image">
+            <div class="row" >
+              <div class="col-md-3" *ngFor="let banner of bannerList">
+                <div class="course-card1 course-card-blog">
+                  <div class="course-card-image1">
+                    <img class="img" src="{{banner.imagePath}}">
+                  </div>
+                     <div class="text-center mb-3">
+                      <button *ngIf="!banner?.isActivated" mat-icon-button  matTooltip="ACTIVE" class="tbl-action-btn" (click)="onChange(banner._id,'false')">
+                        <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
+                      </button>
+                      <button *ngIf="banner?.isActivated"  mat-icon-button matTooltip="DEACTIVATE" class="tbl-action-btn icon-color" (click)="onChange(banner._id,'true')">
+                        <i class="material-icons " >do_not_disturb_off</i>
+                      </button>
+                      <button  mat-icon-button matTooltip="DELETE" class="tbl-action-btn" (click)="removeBannerImage(banner._id)">
+                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                      </button>
+                    </div>
+                </div>
               </div>
-            </div>
+              </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+

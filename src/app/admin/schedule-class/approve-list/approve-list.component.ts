@@ -117,7 +117,9 @@ export class ApproveListComponent  {
     this.studentPaginationModel.docs.forEach((item: Student) => {
       const startDateArr: any = [];
       const endDateArr: any = [];
+      console.log("session1",item?.classId)
       item?.classId?.sessions?.forEach((session) => {
+        console.log("session",session)
         startDateArr.push(new Date(session?.sessionStartDate?.toString()));
         endDateArr.push(new Date(session?.sessionEndDate?.toString()));
       });

@@ -23,6 +23,7 @@ import { SurveyBuilderModel } from '../survey.model';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-survey-list',
   templateUrl: './survey-list.component.html',
@@ -70,37 +71,6 @@ export class SurveyListComponent extends UnsubscribeOnDestroyAdapter
   refresh() {
     this.loadData();
   }
-  // addNew() {
-  //   let tempDirection: Direction;
-  //   if (localStorage.getItem('isRtl') === 'true') {
-  //     tempDirection = 'rtl';
-  //   } else {
-  //     tempDirection = 'ltr';
-  //   }
-  //   const dialogRef = this.dialog.open(FormDialogComponent, {
-  //     data: {
-  //       staff: this.staff,
-  //       action: 'add',
-  //     },
-  //     direction: tempDirection,
-  //   });
-  //   this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-  //     if (result === 1) {
-  //       // After dialog is closed we're doing frontend updates
-  //       // For add we're just pushing a new row inside DataService
-  //       this.exampleDatabase?.dataChange.value.unshift(
-  //         this.surveyService.getDialogData()
-  //       );
-  //       this.refreshTable();
-  //       this.showNotification(
-  //         'snackbar-success',
-  //         'Add Record Successfully...!!!',
-  //         'bottom',
-  //         'center'
-  //       );
-  //     }
-  //   });
-  // }
   editCall(row: SurveyBuilderModel) {
 
     console.log("rowEdit",row)
@@ -142,36 +112,30 @@ export class SurveyListComponent extends UnsubscribeOnDestroyAdapter
     //   }
     // });
   }
-  deleteItem(row: SurveyBuilderModel) {
-    // this.id = row.id;
-    // let tempDirection: Direction;
-    // if (localStorage.getItem('isRtl') === 'true') {
-    //   tempDirection = 'rtl';
-    // } else {
-    //   tempDirection = 'ltr';
-    // }
-    // const dialogRef = this.dialog.open(DeleteDialogComponent, {
-    //   data: row,
-    //   direction: tempDirection,
-    // });
-    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    //   if (result === 1) {
-    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-    //       (x) => x.id === this.id
-    //     );
-    //     // for delete we use splice in order to remove single object from DataService
-    //     if (foundIndex != null && this.exampleDatabase) {
-    //       this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-    //       this.refreshTable();
-    //       this.showNotification(
-    //         'snackbar-danger',
-    //         'Delete Record Successfully...!!!',
-    //         'bottom',
-    //         'center'
-    //       );
-    //     }
-    //   }
-    // });
+  deleteItem(id: SurveyBuilderModel) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this survey entry!',
+      icon: 'warning',
+      confirmButtonText: 'Yes',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed){
+        this.surveyService.deleteSurveyBuilders(id).subscribe(response => {
+          console.log(response);
+          if (response.success){
+            Swal.fire(
+              'Deleted!',
+              'Survey entry has been deleted.',
+              'success'
+            );
+            this.loadData();
+          }
+        });
+      }
+    });
+
   }
   generatePdf() {
     const doc = new jsPDF();
