@@ -14,7 +14,7 @@
             <div class="body">
               <div class="row" >
                 <div class="col-md-3" *ngFor="let data of dataSource">
-                  <div class="program-card course-card-blog">
+                  <div class="student-program-card course-card-blog">
                     <div class="course-card-image">
                       <img class="img" src="{{data?.courseId?.image_link}}">
                     </div>
@@ -23,7 +23,7 @@
                         <!-- <span class="float-start msr-3">
                           <img class="img-circle" src="{{data.image_link}}" alt="...">
                         </span> -->
-                        <h6 class="mb-xs mt-xs title"> {{data?.courseId?.title |truncate : 45}}</h6>
+                        <h6 class="mb-xs mt-xs title"> {{data?.courseId?.title |truncate : 40}}</h6>
                         <p class="text-muted"><time>{{data?.courseId?.duration}} Hours</time></p>
                       </div>
                       <p class="text-muted"><time>{{data?.classDeliveryType | titlecase}}</time></p>
