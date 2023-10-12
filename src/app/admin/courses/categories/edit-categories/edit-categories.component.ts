@@ -102,8 +102,7 @@ getData(){
           main_category_id: [item.main_category_id],
           category_name: [item.category_name],
         });
-      });
-     // console.log("itemControls",itemControls)
+      })
       this.subCategoryForm = this.formBuilder.group({
         subcategories: this.formBuilder.array(itemControls),
       });
