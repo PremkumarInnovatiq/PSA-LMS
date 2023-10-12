@@ -7,6 +7,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { WelcomeMailComponent } from './welcome-mail/welcome-mail.component';
 import { InstructorRequestComponent } from './instructor-request/instructor-request.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { InviteUserRejectComponent } from './invite-user-reject/invite-user-reject.component';
+import { NewStudentReferredComponent } from './new-student-referred/new-student-referred.component';
+import { CourseReferralInviteComponent } from './course-referral-invite/course-referral-invite.component';
+import { CompletedCourseComponent } from './completed-course/completed-course.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -16,11 +21,15 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     
     ForgotPasswordComponent,
                  WelcomeMailComponent,
-                 InstructorRequestComponent
+                 InstructorRequestComponent,
+                 InviteUserRejectComponent,
+                 NewStudentReferredComponent,
+                 CourseReferralInviteComponent,
+                 CompletedCourseComponent
   ],
     imports: [
         CommonModule, EmailConfigurationRoutingModule,
-        ComponentsModule,SharedModule, CKEditorModule,
+        ComponentsModule,SharedModule, CKEditorModule,ModalModule.forRoot(),
     ]
 })
 export class EmailConfigurationModule { }
