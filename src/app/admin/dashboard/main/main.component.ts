@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { CourseService } from '@core/service/course.service';
 import { InstructorService } from '@core/service/instructor.service';
+import { StudentService } from '@core/service/student.service';
 import { UserService } from '@core/service/user.service';
 import { ClassService } from 'app/admin/schedule-class/class.service';
 import {
@@ -89,7 +91,9 @@ export class MainComponent implements OnInit {
   constructor(private courseService: CourseService,
     private userService: UserService,
     private instructorService: InstructorService,
-    private classService: ClassService) {
+    private classService: ClassService,
+    private router: Router,
+    private studentService:StudentService) {
     //constructor
     this.getCount();
     this.getInstructorsList();
@@ -120,6 +124,7 @@ export class MainComponent implements OnInit {
     }, error => {
     });
   }
+
   getStudentsList() {
     let payload = {
       type: "Student"
@@ -241,16 +246,75 @@ export class MainComponent implements OnInit {
     }, error => {
     });
   }
-  deleteStudent(id: any) {
-    this.userService.deleteUser(id).subscribe(() => {
-      this.getStudentsList();
-      Swal.fire({
-        title: 'Success',
-        text: 'Student deleted successfully.',
-        icon: 'success',
+  editCall(student: any) {
+    console.log('hi',student)
+    this.router.navigate(['/admin/students/add-student'],{queryParams:{id:student.id}})
+  }
+  editClass(id:string){
+    this.router.navigate([`admin/schedule/create-class`], { queryParams: {id: id}});
+  }
+  delete(id: string) {
+    console.log(id)
+    this.classService.getClassList({ courseId: id }).subscribe((classList: any) => {
+      const matchingClasses = classList.docs.filter((classItem: any) => {
+        return classItem.courseId && classItem.courseId.id === id;
+      });
+      if (matchingClasses.length > 0) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Class have been registered. Cannot delete.',
+          icon: 'error',
+        });
+        return;
+      }
+      this.classService.deleteClass(id).subscribe(() => {
+        Swal.fire({
+          title: 'Success',
+          text: 'Class deleted successfully.',
+          icon: 'success',
+        });
+        this.getClassList();
       });
     });
   }
+
+
+  deleteStudent(row: any) {
+    // this.id = row.id;
+     Swal.fire({
+       title: "Confirm Deletion",
+       text: "Are you sure you want to delete this Student?",
+       icon: "warning",
+       showCancelButton: true,
+       confirmButtonColor: "#d33",
+       cancelButtonColor: "#3085d6",
+       confirmButtonText: "Delete",
+       cancelButtonText: "Cancel",
+     }).then((result) => {
+       if (result.isConfirmed) {
+         this.studentService.deleteUser(row.id).subscribe(
+           () => {
+             Swal.fire({
+               title: "Deleted",
+               text: "Student deleted successfully",
+               icon: "success",
+             });
+             //this.fetchCourseKits();
+             this.getStudentsList()
+           },
+           (error: { message: any; error: any; }) => {
+             Swal.fire(
+               "Failed to delete Student",
+               error.message || error.error,
+               "error"
+             );
+           }
+         );
+       }
+     });
+
+   }
+
 
 
   ngOnInit() {
