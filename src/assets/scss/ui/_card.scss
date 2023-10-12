@@ -382,6 +382,67 @@
     height: 50px;
   }
 }
+.student-program-card {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 30px;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.87);
+  background: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  .course-card-image {
+    height: 30%;
+    position: relative;
+    overflow: hidden;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: -30px;
+    border-radius: 6px;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+      0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+  }
+  .blog-table {
+    padding: 15px 30px;
+  }
+  .ftr {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    .author {
+      color: #888;
+    }
+    div {
+      display: inline-block;
+    }
+    .stats {
+      position: relative;
+      top: -5px;
+      font-size: 14px;
+      float: right;
+      line-height: 30px;
+    }
+  }
+  .author {
+    .avatar {
+      width: 36px;
+      height: 36px;
+      overflow: hidden;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+  }
+  .course-card-description{
+    height: 50px;
+  }
+}
 .program-card {
   display: inline-block;
   position: relative;
