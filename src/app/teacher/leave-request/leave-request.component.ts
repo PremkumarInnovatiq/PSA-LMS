@@ -47,7 +47,7 @@ export class LeaveRequestComponent
   breadscrums = [
     {
       title: 'Leave Request',
-      items: ['Teacher'],
+      items: ['Instructor'],
       active: 'Leave Request',
     },
   ];

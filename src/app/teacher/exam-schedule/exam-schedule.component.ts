@@ -39,7 +39,7 @@ export class ExamScheduleComponent
   breadscrums = [
     {
       title: 'Schedule',
-      items: ['Teacher'],
+      items: ['Instructor'],
       active: 'Exam Schedule',
     },
   ];

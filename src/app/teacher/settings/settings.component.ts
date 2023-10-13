@@ -9,7 +9,7 @@ export class SettingsComponent {
   breadscrums = [
     {
       title: 'Settings',
-      items: ['Teacher'],
+      items: ['Instructor'],
       active: 'Settings',
     },
   ];

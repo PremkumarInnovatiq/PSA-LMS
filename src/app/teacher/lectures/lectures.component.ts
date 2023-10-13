@@ -73,7 +73,7 @@ export class LecturesComponent
   breadscrums = [
     {
       title: 'Lecture',
-      items: ['Teacher'],
+      items: ['Instructor'],
       active: 'Lecture',
     },
   ];
