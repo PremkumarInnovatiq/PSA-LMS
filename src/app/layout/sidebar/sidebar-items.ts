@@ -1254,7 +1254,7 @@ export const ROUTES: RouteInfo[] = [
   // Teacher Modules
 
   {
-    path: '/teacher/dashboard',
+    path: '/instructor/dashboard',
     title: 'MENUITEMS.TEACHER.LIST.DASHBOARD',
     iconType: 'material-icons-two-tone',
     icon: 'space_dashboard',
@@ -1266,7 +1266,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: '/teacher/lectures',
+    path: '/instructor/lectures',
     title: 'MENUITEMS.TEACHER.LIST.LECTURES',
     iconType: 'material-icons-two-tone',
     icon: 'menu_book',
@@ -1278,7 +1278,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: '/teacher/leave-request',
+    path: '/instructor/leave-request',
     title: 'MENUITEMS.TEACHER.LIST.LEAVE-REQUEST',
     iconType: 'material-icons-two-tone',
     icon: 'offline_pin',
@@ -1290,7 +1290,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: '/teacher/exam-schedule',
+    path: '/instructor/exam-schedule',
     title: 'MENUITEMS.TEACHER.LIST.EXAM-SCHEDULE',
     iconType: 'material-icons-two-tone',
     icon: 'history_edu',
@@ -1302,7 +1302,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: '/teacher/settings',
+    path: '/instructor/settings',
     title: 'MENUITEMS.TEACHER.LIST.SETTINGS',
     iconType: 'material-icons-two-tone',
     icon: 'settings',

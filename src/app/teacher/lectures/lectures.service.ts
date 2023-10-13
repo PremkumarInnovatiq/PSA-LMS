@@ -95,7 +95,7 @@ export class LecturesService extends UnsubscribeOnDestroyAdapter {
           next: (data) => {
             this.dialogData = lectures;
             //this.getClassListWithPagination()
-            //this.route.navigateByUrl("/teacher/lectures")
+            //this.route.navigateByUrl("/instructor/lectures")
 
           },
           error: (error: HttpErrorResponse) => {
