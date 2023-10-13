@@ -162,6 +162,11 @@ export class StudentsService extends UnsubscribeOnDestroyAdapter {
       const apiUrl = `${this.defaultUrl}auth/instructorDelete/${userId}`;
       return this.httpClient.delete<ApiResponse>(apiUrl);
     }
+
+    getAllDepartments(): Observable<ApiResponse> {
+      const apiUrl = this.defaultUrl+'admin/department';
+      return this.httpClient.get<ApiResponse>(apiUrl);
+    }
 }
 
 

@@ -54,5 +54,21 @@ export class BannersService {
       return response.data;
     }));
   }
+  uploadCourseThumbnail(file:any) {
+    const apiUrl = `${this.defaultUrl}admin/video/uploadCourseThumbnail`;
+    return this.http.post<any>(apiUrl, file).pipe(
+      map((response) => {
+        return response
+      })
+    );
+  }
 
+
+  addBanner(formData:any): Observable<AddDefaultBanner> {
+    const apiUrl = this.defaultUrl + 'admin/bannerImage/addBanner';
+    return this.http.post<ApiResponse>(apiUrl, formData).pipe(map(response => {
+      Logging.debug(response);
+      return response.data;
+    }));
+  }
 }

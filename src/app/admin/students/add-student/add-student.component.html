@@ -177,16 +177,10 @@
                     appearance="outline"
                   >
                     <mat-label>Select Department</mat-label>
-                    <mat-select formControlName="department" required>
-                      <mat-option [value]="'mechanical'">
-                        Mechanical
+                    <mat-select formControlName="department" required >
+                      <mat-option [value]="dept.department" *ngFor="let dept of dept">
+                       {{dept.department }}
                       </mat-option>
-                      <mat-option [value]="'science'"> Science </mat-option>
-                      <mat-option [value]="'mathematics'">
-                        Mathematics
-                      </mat-option>
-                      <mat-option [value]="'computer'"> Computer </mat-option>
-                      <mat-option [value]="'civil'"> Civil </mat-option>
                     </mat-select>
                     <mat-error
                       *ngIf="stdForm.get('department')?.hasError('required')"
@@ -219,7 +213,7 @@
                     <mat-label>Parents Mobile Number</mat-label>
                     <input
                       matInput
-                      formControlName="parentsPhnoe"
+                      formControlName="parentsPhone"
                       type="number"
                     />
                   </mat-form-field>
@@ -282,7 +276,7 @@
               </div>
 
               <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                <div  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
                   <label>Upload</label>
                   <div class="file-drop-area">
                     <div class="file">
@@ -305,12 +299,15 @@
                     <input formControlName="avatar" (change)="onFileUpload($event)" class="file-input" type="file">
                   </div> -->
                 </div>
+                <!-- <div *ngIf="viewUrl" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                  <label>Profile</label><br>
+                  <img   class="thumbnail-img" src="{{avatar}}" >
+              </div> -->
               </div>
               <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                   <button *ngIf="!edit"
                     class="btn-space"
-                    [disabled]="!stdForm.valid"
                     mat-raised-button
                     color="primary"  (click)="onSubmit()"
                   >
@@ -318,7 +315,6 @@
                   </button>
                   <button *ngIf="edit"
                   class="btn-space"
-                  [disabled]="!stdForm.valid"
                   mat-raised-button
                   color="primary"
                   (click)="update()"

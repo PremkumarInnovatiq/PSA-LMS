@@ -8,6 +8,7 @@ import {
   MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-i-banner-list',
@@ -21,13 +22,13 @@ export class IBannerListComponent {
     {
       title: 'Blank',
       items: ['Banners'],
-      active: 'Instructor Banner',
+      active: 'Student Banner',
     },
   ];
   instructorBanner : FormGroup
   bannerList: any;
   bannerFor: string;
-  constructor(private bannerService :BannersService,private fb: FormBuilder, private dialogModel: MatDialog,) {
+  constructor(private bannerService :BannersService,private fb: FormBuilder, private router: Router,) {
     // constructor
     this.instructorBanner= this.fb.group({
       bannerFor: new FormControl('', [Validators.required,]),
@@ -40,8 +41,7 @@ export class IBannerListComponent {
   }
 
   ngOnInit(){
-    this.getBanner(this.bannerFor)
-
+    this.getBanner(this.bannerFor);
   }
   getBanner(bannerFor: string) {
     this.bannerService.getBanners(bannerFor).subscribe(
@@ -52,6 +52,10 @@ export class IBannerListComponent {
 
       },
     );
+  }
+
+  addBanner(){
+    this.router.navigate(['/admin/banners/create-instructor-banner'])
   }
 
   onChange(id: any, activeStatus: any){
@@ -91,11 +95,13 @@ export class IBannerListComponent {
               'Banner remove successfully.',
               'success'
             );
-            // this.loadData();
+
           }
+          this.getBanner(this.bannerFor)
         });
       }
     });
+
 
     // this.bannerService.removeBannerImage(obj).subscribe(
     //   (res) => {
@@ -116,7 +122,10 @@ export class IBannerListComponent {
     //   },
     // );
   }
-  dialog() {
-    this.simpleDialog = this.dialogModel.open(SimpleDialogComponent);
-  }
+  // openDialog(): void {
+  //   this.dialogModel.open(DailogFormComponent, {
+  //     width: '640px',
+  //     disableClose: true,
+  //   });
+  // }
 }

@@ -317,17 +317,17 @@ export class CreateClassComponent {
   }
   onSelectChange(event :any) {
     // console.log("this.classForm.controls['instructor'].value",this.classForm.controls['courseId'].value)
- 
+
      this.courseService.getCourseById(this.classForm.controls['courseId'].value).subscribe((response) => {
        console.log("-==========",response)
       // this.router.navigateByUrl(`Schedule Class/List`);
       this.courseTitle=response.title
       this.courseCode=response.courseCode
- 
- 
+
+
       console.log(response)
      });
- 
+
    }
 
   // onSelectChange(event: any) {
