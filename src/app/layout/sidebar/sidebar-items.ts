@@ -563,7 +563,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/email-configuration/instructor-accept-course-invite-status',
+        path: '/admin/email-configuration/instructor-accept-course-invite',
         title: 'Instructor Accept Course Invite Status',
         iconType: 'material-icons-two-tone',
         icon: '',
@@ -587,7 +587,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/email-configuration/admin-new-mail',
+        path: '/admin/email-configuration/admin-new-email',
         title: 'Admin New Email',
         iconType: 'material-icons-two-tone',
         icon: '',
