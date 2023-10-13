@@ -9,12 +9,24 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="header">
+          <div class="header d-flex justify-content-between">
             <h2>Instructor Banner</h2>
+            <div class="d-flex justify-content-end ">
+              <div class="m-l-10" matTooltip="ADD BANNER">
+                <button mat-mini-fab color="primary" (click)="addBanner()">
+                  <mat-icon class="col-white">add</mat-icon>
+                </button>
+              </div>
+              <div class="m-l-10" matTooltip="REFRESH">
+                <button mat-mini-fab color="primary" >
+                  <mat-icon class="col-white">refresh</mat-icon>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="body">
             <div class="row" >
-              <div class="col-md-3" *ngFor="let banner of bannerList">
+              <div class="col-md-4" *ngFor="let banner of bannerList">
                 <div class="course-card1 course-card-blog">
                   <div class="course-card-image1">
                     <img class="img" src="{{banner.imagePath}}">
