@@ -87,7 +87,7 @@
                           
                             <ng-container matColumnDef="position">
                               <th mat-header-cell *matHeaderCellDef> Instructor </th>
-                              <td mat-cell *matCellDef="let element"> {{element?.instructorId?.user_id?.name}} </td>
+                              <td mat-cell *matCellDef="let element"> {{element?.instructorId?.name}} {{element?.instructorId?.last_name}} </td>
                             </ng-container>
                           
                             <ng-container matColumnDef=" Class Start Date ">
