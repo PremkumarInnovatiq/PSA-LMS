@@ -16,9 +16,8 @@
                   <div class="name-center">{{classDetails?.courseId?.courseCode}}</div>
                 </div>
                 <img src="{{classDetails?.courseId?.image_link}}" class="user-img" alt="">
-                <p>
-                {{classDetails?.courseId?.course_description}}
-                </p>
+                <p [innerHTML]="classDetails?.courseId?.course_description| bulletPoints |truncate :
+                40">
               
                 <div class="row">
                   <div class="col-4">
@@ -41,7 +40,8 @@
             <mat-tab-group mat-align-tabs="start">
               <mat-tab label="About">
                 <div class="p-4">
-                  <p class="text-default">{{classDetails?.courseId?.course_detailed_description}}</p>
+                  <p class="text-default"  [innerHTML]="classDetails?.courseId?.course_detailed_description| bulletPoints |truncate :
+                  40">
                 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
@@ -87,7 +87,7 @@
                           
                             <ng-container matColumnDef="position">
                               <th mat-header-cell *matHeaderCellDef> Instructor </th>
-                              <td mat-cell *matCellDef="let element"> {{element?.instructorId?.user_id?.name}} </td>
+                              <td mat-cell *matCellDef="let element"> {{element?.instructorId?.name}} {{element?.instructorId?.last_name ? element?.instructorId?.last_name:''}} </td>
                             </ng-container>
                           
                             <ng-container matColumnDef=" Class Start Date ">
@@ -119,7 +119,8 @@
                           </table>
                           
                   
-                      <p class="m-t-30">{{classDetails?.courseId?.course_detailed_description}}</p>
+                      <p class="m-t-30"[innerHTML]="classDetails?.courseId?.course_detailed_description| bulletPoints |truncate :
+                      40" >
                       <br>
                     </div>
 

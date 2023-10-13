@@ -30,7 +30,7 @@
                     <!-- <p class="course-card-description">{{data.course_detailed_description |truncate : 30}}
                     </p> -->
                     <div class="col">
-                      <p class="course-card-description" [innerHTML]="data?.course_detailed_description | bulletPoints | truncate:30">
+                      <p class="course-card-description" [innerHTML]="data?.course_detailed_description | truncate:30">
                     </div>
                     <div class="text-center mb-3">
                       <button mat-icon-button class="tbl-action-btn" [routerLink]="['/admin/courses/view-course/',data.id]">
