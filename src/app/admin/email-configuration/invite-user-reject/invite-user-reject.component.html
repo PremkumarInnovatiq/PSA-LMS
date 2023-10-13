@@ -16,7 +16,7 @@
                     <div class="body" *ngIf="edit">
                         <div class="row">
                             <div class="col-5">
-                                <h3>Instructor Request</h3>
+                                <h3>Invite User Reject</h3>
                             </div>
                             <!-- <div class="col-4">
                                 <div class="search-bar">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="row para mt-4" *ngFor="let listdata of assignData;  let j = index;">
                             <div class="col-md-11" >
-                                <p>{{listdata.email_subject}}</p>
+                                <p>User Reject</p>
                     
                             </div>
                             <div class="col-md-1">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                    <form [formGroup]="updateInstrctor" *ngFor="let listdata of assignData;">
+                    <form [formGroup]="emailTemplateForm" *ngFor="let listdata of assignData;">
                         <div class="body mx-auto" *ngIf="!edit" >
                             <div class="row">
                                 <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 mb-2 mx-auto">
@@ -66,7 +66,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 mb-2 mx-auto">
-                                    <label>Top Welcome Text<span class="mandatory">&nbsp;*</span></label>
+                                    <label>Top Header Text<span class="mandatory">&nbsp;*</span></label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline">
                                         <input matInput type="text" id="name" 
                                             class="form-control" placeholder="Invite" formControlName="email_top_header_text">
