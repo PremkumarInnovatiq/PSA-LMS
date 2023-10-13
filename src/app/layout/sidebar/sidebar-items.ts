@@ -650,7 +650,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/announcement/list',
         title: 'List',
         iconType: '',
         icon: '',
