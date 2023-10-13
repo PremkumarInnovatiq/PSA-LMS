@@ -1,1 +1,104 @@
-<p>admin-new-email works!</p>
+
+<section class="content">
+    <div class="content-block">
+        <div class="block-header" *ngFor="let breadscrum of breadscrums">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+            </app-breadcrumb>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <!-- <h2>Create Course</h2> -->
+
+                    </div>
+                    <div class="body" *ngIf="edit">
+                        <div class="row">
+                            <div class="col-5">
+                                <h3>New Email Template</h3>
+                            </div>
+                            <!-- <div class="col-4">
+                                <div class="search-bar">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control no-border" placeholder="Search..."
+                                            style="height: 45px;  margin-right: 0px; border-right: none;">
+                                        <span class="input-group-text"></span>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="row para mt-4" *ngFor="let listdata of assignData;  let j = index;">
+                            <div class="col-md-11" >
+                                <p>Reset: Your TI Password</p>
+                    
+                            </div>
+                            <div class="col-md-1">
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <svg class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                                    xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                    class="bi bi-three-dots rounded-circle" viewBox="0 0 16 16">
+                                    <path
+                                      d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                  </svg>
+              
+                                  </button>
+                                  
+                                          <mat-menu #menu="matMenu" xPosition="before">
+                                            <button mat-menu-item  class="tbl-action-btn" (click)="toggle(listdata)">
+                                              <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'" ></app-feather-icons>
+                                              <span class="menu-text">Edit</span>
+                                            </button>
+                                          </mat-menu>
+                            </div>
+                        </div>
+                    </div>
+                    <form [formGroup]="emailTemplateForm" *ngFor="let listdata of assignData;">
+                        <div class="body mx-auto" *ngIf="!edit" >
+                            <div class="row">
+                                <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 mb-2 mx-auto">
+                                    <label>Email Subject<span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <input matInput type="text" id="name" 
+                                            class="form-control" placeholder="Welcome" formControlName="email_subject">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 mb-2 mx-auto">
+                                    <label>Top Welcome Text<span class="mandatory">&nbsp;*</span></label>
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <input matInput type="text" id="name" 
+                                        formControlName="email_top_header_text" class="form-control" placeholder="Course Invoice Details">
+                                    </mat-form-field>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 mb-2 mx-auto">
+                                  <label>Text<span class="mandatory">&nbsp;*</span></label>
+                                  <ckeditor [editor]="Editor" id="editor" formControlName="email_content"></ckeditor>
+                                 
+                                </div>
+          
+                              </div>
+                            
+                            <div class="row body">
+                                <div class="col-md-5 offset-lg-1">
+                                  <button mat-button id="back" (click)="back()">Back</button>
+                                </div>
+                                <div class="col-md-3 offset-lg-3">
+                                  <div class="d-grid gap-4 d-md-flex">
+                                  <button mat-button id="submit" (click)="update()">Update</button>
+                           
+                                  </div>
+                                </div>
+                              </div>
+                          
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

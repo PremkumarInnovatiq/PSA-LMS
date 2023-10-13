@@ -1,0 +1,85 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+      </app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+
+          </div>
+          <form [formGroup]="announcementForm">
+            <h3>{{editUrl ? 'Update Announcement' : 'Create Announcement'}}</h3>
+
+            <div class="body m-4">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                  <label>Title <span class="mandatory">&nbsp;*</span></label>
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <!-- <mat-label>Course Name</mat-label> -->
+
+                    <input matInput type="text" id="name" formControlName="subject" class="form-control" required>
+                    <mat-error *ngIf="announcementForm.get('subject')?.hasError('required')">
+                      Enter Title
+                    </mat-error>
+                    <mat-error
+                      *ngIf="announcementForm.get('subject')?.hasError('pattern') && announcementForm.get('subject')?.touched">
+                      Enter a valid Title
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+                  <label>Course Detailed Description</label>
+                  <ckeditor [editor]="Editor" id="editor" formControlName="details"></ckeditor>
+                  <!-- <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                    <ckeditor [editor]="Editor" ></ckeditor>
+                                    <input matInput formControlName="course_detailed_description" [readonly]="isInputReadonly()">
+                                    <mat-error  *ngIf="firstFormGroup.get('course_detailed_description')?.hasError('maxLength') && firstFormGroup.get('course_detailed_description')?.touched">
+                                     
+                                    Enter Course Detailed Description
+                                  </mat-error>
+                                  </mat-form-field> -->
+                </div>
+
+              </div>
+
+              <div class="row">
+                <label for="" class="form-label">Announcement For</label>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+
+                  <section class="example-section">
+                    <mat-checkbox class="example-margin" formControlName="forStudents"><span class="fs-6">To
+                        Students</span></mat-checkbox>
+                  </section>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+                  <section class="example-section">
+                    <mat-checkbox class="example-margin" formControlName="forTrianers"><span class="fs-6">To
+                        Instructor</span></mat-checkbox>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+          </form>
+          <div class="row">
+            <div class="col-md-8 offset-lg-1">
+              <button mat-button id="back" [routerLink]="['/admin/announcement/list']">Back</button>
+            </div>
+            <div class="col-md-3">
+
+              <button mat-raised-button type="button" color="primary" id="submit"
+                (click)="saveAnnouncement()">Submit</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

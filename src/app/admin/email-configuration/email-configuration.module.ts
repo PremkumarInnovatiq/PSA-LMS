@@ -12,6 +12,10 @@ import { NewStudentReferredComponent } from './new-student-referred/new-student-
 import { CourseReferralInviteComponent } from './course-referral-invite/course-referral-invite.component';
 import { CompletedCourseComponent } from './completed-course/completed-course.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SendCourseInvoiceComponent } from './send-course-invoice/send-course-invoice.component';
+import { InstructorCourseInviteComponent } from './instructor-course-invite/instructor-course-invite.component';
+import { InstructorAcceptCourseInviteComponent } from './instructor-accept-course-invite/instructor-accept-course-invite.component';
+import { AdminNewEmailComponent } from './admin-new-email/admin-new-email.component';
 
 
 
@@ -25,7 +29,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
                  InviteUserRejectComponent,
                  NewStudentReferredComponent,
                  CourseReferralInviteComponent,
-                 CompletedCourseComponent
+                 CompletedCourseComponent,
+                 SendCourseInvoiceComponent,
+                 InstructorCourseInviteComponent,
+                 InstructorAcceptCourseInviteComponent,
+                 AdminNewEmailComponent
   ],
     imports: [
         CommonModule, EmailConfigurationRoutingModule,
