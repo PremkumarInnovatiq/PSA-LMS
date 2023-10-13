@@ -32,10 +32,10 @@
                     <img class="img" src="{{banner.imagePath}}">
                   </div>
                      <div class="text-center mb-3">
-                      <button *ngIf="!banner?.isActivated" mat-icon-button  matTooltip="ACTIVE" class="tbl-action-btn" (click)="onChange(banner._id,'false')">
+                      <button *ngIf="!banner?.isActivated" mat-icon-button  matTooltip="ACTIVATE" class="tbl-action-btn" (click)="onChange(banner._id,'true')">
                         <app-feather-icons [icon]="'eye'" [class]="'tbl-fav-view'"></app-feather-icons>
                       </button>
-                      <button *ngIf="banner?.isActivated"  mat-icon-button matTooltip="DEACTIVATE" class="tbl-action-btn icon-color" (click)="onChange(banner._id,'true')">
+                      <button *ngIf="banner?.isActivated"  mat-icon-button matTooltip="DEACTIVATE" class="tbl-action-btn icon-color" (click)="onChange(banner._id,'false')">
                         <i class="material-icons " >do_not_disturb_off</i>
                       </button>
                       <button  mat-icon-button matTooltip="DELETE" class="tbl-action-btn" (click)="removeBannerImage(banner._id)">
