@@ -1,0 +1,87 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.items" [active_item]="breadscrum.active">
+      </app-breadcrumb>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="materialTableHeader">
+            <div class="left">
+              <ul class="header-buttons-left ms-0">
+                <li class="tbl-title">
+                  <h2>Announcement List</h2>
+                </li>
+              </ul>
+            </div>
+            <div class="right">
+              <ul class="tbl-export-btn">
+                <li class="tbl-header-btn">
+                  <div class="m-l-10" matTooltip="ADD">
+                    <button mat-mini-fab color="primary" [routerLink]="['/admin/announcement/create-announcement']">
+                      <mat-icon class="col-white">add</mat-icon>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="body overflow-auto">
+            <div class="responsive_table">
+              <table mat-table matSort [dataSource]="dataSource" class="mat-cell advance-table">
+                <!-- Course Name -->
+                <ng-container matColumnDef="Title">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <span class="mobile-label">Title:</span>{{row.subject}}</mat-cell>
+                </ng-container>
+                <!-- Course Code -->
+                <ng-container matColumnDef="Decription">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Decription
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <p [innerHTML]="row.details | bulletPoints"></p>
+                  </mat-cell>
+                </ng-container>
+                <!-- actions -->
+                <ng-container matColumnDef="Actions">
+                  <mat-header-cell *matHeaderCellDef class="pr-0">Actions</mat-header-cell>
+                  <mat-cell *matCellDef="let row" class="pr-0">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                      <svg class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                        xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-three-dots rounded-circle" viewBox="0 0 16 16">
+                        <path
+                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                      </svg>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                      <button mat-menu-item [routerLink]="['/admin/announcement/edit-announcement',row.id]">
+                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                        <span class="menu-text">Edit</span>
+                      </button>
+                      <button mat-menu-item (click)="deleteAnnouncement(row._id)">
+                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                        <span class="menu-text">Delete</span>
+                      </button>
+                    </mat-menu>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" [style.cursor]="'pointer'" matRipple>
+                </mat-row>
+              </table>
+              <!-- Loading spinner -->
+              <!-- <div  class="tbl-spinner">
+                  <mat-progress-spinner *ngIf="isLoading" color="primary" [diameter]="40" mode="indeterminate">
+                  </mat-progress-spinner>
+                </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
