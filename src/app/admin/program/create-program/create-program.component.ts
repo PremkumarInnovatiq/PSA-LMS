@@ -297,7 +297,7 @@ export class CreateProgramComponent {
         attendees: this.course?.attendees,
         prerequisites: this.course?.prerequisites,
         electiveprogramCourse: this.course?.electiveprogramCourse,
-        programKit: this.course?.programKit?.[0],
+        programKit: this.course?.programKit?.[0]?.id,
       });
 
       const itemControls = response.data.coreprogramCourse.map((item: {
