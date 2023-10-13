@@ -55,6 +55,7 @@ export class ViewProgramComponent {
   isStatus = false;
   isApproved = false
   isCancelled = false
+  courseName: any;
 
   constructor(private classService: ClassService,private activatedRoute:ActivatedRoute,private modalServices:BsModalService, private courseService:CourseService){
     this.subscribeParams = this.activatedRoute.params.subscribe((params) => {
@@ -73,46 +74,30 @@ export class ViewProgramComponent {
       this.getCourseKitDetails();
     })
   }
-  registerClass(classId: string) {
-    Swal.fire({
-      title: 'Thank you',
-      text: 'We will approve once verified',
-      icon: 'success',
+  registerClass(data:any) {
+    console.log('data',data)
+    let studentId=localStorage.getItem('id')
+    let programName=this.courseName;
+    this.courseService.registerProgramClass(studentId,programName, this.classId).subscribe((response) => {
+      let studentId=localStorage.getItem('user_data');
+        Swal.fire({
+          title: 'Thank you',
+          text: 'We will approve once verified',
+          icon: 'success',
+        });
+      this.isRegistered = true;
+      this.getClassDetails();
     });
-  this.isRegistered = true;
-    // let studentId=localStorage.getItem('id')
-    // this.courseService.saveRegisterClass(studentId, this.classId).subscribe((response) => {
-    //   let studentId=localStorage.getItem('user_data');
-    //     Swal.fire({
-    //       title: 'Thank you',
-    //       text: 'We will approve once verified',
-    //       icon: 'success',
-    //     });
-    //   this.isRegistered = true;
-    //   this.getClassDetails();
-    // });
   }
-  // registerClass(classId: string) {
-  //   let studentId=localStorage.getItem('id')
-  //   this.courseService.saveRegisterClass(studentId, this.classId).subscribe((response) => {
-  //     let studentId=localStorage.getItem('user_data');
-  //       Swal.fire({
-  //         title: 'Thank you',
-  //         text: 'We will approve once verified',
-  //         icon: 'success',
-  //       });
-  //     this.isRegistered = true;
-  //     this.getClassDetails();
-  //   });
-  // }
   getCourseKitDetails(){
     this.courseService.getProgramById(this.courseId).subscribe((response) => {
       this.courseKitDetails=response?.data?.programKit;
+      this.courseName=response?.data?.title;
     });
   }
   getRegisteredClassDetails(){
     let studentId=localStorage.getItem('id')
-    this.courseService.getStudentClass(studentId,this.classId).subscribe((response) => {
+    this.courseService.getProgramRegisteredClasses(studentId,this.classId).subscribe((response) => {
       this.studentClassDetails=response.data;
       if(this.studentClassDetails.status =='registered' ){
         this.isRegistered == true;

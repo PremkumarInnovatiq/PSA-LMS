@@ -80,6 +80,14 @@ export class ClassService extends UnsubscribeOnDestroyAdapter {
       })
     );
   }
+  getStudentRegisteredProgramClasses(data:any) {
+    return this.http.get(`${this.prefix}admin/studentClasses/studentApproveList`,{ params: data }).pipe(
+      map((response:any) => {
+        return response;
+      })
+    );
+  }
+
 
 
   getRegisteredClasses(page: number, limit: number, filterText? : string): Observable<any> {

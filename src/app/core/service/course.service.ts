@@ -56,6 +56,11 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/studentClasses`;
     return this._Http.post<any>(apiUrl, { studentId: studentId, classId: classId }).pipe(map((response) => response));
   }
+  registerProgramClass(studentId: any,programName:any, classId: string) {
+    const apiUrl = `${this.prefix}admin/studentClasses/registerProgram`;
+    return this._Http.post<any>(apiUrl, {program_name:programName, studentId: studentId, classId: classId }).pipe(map((response) => response));
+  }
+
  
   getAllCourses(
     filter?: Partial<CoursePaginationModel>
@@ -232,6 +237,11 @@ export class CourseService {
     const apiUrl = `${this.prefix}admin/studentClasses?classId=${classId}&studentId=${studentId}`;
     return this._Http.get<any>(apiUrl);
   }
+  getProgramRegisteredClasses(studentId: any,classId:any): Observable<any> {
+    const apiUrl = `${this.prefix}admin/studentClasses/studentApproveList?classId=${classId}&studentId=${studentId}`;
+    return this._Http.get<any>(apiUrl);
+  }
+  
   getProgramKitsById(id: any) {
     const apiUrl = `${this.prefix}admin/course-kit/ListProgramCourseKit/${id}`;
     return this._Http.get<any>(apiUrl).pipe(map((response) => response));

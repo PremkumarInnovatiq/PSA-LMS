@@ -19,6 +19,10 @@ export class ProgramComponent {
   ];
 
   coursePaginationModel: Partial<CoursePaginationModel>;
+  studentRegisteredModel!: Partial<CoursePaginationModel>;
+  studentApprovedModel!: Partial<CoursePaginationModel>;
+
+
   classesData: any;
   pagination :any;
   totalItems: any;
@@ -27,13 +31,26 @@ export class ProgramComponent {
   subCategories!: SubCategory[];
   allSubCategories!: SubCategory[];
   dataSource: any;
+  studentRegisteredClasses: any;
+  totalRegisteredItems: any;
+  studentApprovedClasses: any;
+  totalApprovedItems: any;
+
+
 
   constructor(public _courseService:CourseService,  private classService: ClassService) {
     this.coursePaginationModel = {};
+    this.studentRegisteredModel = {};
+    this.studentApprovedModel = {};
+
+
   }
 
   ngOnInit(){
     this.getClassList();
+    this.getRegisteredCourse();
+    this.getApprovedCourse();
+
   }
 
 getClassList() {
@@ -49,20 +66,46 @@ getClassList() {
     }
   );
 }
+getRegisteredCourse(){
+  let studentId=localStorage.getItem('id')
+  const payload = { studentId: studentId, status: 'registered' };
+  this.classService.getStudentRegisteredProgramClasses(payload).subscribe(response =>{
+   this.studentRegisteredClasses = response.data.docs;
+   this.totalRegisteredItems = response.data.totalDocs
+   this.studentRegisteredModel.docs = response.data.docs;
+   this.studentRegisteredModel.page = response.data.page;
+   this.studentRegisteredModel.limit = response.data.limit;
+   this.studentRegisteredModel.totalDocs = response.data.totalDocs;
+  })
+}
+getApprovedCourse(){
+  let studentId=localStorage.getItem('id')
+  const payload = { studentId: studentId, status: 'approved' };
+  this.classService.getStudentRegisteredProgramClasses(payload).subscribe(response =>{
+   this.studentApprovedClasses = response.data.docs;
+   this.totalApprovedItems = response.data.totalDocs
+   this.studentApprovedModel.docs = response.data.docs;
+   this.studentApprovedModel.page = response.data.page;
+   this.studentApprovedModel.limit = response.data.limit;
+   this.studentApprovedModel.totalDocs = response.data.totalDocs;
+  })
+}
+
+
 pageSizeChange($event: any) {
   this.coursePaginationModel.page = $event?.pageIndex + 1;
   this.coursePaginationModel.limit = $event?.pageSize;
   this.getClassList();
 }
-private mapCategories(): void {
-  this.coursePaginationModel.docs?.forEach((item) => {
-    item.main_category_text = this.mainCategories.find((x) => x.id === item.main_category)?.category_name;
-  });
-
-  this.coursePaginationModel.docs?.forEach((item) => {
-    item.sub_category_text = this.allSubCategories.find((x) => x.id === item.sub_category)?.category_name;
-  });
-
+pageStudentRegisteredSizeChange($event: any) {
+  this.studentRegisteredModel.page = $event?.pageIndex + 1;
+  this.studentRegisteredModel.limit = $event?.pageSize;
+  this.getRegisteredCourse();
+}
+pageStudentApprovedSizeChange($event: any) {
+  this.studentApprovedModel.page = $event?.pageIndex + 1;
+  this.studentApprovedModel.limit = $event?.pageSize;
+  this.getApprovedCourse();
 }
 
 
