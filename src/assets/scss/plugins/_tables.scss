@@ -649,20 +649,21 @@ tr.group:hover {
     .search-icon {
       position: absolute;
       top: 10px;
-      padding-left: 10px;
+      padding-left: 35px;
       color: rgba(0, 0, 0, 0.54);
     }
 
     input.search-field {
       font-weight: 500;
       color: rgba(0, 0, 0, 0.54);
-      border-radius: 5px;
+      border-radius: 12px;
       border: 0;
       height: 45px;
       padding: 8px 8px 8px 50px;
       width: 250px;
       background: #ffffff;
       transition: background 0.2s, width 0.2s;
+      margin-left: 20px;
 
       &:hover {
         background: #fffefe;
