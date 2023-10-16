@@ -22,10 +22,30 @@ label {
     font-weight: 700;
 }
 
-
+.sub{
+    width: 50%;
+    height: 55px;
+    text-align: center;
+    border: 1px solid #7A7A7A;
+    color: #526D82;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-top: 28px;
+  }
 #submit {
     margin-left: 150px;
     margin-bottom: 20px;
+    background: #6777ef;
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+}
+#create{
+    margin-top: 35px;
     background: #6777ef;
     border: none;
     width: 100px;

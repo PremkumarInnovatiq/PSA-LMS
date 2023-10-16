@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageSource } from '@core/enums/image-upload-source.enum';
@@ -38,7 +38,7 @@ export class CreateUserTypeComponent {
   isNext : boolean = false;
   isNext1 : boolean = false;
   isEdit:boolean = false;
-  createUser :boolean = false;
+  // createUser :boolean = false;
   dataSource!: MatTableDataSource<MenuItemModel>;
   dataSourceArray: MenuItemModel[] = [];
   chilData : any[] = [];
@@ -57,7 +57,7 @@ export class CreateUserTypeComponent {
 
 
 constructor(public router:ActivatedRoute,private fb:FormBuilder,private adminService: AdminService,
-  private cd: ChangeDetectorRef,private route:Router,public utils:UtilsService
+  private cd: ChangeDetectorRef,private route:Router,public utils:UtilsService, private formBuilder: FormBuilder,
 ){
   this.router.queryParams.subscribe(params => {
     if(params['id']){
@@ -115,6 +115,7 @@ getUserTypeList(filters?:any) {
 ngOnInit() {
   this.dataSource = new MatTableDataSource<MenuItemModel>(this.dataSourceArray);
   this.initMenuItemsV2(); 
+  this.addUserTypeField();
 }
 onSubmitForm() {
   this.submitted = true
@@ -125,7 +126,6 @@ onSubmitForm() {
     let formData = this.userTypeFormGroup.getRawValue();
     this.isLoading = true;
     let selectedMenuItems = []
-    if(formData?.isAdmin)
       selectedMenuItems = this.getCheckedItems(this.dataSourceArray).filter((v: any) => v);
     formData.menuItems = selectedMenuItems;
     if(this.paramId){
@@ -344,8 +344,20 @@ getCheckedItems(obj:any) {
     return null;
   })
 }
-create(){
-  this.createUser = ! this.createUser;
+// create(){
+//   this.createUser = ! this.createUser;
+// }
+
+get subcategories(): FormArray {
+  return this.userTypeFormGroup.get('subcategories') as FormArray;
 }
 
+
+addUserTypeField(): void {
+  this.subcategories.push(
+    this.formBuilder.group({
+      typeName: ['', Validators.required]
+    })
+  );
+}
 }
