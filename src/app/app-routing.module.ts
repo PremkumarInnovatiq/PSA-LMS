@@ -57,6 +57,36 @@ const routes: Routes = [
         loadChildren: () =>
           import('./student/student.module').then((m) => m.StudentModule),
       },
+      {
+        path: 'trainingcoordinator',
+        // canActivate: [AuthGuard],
+        data: {
+          role: Role.TrainingCoordinator,
+        },
+        loadChildren: () =>
+          import('./student/student.module').then((m) => m.StudentModule),
+      },
+      {
+        path: 'trainingadministrator',
+        // canActivate: [AuthGuard],
+        data: {
+          role: Role.TrainingAdministrator,
+        },
+        loadChildren: () =>
+          import('./student/student.module').then((m) => m.StudentModule),
+      },
+      {
+        path: 'supervisor',
+        // canActivate: [AuthGuard],
+        data: {
+          role: Role.Supervisor,
+        },
+        loadChildren: () =>
+          import('./student/student.module').then((m) => m.StudentModule),
+      },
+
+
+
 
 
       // Extra components
