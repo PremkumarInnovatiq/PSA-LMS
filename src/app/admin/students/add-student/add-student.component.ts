@@ -185,7 +185,8 @@ getDepartment(){
     }
   }
   cancel() {
-    this.router.navigate(['/admin/students/all-students']);
+  
+    window.history.back();
   }
   update() {
     console.log('Form Value', this.stdForm.value);
