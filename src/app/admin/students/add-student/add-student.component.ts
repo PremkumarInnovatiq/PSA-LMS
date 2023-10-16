@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Student } from '@core/models/user.model';
+import { Student, Users } from '@core/models/user.model';
 import Swal from 'sweetalert2';
 import { StudentsService } from './../all-students/students.service';
 @Component({
@@ -72,12 +72,21 @@ export class AddStudentComponent {
   ngOnInit(){
     this.getDepartment();
   }
-  onFileUpload(event: any) {
-    if (event.target.files.length > 0) {
-      this.fileName = event.target.files[0].name;
-      this.files = event.target.files[0];
-      this.stdForm.get('avatar')?.setValue(this.files);
-    }
+
+   onFileUpload(event:any) {
+    this.fileName = event.target.files[0].name;
+    this.files=event.target.files[0]
+    // this.authenticationService.uploadVideo(event.target.files[0]).subscribe(
+    //   (response: any) => {
+    //             //Swal.close();
+    //             console.log("--------",response)
+    //   },
+    //   (error:any) => {
+
+    //   }
+    // );
+
+
   }
 
   onSubmit() {
@@ -159,6 +168,7 @@ getDepartment(){
       this.viewUrl = true;
       this.edit = true;
       this.StudentService.getStudentById(id).subscribe((res) => {
+        this.fileName =res.filename
         this.editData = res;
         console.log('editdata', this.editData);
         // this.stdForm.get('department')?.setValue(this.editData.department);
@@ -185,28 +195,55 @@ getDepartment(){
     }
   }
   cancel() {
-    this.router.navigate(['/admin/students/all-students']);
+  
+    window.history.back();
   }
+
+  // update() {
+  //   console.log('Form Value', this.stdForm);
+  //   if (this.stdForm.valid) {
+  //     this.StudentService.uploadVideo(this.files).subscribe((response: any) => {
+  //       const inputUrl = response.inputUrl;
+
+  //       const userData: Student = this.stdForm.value;
+  //       //this.commonService.setVideoId(videoId)
+
+  //       userData.avatar = inputUrl;
+  //       userData.filename = this.fileName;
+  //       userData.type = 'Student';
+  //       userData.role = 'Student';
+
+  //       //this.currentVideoIds = [...this.currentVideoIds, ...videoId]
+  //       // this.currentVideoIds.push(videoId);
+  //       this.updateInstructor(userData);
+
+  //       Swal.close();
+  //     });
+  //   }
+  // }
+
   update() {
     console.log('Form Value', this.stdForm.value);
-    if (this.stdForm.valid) {
-      this.StudentService.uploadVideo(this.files).subscribe((response: any) => {
-        const inputUrl = response.inputUrl;
+    if(this.stdForm.valid){
+      // this.instructor.uploadVideo(this.files).subscribe(
+      //   (response: any) => {
+      //     const inputUrl = response.inputUrl;
 
-        const userData: Student = this.stdForm.value;
-        //this.commonService.setVideoId(videoId)
+          const userData: Student = this.stdForm.value;
+          //this.commonService.setVideoId(videoId)
 
-        userData.avatar = inputUrl;
-        userData.filename = this.fileName;
-        userData.type = 'Student';
-        userData.role = 'Student';
+          //userData.avatar = inputUrl;
+          userData.filename= this.fileName
+          userData.type = "Student";
+          userData.role = "Student";
 
-        //this.currentVideoIds = [...this.currentVideoIds, ...videoId]
-        // this.currentVideoIds.push(videoId);
-        this.updateInstructor(userData);
+          //this.currentVideoIds = [...this.currentVideoIds, ...videoId]
+          // this.currentVideoIds.push(videoId);
+          this.updateInstructor(userData);
 
-        Swal.close();
-      });
+          Swal.close();
+       // },
+
     }
   }
   private updateInstructor(userData: Student): void {

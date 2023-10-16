@@ -180,9 +180,9 @@ onFileUpload(event:any) {
 
   
 }
-cancel(){
-  this.router.navigateByUrl('/admin/teachers/all-teachers');
-
+cancel() {
+  
+  window.history.back();
 }
 
   

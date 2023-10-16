@@ -4,6 +4,8 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { StaffService } from '../all-staff/staff.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-staff',
   templateUrl: './add-staff.component.html',
@@ -18,10 +20,10 @@ export class AddStaffComponent {
       active: 'Add Staff',
     },
   ];
-  constructor(private fb: UntypedFormBuilder) {
+  constructor(private fb: UntypedFormBuilder, public staffService:StaffService) {
     this.staffForm = this.fb.group({
-      first: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      last: [''],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      last_name: [''],
       gender: ['', [Validators.required]],
       mobile: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -35,10 +37,19 @@ export class AddStaffComponent {
       ],
       dob: ['', [Validators.required]],
       education: [''],
-      uploadFile: [''],
     });
   }
   onSubmit() {
     console.log('Form Value', this.staffForm.value);
+
+    this.staffService.saveStaff(this.staffForm.value).subscribe((response: any) => {
+      console.log("res",response);
+      Swal.fire({
+        title: 'Successful',
+        text: 'Department created successfully',
+        icon: 'success',
+      });
+      // this.router.navigate(['/admin/departments/all-departments'])
+    });
   }
 }
