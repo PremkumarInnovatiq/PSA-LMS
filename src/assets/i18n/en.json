@@ -88,8 +88,11 @@
     "BANNER": {
       "TEXT": "Banners",
       "LIST": {
-        "INSTRUCTOR": "Instructors Banner",
-        "STUDENT": "Student Banner"
+        "INSTRUCTOR": "Instructors Banners",
+        "INSTRUCTOR-BANNER":"Add Instructor Banner",
+        "STUDENT": "Student Banners",
+        "STUDENT-BANNER":"Add Student Banner"
+
       }
     },
 

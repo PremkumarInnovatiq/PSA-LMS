@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Staff } from './staff.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
+import { environment } from 'environments/environment';
+import { ApiResponse } from '@core/models/response';
 @Injectable()
 export class StaffService extends UnsubscribeOnDestroyAdapter {
   private readonly API_URL = 'assets/data/staff.json';
+  private apiUrl = 'http://localhost:3000/api/';
+  private prefix: string = environment.apiUrl;
   isTblLoading = true;
   dataChange: BehaviorSubject<Staff[]> = new BehaviorSubject<Staff[]>([]);
   // Temporarily stores data from dialogs
@@ -31,6 +35,13 @@ export class StaffService extends UnsubscribeOnDestroyAdapter {
         console.log(error.name + ' ' + error.message);
       },
     });
+  }
+
+  saveStaff(course: any) {
+    const apiUrl = `${this.prefix}admin/staff/`;
+    return this.httpClient
+      .post<ApiResponse>(apiUrl, course)
+      .pipe(map((response) => { }));
   }
 
   addStaff(staff: Staff): void {

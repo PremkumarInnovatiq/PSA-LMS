@@ -10,6 +10,7 @@ import { SharedModule } from '@shared';
 
 
 
+
 @NgModule({
     declarations: [
         IBannerListComponent,

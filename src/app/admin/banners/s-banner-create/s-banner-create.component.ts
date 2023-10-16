@@ -33,7 +33,7 @@ export class SBannerCreateComponent {
     });
   }
   closeDialog(): void {
-    this.router.navigate(['/admin/banners/instructor-banner-list'])
+    this.router.navigate(['/admin/banners/student-banner-list'])
   }
   onSubmitClick():void {
     this.banner_for = this.addCusForm.value.bannerFor;
@@ -48,7 +48,7 @@ export class SBannerCreateComponent {
           icon: 'success',
         });
         // this. closeDialog();
-        this.router.navigate(['/admin/banners/instructor-banner-list'])
+        this.router.navigate(['/admin/banners/student-banner-list'])
       },
       (err) => {
         Swal.fire(
