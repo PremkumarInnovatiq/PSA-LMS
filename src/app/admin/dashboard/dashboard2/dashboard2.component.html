@@ -10,7 +10,7 @@
         <div class="info-box7 l-bg-purple order-info-box7">
           <div class="info-box7-block">
             <h6 class="m-b-20">Course Payments</h6>
-            <h2 class="text-end"><i class="fas fa-dollar-sign float-start"></i><span>$358</span></h2>
+            <h2 class="text-end"><i class="fas fa-graduation-cap float-start"></i><span>$358</span></h2>
             <p class="m-b-0">18% Higher Then Last Month</p>
           </div>
         </div>
@@ -19,7 +19,7 @@
         <div class="info-box7 l-bg-blue order-info-box7">
           <div class="info-box7-block">
             <h6 class="m-b-20">Program Payments</h6>
-            <h2 class="text-end"><i class="fas fa-dollar-sign float-start"></i><span>$865</span></h2>
+            <h2 class="text-end"><i class="fas fa-bookmark float-start"></i><span>$865</span></h2>
             <p class="m-b-0">21% Higher Then Last Month</p>
           </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="info-box7 l-bg-orange order-info-box7">
           <div class="info-box7-block">
             <h6 class="m-b-20">Pending Payments</h6>
-            <h2 class="text-end"><i class="fas fa-dollar-sign float-start"></i><span>$128</span></h2>
+            <h2 class="text-end"><i class="fas fa-cart-arrow-down float-start"></i><span>$128</span></h2>
             <p class="m-b-0">37% Higher Then Last Month</p>
           </div>
         </div>
@@ -37,7 +37,7 @@
         <div class="info-box7 l-bg-green order-info-box7">
           <div class="info-box7-block">
             <h6 class="m-b-20">Successful Payments</h6>
-            <h2 class="text-end"><i class="fas fa-dollar-sign float-start"></i><span>$1351</span></h2>
+            <h2 class="text-end"><i class="fas fa-cart-plus float-start"></i><span>$1351</span></h2>
             <p class="m-b-0">10% Higher Then Last Month</p>
           </div>
         </div>
@@ -336,11 +336,11 @@
                   <div class="col">
                       <b>{{ program?.courseFee }}$</b>
                   </div>
-                  <div class="col">
+                  <div class="col" [class]="program?.Active ? 'badge badge-solid-red' : 'badge badge-solid-green'">
                       <b>{{ program?.deliveryMode | titlecase }}</b>
                   </div>
                   <div class="col">
-                    <b>
+                    <b  style="color: blue;">
                       <i class="fa fa-play-circle-o"></i> {{program?.sessionStartDate | date}}</b>
                   </div>
                   </div>

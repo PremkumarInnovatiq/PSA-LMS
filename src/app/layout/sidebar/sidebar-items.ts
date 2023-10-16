@@ -214,7 +214,7 @@ export const ROUTES: RouteInfo[] = [
     path: '',
     title: 'MENUITEMS.PROGRAM.TEXT',
     iconType: 'material-icons-two-tone',
-    icon: 'label',
+    icon: 'bookmark',
     class: 'menu-toggle',
     groupTitle: false,
     badge: '',
@@ -356,7 +356,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '',
+        path: '/admin/audit/list',
         title: 'List',
         iconType: '',
         icon: '',
@@ -368,7 +368,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '',
+        path: '/admin/audit/e-attendance',
         title: 'E - Attendance',
         iconType: '',
         icon: '',
