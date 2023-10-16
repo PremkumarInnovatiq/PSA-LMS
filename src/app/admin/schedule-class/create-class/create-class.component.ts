@@ -522,4 +522,8 @@ export class CreateClassComponent {
       this.labList.push(element);
     });
   }
+  cancel() {
+  
+    window.history.back();
+  }
 }

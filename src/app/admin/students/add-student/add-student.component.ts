@@ -195,7 +195,8 @@ getDepartment(){
     }
   }
   cancel() {
-    this.router.navigate(['/admin/students/all-students']);
+  
+    window.history.back();
   }
 
   // update() {
