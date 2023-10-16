@@ -46,7 +46,7 @@ export class LockedComponent implements OnInit {
       if (role === Role.All || role === Role.Admin) {
         this.router.navigate(['/admin/dashboard/main']);
       } else if (role === Role.Instructor) {
-        this.router.navigate(['/teacher/dashboard']);
+        this.router.navigate(['/instructor/dashboard']);
       } else if (role === Role.Student) {
         this.router.navigate(['/student/dashboard']);
       } else {
