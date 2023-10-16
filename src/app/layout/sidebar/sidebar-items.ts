@@ -76,6 +76,7 @@ export const ROUTES: RouteInfo[] = [
       // },
     ],
   },
+  
   {
     path: '',
     title: 'Course',
@@ -1315,6 +1316,68 @@ export const ROUTES: RouteInfo[] = [
   },
 
   // Student Modules
+
+  //
+  {
+    path: '/trainingadministrator/dashboard',
+    title: 'MENUITEMS.STUDENT.LIST.DASHBOARD',
+    iconType: 'material-icons-two-tone',
+    icon: 'space_dashboard',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role: ['Training Administrators'],
+    submenu: [],
+  },
+  {
+    path: '/supervisor/dashboard',
+    title: 'MENUITEMS.STUDENT.LIST.DASHBOARD',
+    iconType: 'material-icons-two-tone',
+    icon: 'space_dashboard',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role: ['Supervisors'],
+    submenu: [],
+  },
+  {
+    path: '/hod/dashboard',
+    title: 'MENUITEMS.STUDENT.LIST.DASHBOARD',
+    iconType: 'material-icons-two-tone',
+    icon: 'space_dashboard',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role: ['Head of Department'],
+    submenu: [],
+  },
+  {
+    path: '/trainingcoordinator/dashboard',
+    title: 'MENUITEMS.STUDENT.LIST.DASHBOARD',
+    iconType: 'material-icons-two-tone',
+    icon: 'space_dashboard',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role: ['Training Coordinators'],
+    submenu: [],
+  },
+  {
+    path: '/coursemanager/dashboard',
+    title: 'MENUITEMS.STUDENT.LIST.DASHBOARD',
+    iconType: 'material-icons-two-tone',
+    icon: 'space_dashboard',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role: ['Course Managers'],
+    submenu: [],
+  },
 
   {
     path: '/student/dashboard',

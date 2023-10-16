@@ -80,12 +80,23 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.sidebarItems = ROUTES.filter(
         (x) => x.role.indexOf(userRole) !== -1 || x.role.indexOf('All') !== -1
       );
+      console.log('ite',this.sidebarItems)
       if (userRole === Role.Admin) {
         this.userType = Role.Admin;
       } else if (userRole === Role.Instructor) {
         this.userType = Role.Instructor;
       } else if (userRole === Role.Student) {
         this.userType = Role.Student;
+      } else if (userRole === Role.TrainingAdministrator) {
+        this.userType = Role.TrainingAdministrator;
+      } else if (userRole === Role.Supervisor) {
+        this.userType = Role.Supervisor;
+      } else if (userRole === Role.HOD) {
+        this.userType = Role.HOD;
+      } else if (userRole === Role.TrainingCoordinator) {
+        this.userType = Role.TrainingCoordinator;
+      } else if (userRole === Role.CourseManager) {
+        this.userType = Role.CourseManager;
       } else {
         this.userType = Role.Admin;
       }

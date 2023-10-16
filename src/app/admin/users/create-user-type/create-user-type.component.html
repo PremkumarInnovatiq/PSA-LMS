@@ -15,10 +15,9 @@
                     <form [formGroup]="userTypeFormGroup">
                         <div class="body m-4">
                             <div class="row">
-                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
                                     <label>Enter User Type <span class="mandatory">&nbsp;*</span></label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline">
-                                        <!-- <mat-label>Course Name</mat-label> -->
 
                                         <mat-select formControlName="typeName">
                                             <mat-option value="USD">System Administrators</mat-option>
@@ -34,7 +33,7 @@
                                             Enter User Type
                                         </mat-error>
                                     </mat-form-field>
-                                </div>
+                                </div> -->
                                 
                                 <!-- <div class="col align-items-center mt-5 ">
                                     <mat-checkbox class="example-margin" (click)="create()" formControlName="isAdmin" checked>Admin</mat-checkbox>
@@ -42,22 +41,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
-                                    <label>Add User Type</label>
+                                    <label>User Type</label>
                                     <mat-form-field class="example-full-width mb-3" appearance="outline">
                                         <!-- <mat-label>Course Name</mat-label> -->
                                         <input matInput type="text" id="name" formControlName="typeName"
-                                        class="form-control"  required>
-                                        <mat-error *ngIf="userTypeFormGroup.get('typeName')?.hasError('required')">
+                                        class="form-control" placeholder="Enter User Type"
+                                        required>                                      
+                                          <mat-error *ngIf="userTypeFormGroup.get('typeName')?.hasError('required')">
                                             Enter User Type
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="d-grid gap-3 d-md-flex">
                                     <button mat-raised-button type="button" class="btn sub" (click)="addUserTypeField()"><img src="/assets/Close.svg" alt="plus">Add User Type</button>
                                     <button mat-button  id="create" > Create </button>
                                     </div>
-                                  </div>
+                                  </div> -->
                                 <!-- <div class="col-xl-4 col-lg-3 col-md-12 col-sm-12 mb-2">
                                 <button class="btn sub" >
                                     <img src="/assets/Close.svg" alt="plus">

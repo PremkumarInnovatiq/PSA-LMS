@@ -39,6 +39,25 @@ const routes: Routes = [
         loadChildren: () =>
           import('./student/student.module').then((m) => m.StudentModule),
       },
+      {
+        path: 'coursemanager',
+        // canActivate: [AuthGuard],
+        data: {
+          role: Role.CourseManager,
+        },
+        loadChildren: () =>
+          import('./student/student.module').then((m) => m.StudentModule),
+      },
+      {
+        path: 'hod',
+        // canActivate: [AuthGuard],
+        data: {
+          role: Role.HOD,
+        },
+        loadChildren: () =>
+          import('./student/student.module').then((m) => m.StudentModule),
+      },
+
 
       // Extra components
       {

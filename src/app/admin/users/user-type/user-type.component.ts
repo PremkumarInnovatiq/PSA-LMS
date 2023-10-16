@@ -70,6 +70,30 @@ export class UserTypeComponent {
         }
       );
     }
+    changeActive(dataDetails: UserType): void {
+      dataDetails.status = "active";
+      this.userService.updateUserType(dataDetails).subscribe(
+        () => {
+          Swal.fire({
+            title: "Success",
+            text: "UserType moved to Active.",
+            icon: "success",
+          });
+          this.getUserTypeList({});
+        },
+        (error) => {
+          console.error(error, "result_error");
+          Swal.fire({
+            title: "Error",
+            text: "UserType already linked with User. Cannot Make Inactive.",
+            icon: "error",
+          });
+        }
+      );
+    }
+  
+
+
   
 
   pageSizeChange($event: any) {

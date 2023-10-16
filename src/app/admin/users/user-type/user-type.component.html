@@ -64,10 +64,15 @@
                                                   <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                                                   <span class="menu-text">Edit</span>
                                                 </button>
-                                                <button mat-menu-item (click)="changeInActive(types)">
+                                                <button *ngIf="types?.status == 'active'"mat-menu-item (click)="changeInActive(types)">
                                                   <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                                                   <span class="menu-text">Inactive</span>
                                                 </button>
+                                                <button *ngIf="types?.status == 'inactive'"mat-menu-item (click)="changeActive(types)">
+                                                    <img class="img" src="/assets/approve.svg" alt="approve">
+                                                    <span class="menu-text">Active</span>
+                                                  </button>
+  
                                               </mat-menu>
                                 </li>
                                
