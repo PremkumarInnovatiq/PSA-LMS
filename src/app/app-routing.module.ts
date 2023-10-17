@@ -31,7 +31,7 @@ const routes: Routes = [
           import('./teacher/teacher.module').then((m) => m.TeacherModule),
       },
       {
-        path: 'student',
+        path: 'Student',
         // canActivate: [AuthGuard],
         data: {
           role: Role.Student,

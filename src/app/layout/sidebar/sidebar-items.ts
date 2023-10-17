@@ -1,5 +1,5 @@
-import { RouteInfo } from './sidebar.metadata';
-export const ROUTES: RouteInfo[] = [
+import { MenuItem, RouteInfo } from './sidebar.metadata';
+export const ROUTES: any[] = [
   {
     path: '',
     title: 'MENUITEMS.MAIN.TEXT',
@@ -10,7 +10,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['All'],
-    submenu: [],
+    children: [],
   },
 
   // Admin Modules
@@ -25,7 +25,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/dashboard/main',
         title: 'Student Analytics',
@@ -36,7 +36,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/dashboard/dashboard2',
@@ -48,7 +48,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       // {
       //   path: '/admin/dashboard/teacher-dashboard',
@@ -60,7 +60,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       // {
       //   path: '/admin/dashboard/student-dashboard',
@@ -72,7 +72,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
     ],
   },
@@ -87,7 +87,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/courses/all-courses',
         title: 'MENUITEMS.COURSE.LIST.ALL-COURSES',
@@ -98,7 +98,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/courses/add-course',
@@ -110,7 +110,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/courses/course-approval',
@@ -122,7 +122,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/courses/course-kit',
@@ -134,7 +134,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/courses/categories',
@@ -146,7 +146,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -160,7 +160,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/schedule/class-list',
         title: 'MENUITEMS.SCHEDULECLASS.LIST.ALL-CLASS',
@@ -171,7 +171,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/schedule/create-class',
@@ -183,7 +183,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/schedule/approve-list',
@@ -195,7 +195,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/schedule/completion-list',
@@ -207,7 +207,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -221,7 +221,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/program/program-list',
         title: 'MENUITEMS.PROGRAM.LIST.ALL-PROGRAM',
@@ -232,7 +232,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/program/schedule-class',
@@ -244,7 +244,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       // {
       //   path: '/admin/program/create-course',
@@ -256,7 +256,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       {
         path: '/admin/program/program-approve-list',
@@ -268,7 +268,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/program/program-kit',
@@ -280,7 +280,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
           path: '/admin/program/student-approve-list',
@@ -292,7 +292,7 @@ export const ROUTES: RouteInfo[] = [
           badge: '',
           badgeClass: '',
           role: [''],
-          submenu: [],
+          children: [],
         },
         {
           path: '/admin/program/program-completion-list',
@@ -304,7 +304,7 @@ export const ROUTES: RouteInfo[] = [
           badge: '',
           badgeClass: '',
           role: [''],
-          submenu: [],
+          children: [],
         },
     ],
   },
@@ -318,7 +318,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/survey/survey-list',
         title: 'MENUITEMS.SURVEY.LIST.ALL-SURVEY',
@@ -329,7 +329,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/survey/likert-chart',
@@ -341,7 +341,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -355,7 +355,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/audit/list',
         title: 'List',
@@ -366,7 +366,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/audit/e-attendance',
@@ -378,7 +378,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -392,7 +392,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/users/user-type',
         title: 'User Type',
@@ -403,7 +403,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/users/all-users',
@@ -415,7 +415,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -429,7 +429,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/certificate/certificates',
         title: 'Certificates',
@@ -440,7 +440,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/certificate/design',
@@ -452,7 +452,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -466,7 +466,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/email-configuration/forgot-password',
         title: 'Forgot Password',
@@ -477,7 +477,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/welcome-mail',
@@ -489,7 +489,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/instructor-request',
@@ -501,7 +501,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/invite-user-reject',
@@ -513,7 +513,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/new-student-referred',
@@ -525,7 +525,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/course-referral-invite',
@@ -537,7 +537,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/completed-course',
@@ -549,7 +549,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/instructor-course-invite',
@@ -561,7 +561,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/instructor-accept-course-invite',
@@ -573,7 +573,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/send-course-invoice',
@@ -585,7 +585,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/email-configuration/admin-new-email',
@@ -597,7 +597,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -611,7 +611,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/banners/instructor-banner-list',
         title: 'MENUITEMS.BANNER.LIST.INSTRUCTOR',
@@ -622,7 +622,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/banners/create-instructor-banner',
@@ -634,7 +634,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/banners/student-banner-list',
@@ -646,7 +646,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
 
       {
@@ -659,7 +659,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -674,7 +674,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/announcement/list',
         title: 'List',
@@ -685,7 +685,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -699,7 +699,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admim'],
-    submenu: [
+    children: [
       {
         path: '',
         title: 'Instructors',
@@ -710,7 +710,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '',
@@ -722,7 +722,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
 
     ],
@@ -737,7 +737,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/teachers/all-teachers',
         title: 'All Instructors',
@@ -748,7 +748,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/teachers/add-teacher',
@@ -760,7 +760,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       // {
       //   path: '/admin/teachers/edit-teacher',
@@ -772,7 +772,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       // {
       //   path: '/admin/teachers/about-teacher',
@@ -784,7 +784,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       // {
       //   path: '/admin/teachers/video-resource',
@@ -796,7 +796,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       {
         path: '/admin/teachers/article',
@@ -808,7 +808,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/teachers/agreement-t-c',
@@ -820,7 +820,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -834,7 +834,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/students/all-students',
         title: 'MENUITEMS.STUDENTS.LIST.ALL-STUDENTS',
@@ -845,7 +845,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/students/add-student',
@@ -857,7 +857,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       // {
       //   path: '/admin/students/edit-student',
@@ -869,7 +869,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       // {
       //   path: '/admin/students/about-student',
@@ -881,7 +881,7 @@ export const ROUTES: RouteInfo[] = [
       //   badge: '',
       //   badgeClass: '',
       //   role: [''],
-      //   submenu: [],
+      //   children: [],
       // },
       {
         path: '/admin/students/student-attendance',
@@ -893,7 +893,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -907,7 +907,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['Admin'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/admin/courses/all-courses',
   //       title: 'MENUITEMS.COURSES.LIST.ALL-COURSES',
@@ -918,7 +918,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/admin/courses/add-course',
@@ -930,7 +930,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/admin/courses/edit-course',
@@ -942,7 +942,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/admin/courses/about-course',
@@ -954,7 +954,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -968,7 +968,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/library/all-assets',
         title: 'MENUITEMS.LIBRARY.LIST.ALL-LIBRARY',
@@ -979,7 +979,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/library/add-asset',
@@ -991,7 +991,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/library/edit-asset',
@@ -1003,7 +1003,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -1017,7 +1017,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/departments/all-departments',
         title: 'MENUITEMS.DEPARTMENTS.LIST.ALL-DEPARTMENT',
@@ -1028,7 +1028,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/departments/add-department',
@@ -1040,7 +1040,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/departments/edit-department',
@@ -1052,7 +1052,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -1066,7 +1066,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/staff/all-staff',
         title: 'MENUITEMS.STAFF.LIST.ALL-STAFF',
@@ -1077,7 +1077,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/staff/add-staff',
@@ -1089,7 +1089,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/staff/edit-staff',
@@ -1101,7 +1101,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/staff/about-staff',
@@ -1113,7 +1113,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -1127,7 +1127,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/holidays/all-holidays',
         title: 'MENUITEMS.HOLIDAY.LIST.ALL-HOLIDAY',
@@ -1138,7 +1138,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/holidays/add-holiday',
@@ -1150,7 +1150,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/holidays/edit-holiday',
@@ -1162,7 +1162,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -1176,7 +1176,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/fees/all-fees',
         title: 'MENUITEMS.FEES.LIST.ALL-FEES',
@@ -1187,7 +1187,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/fees/add-fees',
@@ -1199,7 +1199,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/fees/edit-fees',
@@ -1211,7 +1211,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/fees/fee-receipt',
@@ -1223,7 +1223,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: [''],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -1237,7 +1237,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Admin'],
-    submenu: [
+    children: [
       {
         path: '/admin/attendance/staff',
         title: 'MENUITEMS.ATTENDANCE.LIST.STAFF',
@@ -1248,7 +1248,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: ['Admin'],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/attendance/details',
@@ -1260,7 +1260,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: ['Admin'],
-        submenu: [],
+        children: [],
       },
       {
         path: '/admin/attendance/attendance-sheet',
@@ -1272,7 +1272,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         role: ['Admin'],
-        submenu: [],
+        children: [],
       },
     ],
   },
@@ -1289,7 +1289,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Instructor'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/instructor/lectures',
@@ -1301,7 +1301,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Instructor'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/instructor/leave-request',
@@ -1313,7 +1313,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Instructor'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/instructor/exam-schedule',
@@ -1325,7 +1325,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Instructor'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/instructor/settings',
@@ -1337,7 +1337,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Instructor'],
-    submenu: [],
+    children: [],
   },
 
   // Student Modules
@@ -1353,7 +1353,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Training Administrators'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/supervisor/dashboard',
@@ -1365,7 +1365,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Supervisors'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/hod/dashboard',
@@ -1377,7 +1377,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Head of Department'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/trainingcoordinator/dashboard',
@@ -1389,7 +1389,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Training Coordinators'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/coursemanager/dashboard',
@@ -1401,7 +1401,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Course Managers'],
-    submenu: [],
+    children: [],
   },
 
   {
@@ -1414,7 +1414,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/student/course',
@@ -1426,7 +1426,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/student/program',
@@ -1438,7 +1438,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
 
   {
@@ -1451,7 +1451,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/student/leave-request',
@@ -1463,7 +1463,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/student/timetable',
@@ -1475,7 +1475,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
   {
     path: '/student/settings',
@@ -1487,7 +1487,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['Student'],
-    submenu: [],
+    children: [],
   },
   // Common Module
 
@@ -1501,7 +1501,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     role: ['All'],
-    submenu: [],
+    children: [],
   }
   // {
   //   path: 'calendar',
@@ -1513,7 +1513,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: 'New',
   //   badgeClass: 'badge bg-blue sidebar-badge float-end',
   //   role: ['All'],
-  //   submenu: [],
+  //   children: [],
   // },
   // {
   //   path: 'task',
@@ -1525,7 +1525,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [],
+  //   children: [],
   // },
   // {
   //   path: 'contacts',
@@ -1537,7 +1537,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [],
+  //   children: [],
   // },
   // {
   //   path: '',
@@ -1549,7 +1549,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/email/inbox',
   //       title: 'Inbox',
@@ -1560,7 +1560,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/email/compose',
@@ -1572,7 +1572,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/email/read-mail',
@@ -1584,7 +1584,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -1598,7 +1598,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '5',
   //   badgeClass: 'badge bg-orange sidebar-badge float-end',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/apps/chat',
   //       title: 'Chat',
@@ -1609,7 +1609,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/apps/dragdrop',
@@ -1621,7 +1621,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/apps/contact-grid',
@@ -1633,7 +1633,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/apps/support',
@@ -1645,7 +1645,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -1659,7 +1659,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/widget/chart-widget',
   //       title: 'Chart Widget',
@@ -1670,7 +1670,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/widget/data-widget',
@@ -1682,7 +1682,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -1696,7 +1696,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [],
+  //   children: [],
   // },
   // {
   //   path: '',
@@ -1708,7 +1708,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/ui/alerts',
   //       title: 'Alerts',
@@ -1719,7 +1719,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/badges',
@@ -1731,7 +1731,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/chips',
@@ -1743,7 +1743,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/modal',
@@ -1755,7 +1755,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/buttons',
@@ -1767,7 +1767,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/expansion-panel',
@@ -1779,7 +1779,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/bottom-sheet',
@@ -1791,7 +1791,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/dialogs',
@@ -1803,7 +1803,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/cards',
@@ -1815,7 +1815,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/labels',
@@ -1827,7 +1827,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/list-group',
@@ -1839,7 +1839,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/snackbar',
@@ -1851,7 +1851,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/preloaders',
@@ -1863,7 +1863,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/progressbars',
@@ -1875,7 +1875,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/tabs',
@@ -1887,7 +1887,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/typography',
@@ -1899,7 +1899,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/ui/helper-classes',
@@ -1911,7 +1911,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -1925,7 +1925,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/forms/form-controls',
   //       title: 'Form Controls',
@@ -1936,7 +1936,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/forms/advance-controls',
@@ -1948,7 +1948,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/forms/form-example',
@@ -1960,7 +1960,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/forms/form-validation',
@@ -1972,7 +1972,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/forms/wizard',
@@ -1984,7 +1984,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/forms/editors',
@@ -1996,7 +1996,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2010,7 +2010,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/tables/basic-tables',
   //       title: 'Basic Tables',
@@ -2021,7 +2021,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/tables/material-tables',
@@ -2033,7 +2033,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/tables/ngx-datatable',
@@ -2045,7 +2045,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2059,7 +2059,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '7',
   //   badgeClass: 'badge bg-green sidebar-badge float-end',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/charts/echart',
   //       title: 'Echart',
@@ -2070,7 +2070,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/charts/apex',
@@ -2082,7 +2082,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/charts/chartjs',
@@ -2094,7 +2094,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/charts/ngx-charts',
@@ -2106,7 +2106,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/charts/gauge',
@@ -2118,7 +2118,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2132,7 +2132,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/timeline/timeline1',
   //       title: 'Timeline 1',
@@ -2143,7 +2143,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/timeline/timeline2',
@@ -2155,7 +2155,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2169,7 +2169,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/icons/material',
   //       title: 'Material Icons',
@@ -2180,7 +2180,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/icons/font-awesome',
@@ -2192,7 +2192,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2206,7 +2206,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/authentication/signin',
   //       title: 'Sign In',
@@ -2217,7 +2217,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/authentication/signup',
@@ -2229,7 +2229,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/authentication/forgot-password',
@@ -2241,7 +2241,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/authentication/locked',
@@ -2253,7 +2253,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/authentication/page404',
@@ -2265,7 +2265,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/authentication/page500',
@@ -2277,7 +2277,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2291,7 +2291,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/extra-pages/profile',
   //       title: 'Profile',
@@ -2302,7 +2302,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/extra-pages/pricing',
@@ -2314,7 +2314,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/extra-pages/invoice',
@@ -2326,7 +2326,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/extra-pages/faqs',
@@ -2338,7 +2338,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/extra-pages/blank',
@@ -2350,7 +2350,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2364,7 +2364,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/maps/google',
   //       title: 'Google Map',
@@ -2375,7 +2375,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },
@@ -2389,7 +2389,7 @@ export const ROUTES: RouteInfo[] = [
   //   badge: '',
   //   badgeClass: '',
   //   role: ['All'],
-  //   submenu: [
+  //   children: [
   //     {
   //       path: '/multilevel/first1',
   //       title: 'First',
@@ -2400,7 +2400,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //     {
   //       path: '/',
@@ -2412,7 +2412,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [
+  //       children: [
   //         {
   //           path: '/multilevel/secondlevel/second1',
   //           title: 'Second 1',
@@ -2423,7 +2423,7 @@ export const ROUTES: RouteInfo[] = [
   //           badge: '',
   //           badgeClass: '',
   //           role: [''],
-  //           submenu: [],
+  //           children: [],
   //         },
   //         {
   //           path: '/',
@@ -2435,7 +2435,7 @@ export const ROUTES: RouteInfo[] = [
   //           badge: '',
   //           badgeClass: '',
   //           role: [''],
-  //           submenu: [
+  //           children: [
   //             {
   //               path: '/multilevel/thirdlevel/third1',
   //               title: 'third 1',
@@ -2446,7 +2446,7 @@ export const ROUTES: RouteInfo[] = [
   //               badge: '',
   //               badgeClass: '',
   //               role: [''],
-  //               submenu: [],
+  //               children: [],
   //             },
   //           ],
   //         },
@@ -2462,7 +2462,7 @@ export const ROUTES: RouteInfo[] = [
   //       badge: '',
   //       badgeClass: '',
   //       role: [''],
-  //       submenu: [],
+  //       children: [],
   //     },
   //   ],
   // },

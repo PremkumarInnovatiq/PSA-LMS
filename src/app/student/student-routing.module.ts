@@ -17,7 +17,7 @@ const routes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'course',
+    path: 'courses/student-courses',
     component: CourseComponent,
   },
   {
@@ -25,7 +25,7 @@ const routes: Routes = [
     component: ViewCourseComponent,
   },
   {
-    path: 'program',
+    path: 'program/student-programs',
     component: ProgramComponent,
   },
   {
@@ -38,7 +38,7 @@ const routes: Routes = [
     component: HomeworkComponent,
   },
   {
-    path: 'leave-request',
+    path: 'leave-request/student-leaves',
     component: LeaveRequestComponent,
   },
   {
@@ -46,7 +46,7 @@ const routes: Routes = [
     component: TimetableComponent,
   },
   {
-    path: 'settings',
+    path: 'settings/student-settings',
     component: SettingsComponent,
   },
   { path: '**', component: Page404Component },

@@ -11,3 +11,19 @@ export interface RouteInfo {
   role: string[];
   submenu: RouteInfo[];
 }
+export class MenuItem {
+  path!: string;
+  title!: string;
+  id!:string;
+  iconType!: string;
+  icon!: string;
+  class!: string;
+  badge!: string;
+  badgeClass!: string;
+  groupTitle!: boolean;
+  open!: boolean;
+  role!: string[];
+  // action:any;
+  children!: MenuItem[];
+}
+
