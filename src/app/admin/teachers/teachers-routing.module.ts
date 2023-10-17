@@ -10,19 +10,19 @@ import { AgreementTCComponent } from './agreement-t-c/agreement-t-c.component';
 
 const routes: Routes = [
   {
-    path: 'all-teachers',
+    path: 'all-instructors',
     component: AllTeachersComponent,
   },
   {
-    path: 'add-teacher',
+    path: 'add-instructor',
     component: AddTeacherComponent,
   },
   {
-    path: 'edit-teacher/:id',
+    path: 'edit-instructor/:id',
     component: EditTeacherComponent,
   },
   {
-    path: 'about-teacher',
+    path: 'about-instructor',
     component: AboutTeacherComponent,
   },
   {

@@ -2,39 +2,86 @@
 export let MENU_ITEMS: any[] = [];
 export let MENU_LIST: any[] = [];
 MENU_LIST = [
-    // {
-    //     title: "Home", 
-    //     iconsrc: "/assets/home-icon.svg", 
-    //     selected: false, 
-    //     children: [
-
-    //     ]
-    // },
+    {
+        id: "dashboard",
+        title: "Dashboard", 
+        selected: false, 
+        iconsrc: "/assets/announcement-icon.svg", 
+        children: 
+        [
+            {
+                id: "main",
+                title: "Student Analytics", 
+                type: "none",
+            },
+            {
+                id: "dashboard2",
+                title: "Instructor Analytics", 
+                type: "none",
+            },
+            {
+                id: "student-dashboard",
+                title: "Student Dashboard", 
+                type: "none",
+            },
+            {
+                id: "instructor-dashboard",
+                title: "Instructor Dashboard", 
+                type: "none",
+            },
+            {
+                id: "coursemanager-dashboard",
+                title: "Coursemanager Dashboard", 
+                type: "none",
+            },
+            {
+                id: "supervisor-dashboard",
+                title: "Supervisor Dashboard", 
+                type: "none",
+            },
+            {
+                id: "hod-dashboard",
+                title: "Head Of Department Dashboard", 
+                type: "none",
+            },
+            {
+                id: "trainingcoordinator-dashboard",
+                title: "Training Coordinator Dashboard", 
+                type: "none",
+            },
+            {
+                id: "trainingadministrator-dashboard",
+                title: "Training Administrator Dashboard", 
+                type: "none",
+            }
+              ]
+    },
+    
 {
-    id: "course",
+    id: "courses",
     title: "Course", 
     iconsrc: "/assets/course-icon.svg", 
     selected: true, 
     children: [
         {
-            id: "course_list",
-            title: "List", 
+            id: "all-courses",
+            title: "Course List", 
             type: "none",
             actions: ["edit","view", "delete"],
 
         }, 
         {
-            id: "course_add",
-            title: "Add", 
+            id: "add-course",
+            title: "Create Course", 
             type: "none"
         },  
         {
-            id: "course_approval",
+            id: "course-approval",
             title: "Course Approval", 
             type:"none"
         }, 
         {
-            id: "course_kit",
+            id: "course-kit",
             title: "Course Kit",
             type: "none"
         }, 
@@ -42,56 +89,93 @@ MENU_LIST = [
             id: "categories",
             title: "Categories", 
             type: "none"
+        },
+        {
+            id: "student-courses",
+            title: "Courses", 
+            type: "none"
         }
+
     ]
 },
 {
-    id: "class",
+    id: "schedule",
     title: "Schedule Class", 
     iconsrc: "/assets/schedule-icon.svg", 
     selected: false, 
     children: 
     [
         {
-            id: "class_list",
-            title:"List", 
+            id: "class-list",
+            title:"Class List", 
             type: "selected",
             actions: ["edit", "view","delete"],
 
         }, 
         {
-            id: "class_add",
-            title:"Add", 
+            id: "create-class",
+            title:"Create Class", 
             type:"none"
         }, 
         {
-            id: "class_approve_list",
+            id: "approve-list",
             title:"Approve List", 
             type: "none"
         }, 
         {
-            id: "class_completion_list",
+            id: "completion-list",
             title:"Completion List", 
             type:"none"
         }
     ]
 },
 {
-    id:"fellowship",
-    title: "Fellowship", 
+    id:"program",
+    title: "Program", 
     iconsrc:"/assets/fellowship-icon.svg", 
     selected: false, 
     children: [
+        // {
+        //     id:"add_program",
+        //     title:"Create a Program", 
+        //     type: "none"
+        // }, 
         {
-            id:"add_program",
-            title:"Create a Program", 
-            type: "none"
-        }, 
-        {
-            id:"list_program",
-            title:"List", 
+            id:"program-list",
+            title:"All Program", 
             type:""
+        },
+        {
+            id:"schedule-class",
+            title:"Schedule Class", 
+            type:""
+        },
+        {
+            id:"program-approve-list",
+            title:"Program Approve List", 
+            type:""
+        },
+        {
+            id:"program-kit",
+            title:"Program Kit", 
+            type:""
+        },
+        {
+            id:"student-approve-list",
+            title:"Student Approval List", 
+            type:""
+        },
+        {
+            id:"program-completion-list",
+            title:"Completion Lisr", 
+            type:""
+        },
+        {
+            id: "student-programs",
+            title: "Programs", 
+            type: "none"
         }
+
     ]
 },
 {
@@ -102,11 +186,17 @@ MENU_LIST = [
     children: 
     [
         {
-            id: "survey_list",
-            title: "List", 
+            id: "survey-list",
+            title: "Survey List", 
             type:"none",
             actions: ["add", "edit", "delete"],
+        },
+        {
+            id:"likert-chart",
+            title:"Likert Chart", 
+            type:""
         }
+
     ]
 },
 {
@@ -117,12 +207,12 @@ MENU_LIST = [
     children: 
     [
         {
-            id: "audit_list",
+            id: "audit-list",
             title: "List", 
             type:"none"
         }, 
         {
-            id: "e_attendance",
+            id: "e-attendance",
             title: "E-Attendance", 
             type:"none"
         }
@@ -146,13 +236,13 @@ MENU_LIST = [
     children: 
     [
         {
-            id: "users_type",
-            title: "Type", 
+            id: "user-type",
+            title: "User Type", 
             type: "none",
             actions: ["add", "edit", "inactive"],
         }, 
         {
-            id: "all_users",
+            id: "all-users",
             title: "All User", 
             type: "none",
             actions: ["add", "edit"],
@@ -180,84 +270,84 @@ MENU_LIST = [
 //     ]
 // },
 {
-    id: "certificate_builder",
+    id: "certificate",
     title: "Certificate Builder", 
     selected: false, 
     iconsrc: "/assets/certificate-icon.svg", 
     children: 
     [
         {
-            id: "certificates_list",
+            id: "certificates",
             title: "Certificates", 
             type: "none",
             actions: ["add", "edit", "view", "delete"],
         }, 
         {
-            id: "certificates_add",
-            title: "Add", 
+            id: "design",
+            title: "Design", 
             type: "none"
         }
     ]
 },
 {
-    id: "email_config",
+    id: "email-configuration",
     title: "Email Configuration", 
     selected: false, 
     iconsrc:"/assets/email-icon.svg", 
     children: 
     [
         {
-            id: "forget_password_temp",
+            id: "forgot-password",
             title: "Forgot Password", 
             type: "none"
         }, 
         {
-            id: "welcome_mail_template",
+            id: "welcome-mail",
             title: "Welcome E-mail", 
             type: "none"
         }, 
         {
-            id: "trainer_req_temp",
+            id: "instructor-request",
             title: "Instructor Request", 
             type: "none"
         }, 
         {
-            id: "invite_user_reject",
+            id: "invite-user-reject",
             title: "Invite User Reject", 
             type: "none"
         }, 
         {
-            id: "new_member_referred",
+            id: "new-student-referred",
             title: "New Student Referred", 
             type: "none"
         },
         {
-            id: "course_referral_invite",
+            id: "course-referral-invite",
             title: "Course Referral Invite", 
             type: "none"
         },
         {
-            id: "completed_course",
+            id: "completed-course",
             title: "Completed Course", 
             type: "none"
         },
         {
-            id: "new_trainer_contact",
+            id: "instructor-course-invite",
             title: "Instructor Course Invite", 
             type: "none"
         },
         {
-            id: "trainer_accept_course_invite",
+            id: "instructor-accept-course-invite",
             title: "Instructor Accept Course Invite Status", 
             type: "none"
         },
         {
-            id: "send_course_invoice",
+            id: "send-course-invoice",
             title: "Send Course Invoice", 
             type: "none"
         },
         {
-            id: "admin_email",
+            id: "admin-new-email",
             title: "Admin New Email", 
             type: "none"
         }
@@ -271,38 +361,29 @@ MENU_LIST = [
     children: 
     [
         {
-            id: "trainer_banners",
-            title: "Instructor Banner", 
+            id: "instructor-banner-list",
+            title: "Instructor Banners", 
             type: "none"
         }, 
         {
-            id: "student_banners",
-            title: "Student Banner", 
+            id: "create-instructor-banner",
+            title: "Add Instructor Banner", 
+            type: "none"
+        }, 
+
+        {
+            id: "student-banner-list",
+            title: "Student Banners", 
+            type: "none"
+        },
+        {
+            id: "create-student-banner",
+            title: "Add Student Banner", 
             type: "none"
         }
+
     ]
 },
-// {
-//     id: "trainers",
-//     title: "Trainer", 
-//     selected: false, 
-//     iconsrc: "/assets/trainer-icon.svg", 
-//     children: []
-// },
-// {
-//     id: "resources",
-//     title: "Resources", 
-//     selected: false, 
-//     iconsrc: "/assets/resource-icon.svg", 
-//     children: []
-// },
-// {
-//     id: "news_letter",
-//     title: "Newsletter", 
-//     selected: false, 
-//     iconsrc: "/assets/newsletter-icon.svg", 
-//     children: []
-// },
 {
     id: "announcement",
     title: "Announcement", 
@@ -311,13 +392,109 @@ MENU_LIST = [
     children: 
     [
         {
-            id: "announcement_list",
+            id: "list",
             title: "List", 
             type: "none",
             actions:["List","edit","view"]
         }
     ]
 },
+{
+    id: "instructors",
+    title: "Instructors", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+    children: 
+    [
+        {
+            id: "all-instructors",
+            title: "All Instructors", 
+            type: "none",
+            actions:["List","edit","view"]
+        },
+        {
+            id: "add-instructor",
+            title: "Add Instructor", 
+            type: "none",
+        },
+        {
+            id: "article",
+            title: "Articles", 
+            type: "none",
+        },
+        {
+            id: "agreement-t-c",
+            title: "Agreement T & C", 
+            type: "none",
+        }
+    ]
+},
+{
+    id: "students",
+    title: "Students", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+    children: 
+    [
+        {
+            id: "all-students",
+            title: "All Students", 
+            type: "none",
+            actions:["List","edit","view"]
+        },
+        {
+            id: "add-student",
+            title: "Add Student", 
+            type: "none",
+        },
+        {
+            id: "student-attendance",
+            title: "Student Attendance", 
+            type: "none",
+        },
+    ]
+},
+{
+    id: "departments",
+    title: "Departments", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+    children: 
+    [
+        {
+            id: "all-departments",
+            title: "All Departments", 
+            type: "none",
+            actions:["List","edit","view"]
+        },
+        {
+            id: "add-department",
+            title: "Add Department", 
+            type: "none",
+        }
+    ]
+},
+{
+    id: "staff",
+    title: "Staff", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+    children: 
+    [
+        {
+            id: "all-staff",
+            title: "All Staff", 
+            type: "none",
+            actions:["List","edit","view"]
+        },
+        {
+            id: "add-staff",
+            title: "Add Staff", 
+            type: "none",
+        },
+    ]
+},
+
 {
     id: "testimonials",
     title: "Testimonials", 
@@ -326,24 +503,81 @@ MENU_LIST = [
     children: 
     [
         {
-            id: "testimonials_trainer",
+            id: "testimonials-instructor",
             title: "Instructor", 
             type: "none"
         }, 
         {
-            id: "testimonials_student",
+            id: "testimonials-student",
             title: "Student", 
             type: "none"
         }
     ]
 },
-// {
-//     id: "email_invite",
-//     title: "Email Invite", 
-//     selected: false, 
-//     iconsrc: "/assets/email-invite-icon.svg", 
-//     children: []
-// },
+{
+    id: "homework",
+    title: "Homework", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+},
+{
+    id: "leave-request",
+    title: "Leave Request", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+    children: 
+    [
+        {
+            id: "instructor-leaves",
+            title: "Instructor Leaves", 
+            type: "none"
+        }, 
+        {
+            id: "student-leaves",
+            title: "Student Leaves", 
+            type: "none"
+        }
+    ]
+
+},
+{
+    id: "timetable",
+    title: "Time Table", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+},
+{
+    id: "settings",
+    title: "Settings", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+    children: 
+    [
+        {
+            id: "instructor-settings",
+            title: "Instructor Profile", 
+            type: "none"
+        }, 
+        {
+            id: "student-settings",
+            title: "Student Profile", 
+            type: "none"
+        }
+    ]
+},
+{
+    id: "lectures",
+    title: "Lectures", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+},
+{
+    id: "exam-schedule",
+    title: "Exam Schedule", 
+    selected: false, 
+    iconsrc: "/assets/announcement-icon.svg", 
+},
+
 ]
 
 MENU_ITEMS = [...MENU_LIST];

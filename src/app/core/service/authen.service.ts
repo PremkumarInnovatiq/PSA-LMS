@@ -108,5 +108,7 @@ export class AuthenService {
 
   saveUserInfo(info:any) {
     localStorage.setItem(AppConstants.KEY_USER_DATA, JSON.stringify(info));
+    localStorage.setItem('user_type',info.user.type);
+
 }
 }

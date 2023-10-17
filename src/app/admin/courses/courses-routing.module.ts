@@ -19,7 +19,7 @@ const routes: Routes = [
     component: AllCourseComponent
   },
   {
-    path: 'add-course',
+    path: 'course_add',
     component: AddCourseComponent
   },
   {
